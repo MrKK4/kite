@@ -3582,7 +3582,8 @@ fn handle_welcome_input(ev: &Event, ctx: &mut WelcomeInputCtx<'_>) -> InputOutco
                 return InputOutcome::Action(Action::OpenNewWorktreeDialog);
             }
             if ctx.registry.matches_id(ActionId::OpenSessions, key) {
-                return InputOutcome::Action(Action::FetchSessionList);
+                // Kite: reuse the in-session `/resume` picker (the welcome inline picker closed instantly when empty)
+                return InputOutcome::Action(Action::SendPrompt("/resume".to_owned()));
             }
             if ctx.registry.matches_id(ActionId::CommandPalette, key)
                 && !crate::input::key::is_text_input_key(key)
@@ -4051,7 +4052,8 @@ fn dispatch_menu_action(
         return InputOutcome::Action(Action::OpenNewWorktreeDialog);
     }
     if index == resume_idx {
-        return InputOutcome::Action(Action::FetchSessionList);
+        // Kite: same as typing `/resume`
+        return InputOutcome::Action(Action::SendPrompt("/resume".to_owned()));
     }
     if Some(index) == changelog_idx {
         if let Some(md) = changelog_md {

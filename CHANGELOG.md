@@ -4,6 +4,11 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 (upstream commit `2bdd1d6a`, see `SOURCE_REV`). Details and settings live in
 [KITE.md](KITE.md).
 
+## v0.1.3 — resume fix
+
+- Fix: "Resume session" with no saved sessions opened and instantly closed the
+  picker; it now opens the same picker as `/resume`.
+
 ## v0.1.2 — installers and build version
 
 - Report the Kite release version and source commit in `kite --version`,

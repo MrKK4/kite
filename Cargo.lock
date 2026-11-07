@@ -6837,7 +6837,7 @@ dependencies = [
 
 [[package]]
 name = "kite-pager"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "agent-client-protocol",
  "ansi-to-tui",
@@ -6947,7 +6947,7 @@ dependencies = [
 
 [[package]]
 name = "kite-pager-bin"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "anyhow",
  "clap",
@@ -7380,7 +7380,7 @@ dependencies = [
 
 [[package]]
 name = "kite-shell"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "agent-client-protocol",
  "anyhow",
@@ -7975,7 +7975,7 @@ dependencies = [
 
 [[package]]
 name = "kite-version"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "semver",
 ]
