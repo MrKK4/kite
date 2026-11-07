@@ -8,6 +8,7 @@ from pathlib import Path
 import hashlib
 import os
 import subprocess
+import tempfile
 
 import modal
 
@@ -19,7 +20,7 @@ image = (
     .apt_install(
         "build-essential", "curl", "git", "pkg-config", "cmake", "ninja-build",
         "clang", "lld", "llvm", "libclang-dev", "protobuf-compiler", "libssl-dev",
-        "nasm", "libxcb1-dev", "libxkbcommon-dev", "libdbus-1-dev",
+        "nasm", "ripgrep", "libxcb1-dev", "libxkbcommon-dev", "libdbus-1-dev",
     )
     .env({
         "RUSTUP_HOME": "/opt/rustup",
@@ -88,13 +89,13 @@ def build(target: str = "windows", mode: str = "build") -> dict:
             return {"artifact": "Cargo.lock"}
         if mode == "test":
             # Every crate Kite modifies; --no-fail-fast so one failure doesn't hide the rest.
-            run(["python3", "crates/codegen/xai-grok-agent/scripts/encrypt_templates.py"])
+            run(["python3", "crates/codegen/kite-agent/scripts/encrypt_templates.py"])
             crates = [
-                "xai-dirs", "xai-grok-config-types", "xai-grok-config", "xai-grok-markdown",
-                "xai-grok-tools", "xai-grok-agent", "xai-grok-hooks", "xai-grok-workspace",
-                "xai-grok-pager-render", "xai-grok-pager", "xai-grok-shell", "xai-grok-sampler",
+                "kite-dirs", "kite-config-types", "kite-config", "kite-markdown",
+                "kite-tools", "kite-agent", "kite-hooks", "kite-workspace",
+                "kite-pager-render", "kite-pager", "kite-shell", "kite-sampler",
             ]
-            # Debug test threads overflow the default stack (aborting xai-grok-shell, even
+            # Debug test threads overflow the default stack (aborting kite-shell, even
             # upstream); tests that point GROK_HOME at a temp dir must not see KITE_HOME.
             test_env = {k: v for k, v in os.environ.items() if k != "KITE_HOME"}
             test_env["RUST_MIN_STACK"] = str(16 * 1024 * 1024)
@@ -119,13 +120,13 @@ def build(target: str = "windows", mode: str = "build") -> dict:
             return {"artifact": format_source()}
         # The system prompt ships as an XOR-obfuscated copy of templates/*.md; a
         # template edit without regenerating silently builds the old prompt.
-        run(["python3", "crates/codegen/xai-grok-agent/scripts/encrypt_templates.py"])
+        run(["python3", "crates/codegen/kite-agent/scripts/encrypt_templates.py"])
         formatted = format_source()
         if target == "windows":
-            run(["cargo", "xwin", "build", "--locked", "--release", "--target", "x86_64-pc-windows-msvc", "-p", "xai-grok-pager-bin", "--bin", "kite"])
+            run(["cargo", "xwin", "build", "--locked", "--release", "--target", "x86_64-pc-windows-msvc", "-p", "kite-pager-bin", "--bin", "kite"])
             artifact = Path("/work/target/x86_64-pc-windows-msvc/release/kite.exe")
         elif target == "linux":
-            run(["cargo", "build", "--locked", "--release", "-p", "xai-grok-pager-bin", "--bin", "kite"])
+            run(["cargo", "build", "--locked", "--release", "-p", "kite-pager-bin", "--bin", "kite"])
             artifact = Path("/work/target/release/kite")
             run([str(artifact), "--version"])
         else:
@@ -146,7 +147,27 @@ def main(target: str = "windows", mode: str = "build"):
             continue
         destination = ROOT / "dist" / name
         destination.parent.mkdir(exist_ok=True)
-        with destination.open("wb") as output:
-            for chunk in cache.read_file(name):
-                output.write(chunk)
+        # Windows cannot replace a running executable. Download completely before
+        # touching the installed copy, then keep a uniquely named build if locked.
+        with tempfile.NamedTemporaryFile(
+            dir=destination.parent, prefix=f".{name}.", suffix=".download", delete=False,
+        ) as output:
+            pending = Path(output.name)
+            try:
+                for chunk in cache.read_file(name):
+                    output.write(chunk)
+            except BaseException:
+                output.close()
+                pending.unlink(missing_ok=True)
+                raise
+        try:
+            try:
+                pending.replace(destination)
+            except PermissionError:
+                digest = hashlib.sha256(pending.read_bytes()).hexdigest()[:12]
+                destination = destination.with_stem(f"{destination.stem}-{digest}")
+                pending.replace(destination)
+                print("Existing artifact is locked; saved the new build separately.")
+        finally:
+            pending.unlink(missing_ok=True)
         print(f"Downloaded {destination}")

@@ -6,7 +6,8 @@ Kite is this repository's personal, local-model fork. The executable is
 installed Grok account or share its default application directory.
 
 Kite's user guide is copied to `~/.kite/docs/user-guide/` at startup (`/docs`
-inside Kite). Some inherited names remain until a later rename: project-level
+inside Kite). Workspace crates use the `kite-*` prefix (see [the rename map](docs/crate-renames.md)).
+Some inherited names remain for compatibility: project-level
 folders are `.grok/` (for example `.grok/skills/`), environment variables use
 the `GROK_` prefix (except `KITE_HOME`), and the built-in themes are stored as
 `groknight` / `grokday` (shown as Kite Dark / Kite Light; `kite-dark` and
@@ -202,9 +203,9 @@ on Modal; the local computer only uploads source and downloads the result to
 `dist/kite.exe`. Registry downloads and the Windows toolchain are cached in
 `kite-build-cache`; compiler outputs use fast container-local disk.
 Use `--target linux` to produce `dist/kite` instead. Local builds remain possible
-with `cargo build -p xai-grok-pager-bin --release --bin kite`.
+with `cargo build -p kite-pager-bin --release --bin kite`.
 
 The system prompt is compiled from an obfuscated copy of
-`crates/codegen/xai-grok-agent/templates/*.md`. The Modal build regenerates it;
+`crates/codegen/kite-agent/templates/*.md`. The Modal build regenerates it;
 for a local build after editing a template, first run
-`python crates/codegen/xai-grok-agent/scripts/encrypt_templates.py`.
+`python crates/codegen/kite-agent/scripts/encrypt_templates.py`.

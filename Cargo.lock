@@ -5842,6 +5842,2334 @@ dependencies = [
 ]
 
 [[package]]
+name = "kite-acp-lib"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "async-trait",
+ "derive_more 2.1.1",
+ "futures",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-active-sessions"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "chrono",
+ "kite-config",
+ "libc",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tracing",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "kite-agent"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "dunce",
+ "fs2",
+ "git2",
+ "ignore",
+ "kite-config",
+ "kite-dirs",
+ "kite-hooks",
+ "kite-permission-rules",
+ "kite-sampling-types",
+ "kite-telemetry",
+ "kite-token-estimation",
+ "kite-tool-types",
+ "kite-tools",
+ "kite-tty-utils",
+ "minijinja",
+ "regex",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "serial_test",
+ "sha2 0.10.9",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "zeroize",
+]
+
+[[package]]
+name = "kite-agent-lifecycle"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-announcements"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "kite-config",
+ "kite-tools",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+ "ts-rs",
+]
+
+[[package]]
+name = "kite-auth"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "http 1.4.0",
+ "mockito",
+ "reqwest 0.12.24",
+ "reqwest-middleware 0.4.2",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-bundle"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "flate2",
+ "kite-config",
+ "prod-mc-cli-chat-proxy-types",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "tar",
+ "tempfile",
+]
+
+[[package]]
+name = "kite-chat-state"
+version = "0.1.0"
+dependencies = [
+ "indexmap",
+ "kite-compaction",
+ "kite-compaction-transcript",
+ "kite-sampling-types",
+ "kite-token-estimation",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "tokio",
+ "tokio-util",
+ "tracing",
+]
+
+[[package]]
+name = "kite-circuit-breaker"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "tonic",
+]
+
+[[package]]
+name = "kite-cloud-config"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "blake3",
+ "chrono",
+ "fs2",
+ "futures",
+ "globset",
+ "hmac",
+ "indexmap",
+ "kite-config",
+ "kite-dirs",
+ "kite-env",
+ "kite-extra-ca",
+ "kite-http",
+ "kite-login",
+ "kite-telemetry",
+ "kite-version",
+ "prod-mc-cli-chat-proxy-types",
+ "reqwest 0.12.24",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "sha2 0.10.9",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "kite-codebase-graph"
+version = "0.1.0"
+dependencies = [
+ "ahash",
+ "clap",
+ "crossbeam",
+ "dashmap",
+ "dunce",
+ "git2",
+ "hashbrown 0.15.5",
+ "ignore",
+ "kite-paths",
+ "libc",
+ "mimalloc",
+ "nohash-hasher",
+ "num_cpus",
+ "once_cell",
+ "petgraph 0.6.5",
+ "rayon",
+ "rustc-hash 2.1.1",
+ "serde",
+ "serde_json",
+ "smallvec",
+ "strum 0.27.2",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "tree-sitter",
+ "tree-sitter-go",
+ "tree-sitter-javascript",
+ "tree-sitter-python",
+ "tree-sitter-rust",
+ "tree-sitter-typescript",
+]
+
+[[package]]
+name = "kite-compaction"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-compaction-transcript"
+version = "0.1.0"
+dependencies = [
+ "kite-sampling-types",
+ "regex",
+ "serde_json",
+ "strum 0.27.2",
+]
+
+[[package]]
+name = "kite-computer-hub-core"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "chrono",
+ "dashmap",
+ "futures",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-computer-hub-mcp-adapter"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "futures",
+ "kite-computer-hub-sdk",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "prometheus",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-computer-hub-sdk"
+version = "0.1.0"
+dependencies = [
+ "arc-swap",
+ "async-trait",
+ "axum",
+ "base64 0.22.1",
+ "chrono",
+ "dashmap",
+ "fastrace",
+ "fastrace-opentelemetry",
+ "futures",
+ "http 1.4.0",
+ "indexmap",
+ "kite-computer-hub-core",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "kite-tracing",
+ "opentelemetry",
+ "opentelemetry-proto",
+ "opentelemetry_sdk",
+ "parking_lot",
+ "prometheus",
+ "prometheus-parse",
+ "prost",
+ "reqwest 0.12.24",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-tungstenite",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "uuid",
+]
+
+[[package]]
+name = "kite-config"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "base64 0.22.1",
+ "blake3",
+ "chrono",
+ "core-foundation",
+ "dunce",
+ "fs2",
+ "indexmap",
+ "kite-dirs",
+ "kite-env",
+ "kite-tty-utils",
+ "kite-version",
+ "prod-mc-cli-chat-proxy-types",
+ "ring",
+ "semver",
+ "serde",
+ "serde_json",
+ "shellexpand",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "toml",
+ "tracing",
+ "ts-rs",
+ "urlencoding",
+ "which",
+]
+
+[[package]]
+name = "kite-config-types"
+version = "0.1.0"
+dependencies = [
+ "kite-config",
+ "kite-sandbox",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "kite-crash-handler"
+version = "0.1.0"
+dependencies = [
+ "backtrace",
+ "libc",
+ "tempfile",
+ "tokio",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "kite-dashboard-store"
+version = "0.1.0"
+dependencies = [
+ "kite-config",
+ "kite-sqlite-journal",
+ "pretty_assertions",
+ "rusqlite",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tracing",
+]
+
+[[package]]
+name = "kite-diag-server"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "axum",
+ "kite-version",
+ "reqwest 0.12.24",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-dirs"
+version = "0.1.0"
+dependencies = [
+ "dunce",
+ "pretty_assertions",
+ "tempfile",
+ "tracing",
+]
+
+[[package]]
+name = "kite-egress-proxy"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "httparse",
+ "kite-sandbox",
+ "rand 0.9.5",
+ "subtle",
+ "thiserror 2.0.18",
+ "tokio",
+]
+
+[[package]]
+name = "kite-env"
+version = "0.1.0"
+dependencies = [
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "kite-external-agent-migration"
+version = "0.1.0"
+dependencies = [
+ "dunce",
+ "git2",
+ "kite-config",
+ "kite-dirs",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "kite-extra-ca"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "rcgen",
+ "reqwest 0.12.24",
+ "rustls",
+ "rustls-native-certs",
+ "tempfile",
+ "tracing",
+ "webpki-roots 0.26.11",
+]
+
+[[package]]
+name = "kite-fast-worktree"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytes",
+ "clap",
+ "crossbeam",
+ "dashmap",
+ "dunce",
+ "gix",
+ "gix-status",
+ "globset",
+ "ignore",
+ "kite-dirs",
+ "kite-gix-status",
+ "kite-sqlite-journal",
+ "kite-test-utils",
+ "kite-tty-utils",
+ "libc",
+ "nix 0.30.1",
+ "num_cpus",
+ "rapidhash",
+ "reflink-copy",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "strum 0.27.2",
+ "tempfile",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "uuid",
+]
+
+[[package]]
+name = "kite-feedback"
+version = "0.1.0"
+dependencies = [
+ "flate2",
+ "fs2",
+ "libc",
+ "same-file",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "uuid",
+ "walkdir",
+]
+
+[[package]]
+name = "kite-file-lock"
+version = "0.1.0"
+dependencies = [
+ "fs2",
+ "libc",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tracing",
+]
+
+[[package]]
+name = "kite-file-utils"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-compression",
+ "aws-config",
+ "aws-sdk-s3",
+ "aws-smithy-http-client",
+ "axum",
+ "axum-server",
+ "base64 0.22.1",
+ "chrono",
+ "dirs 5.0.1",
+ "dunce",
+ "filetime",
+ "futures",
+ "gcloud-storage",
+ "indexmap",
+ "kite-auth",
+ "kite-circuit-breaker",
+ "kite-dirs",
+ "kite-extra-ca",
+ "kite-otel",
+ "kite-test-utils",
+ "kite-version",
+ "prod-mc-cli-chat-proxy-types",
+ "rcgen",
+ "reflink-copy",
+ "reqwest 0.12.24",
+ "reqwest-middleware 0.4.2",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "tempfile",
+ "tokio",
+ "tokio-stream",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "zstd",
+]
+
+[[package]]
+name = "kite-foreign-sessions"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "dirs 6.0.0",
+ "dunce",
+ "filetime",
+ "git2",
+ "kite-dirs",
+ "kite-sqlite-journal",
+ "libc",
+ "md5",
+ "rusqlite",
+ "serde_json",
+ "tempfile",
+ "uuid",
+ "zstd",
+]
+
+[[package]]
+name = "kite-fsnotify"
+version = "0.1.0"
+dependencies = [
+ "criterion",
+ "dunce",
+ "git2",
+ "globset",
+ "ignore",
+ "kite-tracing-macros",
+ "notify",
+ "notify-debouncer-full",
+ "serde",
+ "serial_test",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "tracing",
+]
+
+[[package]]
+name = "kite-fuzzy-file-search"
+version = "0.1.0"
+dependencies = [
+ "ignore",
+ "kite-tty-utils",
+ "libc",
+ "nucleo",
+ "serde",
+ "tempfile",
+ "tracing",
+]
+
+[[package]]
+name = "kite-gboom"
+version = "0.1.0"
+dependencies = [
+ "crossterm",
+ "image",
+]
+
+[[package]]
+name = "kite-gix-status"
+version = "0.1.0"
+dependencies = [
+ "gix",
+ "kite-test-utils",
+ "libc",
+ "tempfile",
+]
+
+[[package]]
+name = "kite-hooks"
+version = "0.1.0"
+dependencies = [
+ "fastrand",
+ "kite-config",
+ "kite-extra-ca",
+ "kite-sandbox",
+ "kite-tools",
+ "regex",
+ "reqwest 0.12.24",
+ "serde",
+ "serde_json",
+ "shellexpand",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "toml",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+]
+
+[[package]]
+name = "kite-hooks-plugins-types"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "kite-http"
+version = "0.1.0"
+dependencies = [
+ "kite-auth",
+ "kite-extra-ca",
+ "kite-sampler",
+ "kite-telemetry",
+ "kite-version",
+ "kite-workspace",
+ "rcgen",
+ "reqwest 0.12.24",
+ "reqwest-middleware 0.4.2",
+ "rustls",
+ "serde_json",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-hunk-tracker"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "dunce",
+ "gix",
+ "kite-gix-status",
+ "kite-test-utils",
+ "rustc-hash 2.1.1",
+ "serde",
+ "serde_json",
+ "similar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "kite-image"
+version = "0.1.0"
+dependencies = [
+ "crc32fast",
+ "image",
+ "kite-test-utils",
+ "thiserror 2.0.18",
+]
+
+[[package]]
+name = "kite-interjection-core"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "kite-lifecycle"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "kite-diag-server",
+ "kite-tty-utils",
+ "nix 0.30.1",
+ "parking_lot",
+ "pretty_assertions",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "tower",
+ "tracing",
+]
+
+[[package]]
+name = "kite-login"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arc-swap",
+ "async-trait",
+ "axum",
+ "backon",
+ "base64 0.22.1",
+ "chrono",
+ "filetime",
+ "fs2",
+ "indexmap",
+ "jsonwebtoken",
+ "kite-auth",
+ "kite-config",
+ "kite-config-types",
+ "kite-env",
+ "kite-extra-ca",
+ "kite-file-utils",
+ "kite-http",
+ "kite-memory",
+ "kite-sampler",
+ "kite-shell-base",
+ "kite-system-power",
+ "kite-telemetry",
+ "kite-test-support",
+ "kite-tools",
+ "kite-version",
+ "libc",
+ "loom",
+ "obfstr",
+ "parking_lot",
+ "pretty_assertions",
+ "prost",
+ "rand 0.9.5",
+ "reqwest 0.12.24",
+ "rsa",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "sha2 0.10.9",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "toml",
+ "tonic",
+ "tonic-prost",
+ "tower-http",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "urlencoding",
+ "uuid",
+ "webbrowser",
+ "wiremock",
+]
+
+[[package]]
+name = "kite-markdown"
+version = "0.1.0"
+dependencies = [
+ "anstyle",
+ "anstyle-lossy",
+ "anstyle-syntect",
+ "criterion",
+ "crossterm",
+ "html-escape",
+ "kite-markdown-core",
+ "kite-ratatui-textarea",
+ "linkify",
+ "pretty_assertions",
+ "pulldown-cmark",
+ "ratatui",
+ "supports-color",
+ "syntect",
+ "textwrap",
+ "two-face",
+ "unicode-segmentation",
+ "unicode-width 0.2.0",
+ "url",
+]
+
+[[package]]
+name = "kite-markdown-core"
+version = "0.1.0"
+dependencies = [
+ "pulldown-cmark",
+ "strum 0.27.2",
+]
+
+[[package]]
+name = "kite-mcp"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "async-trait",
+ "axum",
+ "futures",
+ "http 1.4.0",
+ "kite-computer-hub-sdk",
+ "kite-config",
+ "kite-extra-ca",
+ "kite-sandbox",
+ "kite-session-events",
+ "kite-telemetry",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "kite-tools",
+ "kite-version",
+ "kite-workspace-types",
+ "libc",
+ "nix 0.30.1",
+ "oauth2",
+ "parking_lot",
+ "reqwest 0.13.4",
+ "rmcp",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "sse-stream",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "url",
+ "webbrowser",
+ "which",
+]
+
+[[package]]
+name = "kite-memory"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arc-swap",
+ "async-trait",
+ "blake3",
+ "chrono",
+ "dunce",
+ "filetime",
+ "flate2",
+ "git2",
+ "kite-auth",
+ "kite-config-types",
+ "kite-http",
+ "kite-sqlite-journal",
+ "kite-token-estimation",
+ "kite-tools",
+ "kite-version",
+ "libc",
+ "nix 0.30.1",
+ "notify",
+ "parking_lot",
+ "regex",
+ "reqwest 0.12.24",
+ "reqwest-middleware 0.4.2",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sqlite-vec",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "kite-mermaid"
+version = "0.1.0"
+dependencies = [
+ "fontdb",
+ "image",
+ "kite-tty-utils",
+ "libc",
+ "mermaid-to-svg",
+ "resvg",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tiny-skia",
+ "tracing",
+ "wait-timeout",
+ "which",
+]
+
+[[package]]
+name = "kite-message-delivery-core"
+version = "0.1.0"
+
+[[package]]
+name = "kite-mixpanel"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "kite-secrets",
+ "reqwest 0.12.24",
+ "serde_json",
+ "thiserror 2.0.18",
+ "tokio",
+ "wiremock",
+]
+
+[[package]]
+name = "kite-models"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "kite-otel"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "http 1.4.0",
+ "kite-auth",
+ "kite-env",
+ "kite-extra-ca",
+ "kite-secrets",
+ "opentelemetry",
+ "opentelemetry-http",
+ "opentelemetry-otlp",
+ "opentelemetry_sdk",
+ "parking_lot",
+ "rcgen",
+ "reqwest 0.12.24",
+ "rustls",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "tracing-opentelemetry",
+ "tracing-subscriber",
+ "url",
+]
+
+[[package]]
+name = "kite-pager"
+version = "1.0.45"
+dependencies = [
+ "agent-client-protocol",
+ "ansi-to-tui",
+ "anyhow",
+ "backon",
+ "base64 0.22.1",
+ "blake3",
+ "chrono",
+ "clap",
+ "clap_complete",
+ "core-foundation",
+ "criterion",
+ "crossterm",
+ "dunce",
+ "flate2",
+ "gethostname",
+ "git2",
+ "image",
+ "indexmap",
+ "insta",
+ "kite-acp-lib",
+ "kite-active-sessions",
+ "kite-agent",
+ "kite-announcements",
+ "kite-chat-state",
+ "kite-cloud-config",
+ "kite-config",
+ "kite-crash-handler",
+ "kite-dashboard-store",
+ "kite-dirs",
+ "kite-external-agent-migration",
+ "kite-extra-ca",
+ "kite-fast-worktree",
+ "kite-feedback",
+ "kite-file-utils",
+ "kite-foreign-sessions",
+ "kite-gboom",
+ "kite-hooks",
+ "kite-hooks-plugins-types",
+ "kite-interjection-core",
+ "kite-login",
+ "kite-markdown",
+ "kite-mermaid",
+ "kite-otel",
+ "kite-pager-diff",
+ "kite-pager-render",
+ "kite-plugin-marketplace",
+ "kite-prompt-queue",
+ "kite-ratatui-inline",
+ "kite-ratatui-textarea",
+ "kite-sampling-types",
+ "kite-sandbox",
+ "kite-shell",
+ "kite-status-line",
+ "kite-telemetry",
+ "kite-test-support",
+ "kite-token-estimation",
+ "kite-tool-types",
+ "kite-tools",
+ "kite-tty-utils",
+ "kite-update",
+ "kite-version",
+ "kite-voice",
+ "kite-workspace",
+ "libc",
+ "nix 0.30.1",
+ "nucleo",
+ "obfstr",
+ "parking_lot",
+ "portable-pty",
+ "pretty_assertions",
+ "prost",
+ "rand 0.9.5",
+ "ratatui",
+ "regex",
+ "rstest",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "shellexpand",
+ "shlex",
+ "signal-hook 0.3.18",
+ "similar",
+ "strip-ansi-escapes",
+ "strum 0.27.2",
+ "syntect",
+ "tar",
+ "tempfile",
+ "textwrap",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-stream",
+ "tokio-util",
+ "toml",
+ "toml_edit 0.22.27",
+ "tracing",
+ "tracing-subscriber",
+ "unicode-segmentation",
+ "unicode-width 0.2.0",
+ "url",
+ "urlencoding",
+ "uuid",
+ "walkdir",
+ "windows-sys 0.59.0",
+ "wiremock",
+]
+
+[[package]]
+name = "kite-pager-bin"
+version = "1.0.45"
+dependencies = [
+ "anyhow",
+ "clap",
+ "cryptify",
+ "dunce",
+ "kite-acp-lib",
+ "kite-cloud-config",
+ "kite-config",
+ "kite-crash-handler",
+ "kite-dirs",
+ "kite-extra-ca",
+ "kite-login",
+ "kite-pager",
+ "kite-pager-minimal",
+ "kite-sandbox",
+ "kite-shell",
+ "kite-telemetry",
+ "kite-tty-utils",
+ "kite-update",
+ "kite-version",
+ "kite-workspace",
+ "libc",
+ "obfstr",
+ "semver",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "sha2 0.10.9",
+ "tar",
+ "tempfile",
+ "tikv-jemalloc-ctl",
+ "tikv-jemalloc-sys",
+ "tikv-jemallocator",
+ "tokio",
+ "tokio-util",
+ "toml",
+ "tracing",
+ "tracing-subscriber",
+ "zstd",
+]
+
+[[package]]
+name = "kite-pager-diff"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "kite-tools",
+ "serde_json",
+ "similar",
+ "tracing",
+]
+
+[[package]]
+name = "kite-pager-minimal"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "crossterm",
+ "kite-pager",
+ "kite-pager-diff",
+ "kite-ratatui-inline",
+ "kite-shell",
+ "kite-token-estimation",
+ "kite-version",
+ "ratatui",
+ "serial_test",
+ "similar",
+ "tracing",
+ "unicode-width 0.2.0",
+ "uuid",
+]
+
+[[package]]
+name = "kite-pager-pty-harness"
+version = "0.1.0"
+dependencies = [
+ "alacritty_terminal",
+ "anyhow",
+ "base64 0.22.1",
+ "clap",
+ "dunce",
+ "git2",
+ "image",
+ "kite-interjection-core",
+ "kite-test-support",
+ "kite-tty-utils",
+ "libc",
+ "portable-pty",
+ "ptyctl",
+ "reqwest 0.12.24",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "serial_test",
+ "strum 0.27.2",
+ "tempfile",
+ "tokio",
+ "toml",
+ "tracing",
+ "tracing-subscriber",
+ "unicode-width 0.2.0",
+]
+
+[[package]]
+name = "kite-pager-render"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "anstyle",
+ "anyhow",
+ "base64 0.22.1",
+ "blake3",
+ "chrono",
+ "crossterm",
+ "dark-light",
+ "documented",
+ "dunce",
+ "image",
+ "kite-config",
+ "kite-dirs",
+ "kite-env",
+ "kite-gboom",
+ "kite-markdown",
+ "kite-paths",
+ "kite-ratatui-inline",
+ "kite-ratatui-textarea",
+ "kite-shared",
+ "kite-telemetry",
+ "kite-tools",
+ "kite-tty-utils",
+ "kite-workspace",
+ "libc",
+ "linkify",
+ "notify",
+ "pretty_assertions",
+ "ratatui",
+ "ratatui-core",
+ "regex",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "shellexpand",
+ "strum 0.27.2",
+ "supports-color",
+ "syntect",
+ "tempfile",
+ "textwrap",
+ "tokio",
+ "toml",
+ "toml_edit 0.22.27",
+ "tracing",
+ "tui-scrollbar",
+ "unicode-bidi",
+ "unicode-bidi-mirroring",
+ "unicode-segmentation",
+ "unicode-width 0.2.0",
+ "url",
+ "uuid",
+ "vte 0.15.0",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "kite-paths"
+version = "0.1.0"
+dependencies = [
+ "camino",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+]
+
+[[package]]
+name = "kite-permission-rules"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "dunce",
+ "fs2",
+ "git2",
+ "glob",
+ "kite-config",
+ "kite-dirs",
+ "kite-paths",
+ "kite-sqlite-journal",
+ "kite-version",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "toml",
+ "tracing",
+ "tracing-subscriber",
+ "tree-sitter",
+ "tree-sitter-bash",
+ "url",
+]
+
+[[package]]
+name = "kite-plugin-marketplace"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "dunce",
+ "kite-agent",
+ "kite-config",
+ "kite-dirs",
+ "kite-hooks-plugins-types",
+ "kite-tty-utils",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "kite-prompt-queue"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "kite-proto-build"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "pbjson-build",
+ "prost-build",
+ "prost-reflect",
+ "tempfile",
+ "tonic-prost-build",
+]
+
+[[package]]
+name = "kite-ratatui-inline"
+version = "0.1.0"
+dependencies = [
+ "ansi-width",
+ "anstyle-parse",
+ "anyhow",
+ "colored_json",
+ "criterion",
+ "crossterm",
+ "lipsum",
+ "ratatui",
+ "serde_json",
+ "termwiz",
+ "unicode-width 0.2.0",
+]
+
+[[package]]
+name = "kite-ratatui-textarea"
+version = "0.1.0"
+dependencies = [
+ "arboard",
+ "crossterm",
+ "fuzzy-matcher",
+ "ignore",
+ "itertools 0.14.0",
+ "pretty_assertions",
+ "rand 0.9.5",
+ "ratatui",
+ "ratatui-core",
+ "textwrap",
+ "tracing",
+ "tui-scrollbar",
+ "unicode-segmentation",
+ "unicode-width 0.2.0",
+]
+
+[[package]]
+name = "kite-sampler"
+version = "0.1.0"
+dependencies = [
+ "async-openai",
+ "async-stream",
+ "axum",
+ "axum-server",
+ "base64 0.22.1",
+ "blake3",
+ "chrono",
+ "eventsource-stream",
+ "futures-util",
+ "indexmap",
+ "kite-auth",
+ "kite-extra-ca",
+ "kite-sampling-types",
+ "kite-test-support",
+ "kite-version",
+ "rcgen",
+ "reqwest 0.12.24",
+ "rustls",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "uuid",
+ "zstd",
+]
+
+[[package]]
+name = "kite-sampling-types"
+version = "0.1.0"
+dependencies = [
+ "assert_matches",
+ "async-openai",
+ "chrono",
+ "indexmap",
+ "kite-circuit-breaker",
+ "kite-compaction",
+ "kite-tool-types",
+ "reqwest 0.12.24",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "thiserror 2.0.18",
+ "tracing",
+]
+
+[[package]]
+name = "kite-sandbox"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "dunce",
+ "fs2",
+ "globset",
+ "ignore",
+ "kite-config",
+ "kite-dirs",
+ "kite-tty-utils",
+ "libc",
+ "nono",
+ "regex",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "sha2 0.10.9",
+ "strum 0.27.2",
+ "thiserror 2.0.18",
+ "tokio",
+ "toml",
+ "tracing",
+ "unicode-normalization",
+ "url",
+]
+
+[[package]]
+name = "kite-secrets"
+version = "0.1.0"
+dependencies = [
+ "regex",
+ "serde_json",
+ "url",
+]
+
+[[package]]
+name = "kite-session-events"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "tempfile",
+ "tracing",
+]
+
+[[package]]
+name = "kite-session-search"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "blake3",
+ "chrono",
+ "fs2",
+ "kite-config",
+ "kite-sqlite-journal",
+ "kite-telemetry",
+ "parking_lot",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "kite-shared"
+version = "0.0.0"
+dependencies = [
+ "agent-client-protocol",
+ "anyhow",
+ "arboard",
+ "base64 0.22.1",
+ "dunce",
+ "image",
+ "kite-config",
+ "kite-dirs",
+ "kite-image",
+ "kite-models",
+ "kite-status-line",
+ "kite-tty-utils",
+ "libc",
+ "objc2 0.6.3",
+ "parking_lot",
+ "prod-mc-cli-chat-proxy-types",
+ "regex",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tracing",
+ "urlencoding",
+ "uuid",
+ "wl-clipboard-rs",
+]
+
+[[package]]
+name = "kite-shell"
+version = "1.0.45"
+dependencies = [
+ "agent-client-protocol",
+ "anyhow",
+ "arc-swap",
+ "async-openai",
+ "async-trait",
+ "axum",
+ "backon",
+ "base64 0.22.1",
+ "blake3",
+ "bm25",
+ "bytes",
+ "chrono",
+ "clap",
+ "criterion",
+ "ctor",
+ "dashmap",
+ "dhat",
+ "dunce",
+ "filetime",
+ "flate2",
+ "fs2",
+ "futures",
+ "futures-util",
+ "gcloud-storage",
+ "gethostname",
+ "git2",
+ "glob",
+ "ignore",
+ "image",
+ "indexmap",
+ "infer 0.15.0",
+ "jsonschema",
+ "kite-acp-lib",
+ "kite-agent",
+ "kite-agent-lifecycle",
+ "kite-announcements",
+ "kite-auth",
+ "kite-bundle",
+ "kite-chat-state",
+ "kite-cloud-config",
+ "kite-codebase-graph",
+ "kite-compaction",
+ "kite-compaction-transcript",
+ "kite-computer-hub-sdk",
+ "kite-config",
+ "kite-config-types",
+ "kite-dirs",
+ "kite-env",
+ "kite-external-agent-migration",
+ "kite-extra-ca",
+ "kite-fast-worktree",
+ "kite-feedback",
+ "kite-file-lock",
+ "kite-file-utils",
+ "kite-foreign-sessions",
+ "kite-fsnotify",
+ "kite-hooks",
+ "kite-hooks-plugins-types",
+ "kite-http",
+ "kite-hunk-tracker",
+ "kite-interjection-core",
+ "kite-login",
+ "kite-mcp",
+ "kite-memory",
+ "kite-message-delivery-core",
+ "kite-models",
+ "kite-otel",
+ "kite-paths",
+ "kite-plugin-marketplace",
+ "kite-prompt-queue",
+ "kite-sampler",
+ "kite-sampling-types",
+ "kite-sandbox",
+ "kite-session-events",
+ "kite-session-search",
+ "kite-shared",
+ "kite-shell-base",
+ "kite-shell-session-support",
+ "kite-shell-terminal",
+ "kite-status-line",
+ "kite-subagent-resolution",
+ "kite-telemetry",
+ "kite-test-support",
+ "kite-test-utils",
+ "kite-token-estimation",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "kite-tools",
+ "kite-tracing-macros",
+ "kite-tty-utils",
+ "kite-version",
+ "kite-workflow",
+ "kite-workspace",
+ "libc",
+ "moka",
+ "nix 0.30.1",
+ "notify",
+ "notify-debouncer-mini",
+ "nucleo",
+ "obfstr",
+ "parking_lot",
+ "pretty_assertions",
+ "prod-mc-cli-chat-proxy-types",
+ "regex",
+ "reqwest 0.12.24",
+ "reqwest-middleware 0.4.2",
+ "rstest",
+ "rustls",
+ "semver",
+ "serde",
+ "serde_ignored",
+ "serde_json",
+ "serial_test",
+ "sha2 0.10.9",
+ "siphasher",
+ "strum 0.27.2",
+ "tar",
+ "tdigests",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-retry",
+ "tokio-rustls",
+ "tokio-tungstenite",
+ "tokio-util",
+ "toml",
+ "toml_edit 0.22.27",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "urlencoding",
+ "uuid",
+ "walkdir",
+ "webbrowser",
+ "windows 0.61.3",
+ "zstd",
+]
+
+[[package]]
+name = "kite-shell-base"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "kite-config",
+ "kite-dirs",
+ "kite-env",
+ "kite-extra-ca",
+ "kite-shared",
+ "kite-tty-utils",
+ "kite-version",
+ "libc",
+ "nix 0.30.1",
+ "pprof",
+ "reqwest 0.12.24",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "url",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "kite-shell-session-support"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "kite-file-utils",
+ "kite-http",
+ "kite-version",
+ "reqwest 0.12.24",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-shell-terminal"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "futures",
+ "kite-acp-lib",
+ "kite-config",
+ "kite-paths",
+ "kite-sandbox",
+ "kite-tools",
+ "kite-tty-utils",
+ "kite-workspace",
+ "libc",
+ "portable-pty",
+ "process-wrap",
+ "serde",
+ "serde_json",
+ "shlex",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "uuid",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "kite-sqlite-journal"
+version = "0.1.0"
+dependencies = [
+ "libc",
+ "rusqlite",
+ "strum 0.27.2",
+ "tempfile",
+ "tracing",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "kite-status-line"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "toml",
+]
+
+[[package]]
+name = "kite-subagent-resolution"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "kite-agent",
+ "kite-sampling-types",
+ "kite-tool-types",
+ "kite-tools",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "kite-system-power"
+version = "0.1.0"
+dependencies = [
+ "windows-sys 0.59.0",
+ "zbus",
+]
+
+[[package]]
+name = "kite-telemetry"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "axum",
+ "axum-server",
+ "base64 0.22.1",
+ "chrono",
+ "ctor",
+ "filetime",
+ "git2",
+ "http 1.4.0",
+ "kite-auth",
+ "kite-config",
+ "kite-dirs",
+ "kite-env",
+ "kite-extra-ca",
+ "kite-file-utils",
+ "kite-otel",
+ "kite-sampler",
+ "kite-secrets",
+ "kite-session-events",
+ "kite-test-support",
+ "kite-token-estimation",
+ "kite-tty-utils",
+ "kite-version",
+ "mid",
+ "obfstr",
+ "opentelemetry",
+ "opentelemetry-otlp",
+ "opentelemetry-proto",
+ "opentelemetry_sdk",
+ "parking_lot",
+ "prost",
+ "rcgen",
+ "reqwest 0.12.24",
+ "rustls",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "tempfile",
+ "tokio",
+ "tokio-stream",
+ "tonic",
+ "tracing",
+ "tracing-appender",
+ "tracing-chrome",
+ "tracing-subscriber",
+ "uuid",
+ "webpki-roots 0.26.11",
+ "whoami",
+]
+
+[[package]]
+name = "kite-test-support"
+version = "0.1.0"
+dependencies = [
+ "agent-client-protocol",
+ "anyhow",
+ "async-trait",
+ "axum",
+ "axum-server",
+ "base64 0.22.1",
+ "clap",
+ "futures-util",
+ "kite-acp-lib",
+ "kite-tty-utils",
+ "libc",
+ "opentelemetry-proto",
+ "portable-pty",
+ "pretty_assertions",
+ "prost",
+ "rcgen",
+ "regex",
+ "reqwest 0.12.24",
+ "ring",
+ "rustls",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-tungstenite",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+]
+
+[[package]]
+name = "kite-test-utils"
+version = "0.1.0"
+dependencies = [
+ "runfiles",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "kite-token-estimation"
+version = "0.1.0"
+
+[[package]]
+name = "kite-tool-protocol"
+version = "0.1.0"
+dependencies = [
+ "kite-tool-types",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "typeshare",
+ "uuid",
+]
+
+[[package]]
+name = "kite-tool-runtime"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "futures",
+ "kite-tool-protocol",
+ "kite-tool-types",
+ "kite-tools-api",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-util",
+]
+
+[[package]]
+name = "kite-tool-types"
+version = "0.1.0"
+dependencies = [
+ "minijinja",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "kite-tools"
+version = "0.1.220-alpha.4"
+dependencies = [
+ "anyhow",
+ "arc-swap",
+ "async-lsp",
+ "async-openai",
+ "async-stream",
+ "async-trait",
+ "base64 0.22.1",
+ "bstr",
+ "chrono",
+ "command-fds",
+ "derive_more 2.1.1",
+ "dhat",
+ "dunce",
+ "educe",
+ "encoding_rs",
+ "flate2",
+ "fs2",
+ "futures",
+ "futures-util",
+ "globset",
+ "htmd",
+ "ignore",
+ "image",
+ "indexmap",
+ "infer 0.19.0",
+ "kamadak-exif",
+ "kite-auth",
+ "kite-computer-hub-core",
+ "kite-computer-hub-sdk",
+ "kite-config",
+ "kite-dirs",
+ "kite-env",
+ "kite-extra-ca",
+ "kite-feedback",
+ "kite-file-utils",
+ "kite-image",
+ "kite-interjection-core",
+ "kite-message-delivery-core",
+ "kite-otel",
+ "kite-permission-rules",
+ "kite-sandbox",
+ "kite-test-support",
+ "kite-test-utils",
+ "kite-token-estimation",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "kite-tools-api",
+ "kite-tty-utils",
+ "kite-version",
+ "kite-workspace-types",
+ "libc",
+ "minijinja",
+ "nix 0.30.1",
+ "parking_lot",
+ "pdf_oxide",
+ "pretty_assertions",
+ "pulldown-cmark",
+ "quick-xml 0.41.0",
+ "regex",
+ "reqwest 0.12.24",
+ "schemars 1.0.4",
+ "scraper",
+ "serde",
+ "serde_json",
+ "serde_path_to_error",
+ "serde_yaml",
+ "sha2 0.10.9",
+ "shellexpand",
+ "similar",
+ "strip-ansi-escapes",
+ "strum 0.26.3",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "tonic",
+ "tracing",
+ "tracing-subscriber",
+ "unicode-normalization",
+ "url",
+ "uuid",
+ "which",
+ "wildmatch",
+ "windows 0.61.3",
+ "wiremock",
+ "zip 3.0.0",
+ "zstd",
+]
+
+[[package]]
+name = "kite-tools-api"
+version = "0.1.220-alpha.4"
+dependencies = [
+ "kite-proto-build",
+ "kite-tool-protocol",
+ "prost",
+ "serde",
+ "serde_json",
+ "tonic",
+ "tonic-prost",
+]
+
+[[package]]
+name = "kite-tracing"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "fastrace",
+ "fastrace-opentelemetry",
+ "fastrace-reqwest",
+ "fastrace-tonic",
+ "http 1.4.0",
+ "http-body-util",
+ "log",
+ "opentelemetry",
+ "opentelemetry-http",
+ "opentelemetry-otlp",
+ "opentelemetry_sdk",
+ "reqwest 0.12.24",
+ "reqwest-middleware 0.4.2",
+ "tokio",
+ "tonic",
+ "tower",
+ "tower-http",
+ "tracing",
+ "tracing-opentelemetry",
+ "tracing-subscriber",
+ "uuid",
+ "wiremock",
+]
+
+[[package]]
+name = "kite-tracing-macros"
+version = "0.1.0"
+
+[[package]]
+name = "kite-tty-utils"
+version = "0.1.0"
+dependencies = [
+ "libc",
+ "nix 0.30.1",
+ "tokio",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "kite-update"
+version = "0.1.220-alpha.4"
+dependencies = [
+ "anyhow",
+ "dunce",
+ "flate2",
+ "futures",
+ "indicatif",
+ "kite-cloud-config",
+ "kite-dirs",
+ "kite-extra-ca",
+ "kite-login",
+ "kite-shell",
+ "kite-telemetry",
+ "kite-tools",
+ "kite-tty-utils",
+ "kite-version",
+ "libc",
+ "reqwest 0.12.24",
+ "semver",
+ "serde",
+ "serde_json",
+ "serial_test",
+ "sha2 0.10.9",
+ "tempfile",
+ "thiserror 2.0.18",
+ "time",
+ "tokio",
+ "tracing",
+ "url",
+ "wiremock",
+ "zip 3.0.0",
+ "zstd",
+]
+
+[[package]]
+name = "kite-version"
+version = "1.0.45"
+dependencies = [
+ "semver",
+]
+
+[[package]]
+name = "kite-voice"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "cpal",
+ "futures-util",
+ "kite-dirs",
+ "kite-extra-ca",
+ "kite-tty-utils",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-tungstenite",
+ "tokio-util",
+ "toml",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+]
+
+[[package]]
+name = "kite-workflow"
+version = "0.1.0"
+dependencies = [
+ "libc",
+ "rhai",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-util",
+ "tracing",
+]
+
+[[package]]
+name = "kite-workspace"
+version = "0.1.220-alpha.4"
+dependencies = [
+ "agent-client-protocol",
+ "anyhow",
+ "arc-swap",
+ "async-stream",
+ "async-trait",
+ "axum",
+ "base64 0.22.1",
+ "bstr",
+ "chrono",
+ "clap",
+ "dashmap",
+ "dunce",
+ "fastrace",
+ "flate2",
+ "fs2",
+ "futures",
+ "git2",
+ "hashbrown 0.16.1",
+ "humantime-serde",
+ "ignore",
+ "indexmap",
+ "infer 0.19.0",
+ "kite-acp-lib",
+ "kite-agent",
+ "kite-auth",
+ "kite-codebase-graph",
+ "kite-computer-hub-mcp-adapter",
+ "kite-computer-hub-sdk",
+ "kite-config",
+ "kite-config-types",
+ "kite-diag-server",
+ "kite-dirs",
+ "kite-egress-proxy",
+ "kite-env",
+ "kite-extra-ca",
+ "kite-fast-worktree",
+ "kite-file-utils",
+ "kite-fsnotify",
+ "kite-fuzzy-file-search",
+ "kite-hooks",
+ "kite-hunk-tracker",
+ "kite-lifecycle",
+ "kite-mcp",
+ "kite-paths",
+ "kite-permission-rules",
+ "kite-sandbox",
+ "kite-session-events",
+ "kite-telemetry",
+ "kite-test-utils",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "kite-tools",
+ "kite-tools-api",
+ "kite-tracing",
+ "kite-tty-utils",
+ "kite-version",
+ "kite-workspace-client",
+ "kite-workspace-daemon",
+ "kite-workspace-types",
+ "libc",
+ "nix 0.30.1",
+ "nohash-hasher",
+ "parking_lot",
+ "prometheus",
+ "rand 0.9.5",
+ "regex",
+ "reqwest 0.12.24",
+ "rustc-hash 2.1.1",
+ "serde",
+ "serde_json",
+ "sha1",
+ "sha2 0.10.9",
+ "smallvec",
+ "strum 0.27.2",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tokio-tungstenite",
+ "tokio-util",
+ "toml",
+ "toml_edit 0.22.27",
+ "tonic",
+ "tracing",
+ "tracing-subscriber",
+ "tree-sitter",
+ "url",
+ "urlencoding",
+ "uuid",
+ "wait-timeout",
+ "zip 3.0.0",
+ "zstd",
+]
+
+[[package]]
+name = "kite-workspace-client"
+version = "0.1.0"
+dependencies = [
+ "kite-computer-hub-sdk",
+ "kite-tool-protocol",
+ "kite-tool-runtime",
+ "kite-tool-types",
+ "kite-workspace-types",
+ "schemars 1.0.4",
+ "semver",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "kite-workspace-daemon"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "fs2",
+ "kite-computer-hub-sdk",
+ "kite-tty-utils",
+ "libc",
+ "prometheus",
+ "reqwest 0.12.24",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "kite-workspace-types"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "chrono",
+ "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "thiserror 2.0.18",
+]
+
+[[package]]
 name = "kqueue"
 version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -12995,2334 +15323,6 @@ dependencies = [
  "cmpv2",
  "cms",
  "der",
-]
-
-[[package]]
-name = "xai-acp-lib"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "async-trait",
- "derive_more 2.1.1",
- "futures",
- "serde",
- "serde_json",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "xai-agent-lifecycle"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "xai-chat-state"
-version = "0.1.0"
-dependencies = [
- "indexmap",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "tokio",
- "tokio-util",
- "tracing",
- "xai-compaction-transcript",
- "xai-grok-compaction",
- "xai-grok-sampling-types",
- "xai-token-estimation",
-]
-
-[[package]]
-name = "xai-circuit-breaker"
-version = "0.1.0"
-dependencies = [
- "log",
- "tonic",
-]
-
-[[package]]
-name = "xai-codebase-graph"
-version = "0.1.0"
-dependencies = [
- "ahash",
- "clap",
- "crossbeam",
- "dashmap",
- "dunce",
- "git2",
- "hashbrown 0.15.5",
- "ignore",
- "libc",
- "mimalloc",
- "nohash-hasher",
- "num_cpus",
- "once_cell",
- "petgraph 0.6.5",
- "rayon",
- "rustc-hash 2.1.1",
- "serde",
- "serde_json",
- "smallvec",
- "strum 0.27.2",
- "tempfile",
- "tokio",
- "tracing",
- "tree-sitter",
- "tree-sitter-go",
- "tree-sitter-javascript",
- "tree-sitter-python",
- "tree-sitter-rust",
- "tree-sitter-typescript",
- "xai-grok-paths",
-]
-
-[[package]]
-name = "xai-compaction-transcript"
-version = "0.1.0"
-dependencies = [
- "regex",
- "serde_json",
- "strum 0.27.2",
- "xai-grok-sampling-types",
-]
-
-[[package]]
-name = "xai-computer-hub-core"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "chrono",
- "dashmap",
- "futures",
- "schemars 1.0.4",
- "serde",
- "serde_json",
- "tokio",
- "tracing",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-computer-hub-mcp-adapter"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "futures",
- "prometheus",
- "serde",
- "serde_json",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
- "xai-computer-hub-sdk",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-computer-hub-sdk"
-version = "0.1.0"
-dependencies = [
- "arc-swap",
- "async-trait",
- "axum",
- "base64 0.22.1",
- "chrono",
- "dashmap",
- "fastrace",
- "fastrace-opentelemetry",
- "futures",
- "http 1.4.0",
- "indexmap",
- "opentelemetry",
- "opentelemetry-proto",
- "opentelemetry_sdk",
- "parking_lot",
- "prometheus",
- "prometheus-parse",
- "prost",
- "reqwest 0.12.24",
- "schemars 1.0.4",
- "serde",
- "serde_json",
- "thiserror 2.0.18",
- "tokio",
- "tokio-tungstenite",
- "tokio-util",
- "tracing",
- "tracing-subscriber",
- "url",
- "uuid",
- "xai-computer-hub-core",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
- "xai-tracing",
-]
-
-[[package]]
-name = "xai-crash-handler"
-version = "0.1.0"
-dependencies = [
- "backtrace",
- "libc",
- "tempfile",
- "tokio",
- "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "xai-dirs"
-version = "0.1.0"
-dependencies = [
- "dunce",
- "pretty_assertions",
- "tempfile",
- "tracing",
-]
-
-[[package]]
-name = "xai-fast-worktree"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "bytes",
- "clap",
- "crossbeam",
- "dashmap",
- "dunce",
- "gix",
- "gix-status",
- "globset",
- "ignore",
- "libc",
- "nix 0.30.1",
- "num_cpus",
- "rapidhash",
- "reflink-copy",
- "rusqlite",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "strum 0.27.2",
- "tempfile",
- "tokio-util",
- "tracing",
- "tracing-subscriber",
- "url",
- "uuid",
- "xai-dirs",
- "xai-gix-status",
- "xai-sqlite-journal",
- "xai-test-utils",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-file-utils"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-compression",
- "aws-config",
- "aws-sdk-s3",
- "aws-smithy-http-client",
- "axum",
- "axum-server",
- "base64 0.22.1",
- "chrono",
- "dirs 5.0.1",
- "dunce",
- "filetime",
- "futures",
- "gcloud-storage",
- "indexmap",
- "prod-mc-cli-chat-proxy-types",
- "rcgen",
- "reflink-copy",
- "reqwest 0.12.24",
- "reqwest-middleware 0.4.2",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "tempfile",
- "tokio",
- "tokio-stream",
- "tokio-util",
- "tracing",
- "tracing-subscriber",
- "url",
- "xai-circuit-breaker",
- "xai-dirs",
- "xai-grok-auth",
- "xai-grok-extra-ca",
- "xai-grok-otel",
- "xai-grok-version",
- "xai-test-utils",
- "zstd",
-]
-
-[[package]]
-name = "xai-fsnotify"
-version = "0.1.0"
-dependencies = [
- "criterion",
- "dunce",
- "git2",
- "globset",
- "ignore",
- "notify",
- "notify-debouncer-full",
- "serde",
- "serial_test",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "tracing",
- "xai-tracing-macros",
-]
-
-[[package]]
-name = "xai-fuzzy-file-search"
-version = "0.1.0"
-dependencies = [
- "ignore",
- "libc",
- "nucleo",
- "serde",
- "tempfile",
- "tracing",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-gix-status"
-version = "0.1.0"
-dependencies = [
- "gix",
- "libc",
- "tempfile",
- "xai-test-utils",
-]
-
-[[package]]
-name = "xai-grok-active-sessions"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "chrono",
- "libc",
- "serde",
- "serde_json",
- "tempfile",
- "tracing",
- "windows 0.61.3",
- "xai-grok-config",
-]
-
-[[package]]
-name = "xai-grok-agent"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "dunce",
- "fs2",
- "git2",
- "ignore",
- "minijinja",
- "regex",
- "serde",
- "serde_json",
- "serde_yaml",
- "serial_test",
- "sha2 0.10.9",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
- "xai-dirs",
- "xai-grok-config",
- "xai-grok-hooks",
- "xai-grok-permission-rules",
- "xai-grok-sampling-types",
- "xai-grok-telemetry",
- "xai-grok-tools",
- "xai-token-estimation",
- "xai-tool-types",
- "xai-tty-utils",
- "zeroize",
-]
-
-[[package]]
-name = "xai-grok-announcements"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "serde",
- "serde_json",
- "tokio",
- "tracing",
- "ts-rs",
- "xai-grok-config",
- "xai-grok-tools",
-]
-
-[[package]]
-name = "xai-grok-auth"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "http 1.4.0",
- "mockito",
- "reqwest 0.12.24",
- "reqwest-middleware 0.4.2",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "xai-grok-bundle"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "flate2",
- "prod-mc-cli-chat-proxy-types",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "tar",
- "tempfile",
- "xai-grok-config",
-]
-
-[[package]]
-name = "xai-grok-cloud-config"
-version = "0.1.0"
-dependencies = [
- "axum",
- "blake3",
- "chrono",
- "fs2",
- "futures",
- "globset",
- "hmac",
- "indexmap",
- "prod-mc-cli-chat-proxy-types",
- "reqwest 0.12.24",
- "serde",
- "serde_json",
- "serial_test",
- "sha2 0.10.9",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "toml",
- "tracing",
- "xai-dirs",
- "xai-grok-config",
- "xai-grok-env",
- "xai-grok-extra-ca",
- "xai-grok-http",
- "xai-grok-login",
- "xai-grok-telemetry",
- "xai-grok-version",
-]
-
-[[package]]
-name = "xai-grok-compaction"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-trait",
- "serde",
- "serde_json",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "xai-grok-config"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "base64 0.22.1",
- "blake3",
- "chrono",
- "core-foundation",
- "dunce",
- "fs2",
- "indexmap",
- "prod-mc-cli-chat-proxy-types",
- "ring",
- "semver",
- "serde",
- "serde_json",
- "shellexpand",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "toml",
- "tracing",
- "ts-rs",
- "urlencoding",
- "which",
- "xai-dirs",
- "xai-grok-env",
- "xai-grok-version",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-config-types"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "strum 0.27.2",
- "toml",
- "tracing",
- "xai-grok-config",
- "xai-grok-sandbox",
-]
-
-[[package]]
-name = "xai-grok-dashboard-store"
-version = "0.1.0"
-dependencies = [
- "pretty_assertions",
- "rusqlite",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "tracing",
- "xai-grok-config",
- "xai-sqlite-journal",
-]
-
-[[package]]
-name = "xai-grok-diag-server"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "axum",
- "reqwest 0.12.24",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "tracing",
- "xai-grok-version",
-]
-
-[[package]]
-name = "xai-grok-egress-proxy"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "base64 0.22.1",
- "httparse",
- "rand 0.9.5",
- "subtle",
- "thiserror 2.0.18",
- "tokio",
- "xai-grok-sandbox",
-]
-
-[[package]]
-name = "xai-grok-env"
-version = "0.1.0"
-dependencies = [
- "tracing",
- "url",
-]
-
-[[package]]
-name = "xai-grok-external-agent-migration"
-version = "0.1.0"
-dependencies = [
- "dunce",
- "git2",
- "serde_json",
- "tempfile",
- "thiserror 2.0.18",
- "toml",
- "tracing",
- "xai-dirs",
- "xai-grok-config",
-]
-
-[[package]]
-name = "xai-grok-extra-ca"
-version = "0.1.0"
-dependencies = [
- "base64 0.22.1",
- "rcgen",
- "reqwest 0.12.24",
- "rustls",
- "rustls-native-certs",
- "tempfile",
- "tracing",
- "webpki-roots 0.26.11",
-]
-
-[[package]]
-name = "xai-grok-feedback"
-version = "0.1.0"
-dependencies = [
- "flate2",
- "fs2",
- "libc",
- "same-file",
- "schemars 1.0.4",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "tar",
- "tempfile",
- "thiserror 2.0.18",
- "uuid",
- "walkdir",
-]
-
-[[package]]
-name = "xai-grok-file-lock"
-version = "0.1.0"
-dependencies = [
- "fs2",
- "libc",
- "tempfile",
- "thiserror 2.0.18",
- "tracing",
-]
-
-[[package]]
-name = "xai-grok-foreign-sessions"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "dirs 6.0.0",
- "dunce",
- "filetime",
- "git2",
- "libc",
- "md5",
- "rusqlite",
- "serde_json",
- "tempfile",
- "uuid",
- "xai-dirs",
- "xai-sqlite-journal",
- "zstd",
-]
-
-[[package]]
-name = "xai-grok-gboom"
-version = "0.1.0"
-dependencies = [
- "crossterm",
- "image",
-]
-
-[[package]]
-name = "xai-grok-hooks"
-version = "0.1.0"
-dependencies = [
- "fastrand",
- "regex",
- "reqwest 0.12.24",
- "serde",
- "serde_json",
- "shellexpand",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "toml",
- "tracing",
- "tracing-subscriber",
- "url",
- "xai-grok-config",
- "xai-grok-extra-ca",
- "xai-grok-sandbox",
- "xai-grok-tools",
-]
-
-[[package]]
-name = "xai-grok-http"
-version = "0.1.0"
-dependencies = [
- "rcgen",
- "reqwest 0.12.24",
- "reqwest-middleware 0.4.2",
- "rustls",
- "serde_json",
- "tokio",
- "tracing",
- "xai-grok-auth",
- "xai-grok-extra-ca",
- "xai-grok-sampler",
- "xai-grok-telemetry",
- "xai-grok-version",
- "xai-grok-workspace",
-]
-
-[[package]]
-name = "xai-grok-image"
-version = "0.1.0"
-dependencies = [
- "crc32fast",
- "image",
- "thiserror 2.0.18",
- "xai-test-utils",
-]
-
-[[package]]
-name = "xai-grok-lifecycle"
-version = "0.1.0"
-dependencies = [
- "axum",
- "nix 0.30.1",
- "parking_lot",
- "pretty_assertions",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "tower",
- "tracing",
- "xai-grok-diag-server",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-login"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "arc-swap",
- "async-trait",
- "axum",
- "backon",
- "base64 0.22.1",
- "chrono",
- "filetime",
- "fs2",
- "indexmap",
- "jsonwebtoken",
- "libc",
- "loom",
- "obfstr",
- "parking_lot",
- "pretty_assertions",
- "prost",
- "rand 0.9.5",
- "reqwest 0.12.24",
- "rsa",
- "serde",
- "serde_json",
- "serial_test",
- "sha2 0.10.9",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "toml",
- "tonic",
- "tonic-prost",
- "tower-http",
- "tracing",
- "tracing-subscriber",
- "url",
- "urlencoding",
- "uuid",
- "webbrowser",
- "wiremock",
- "xai-file-utils",
- "xai-grok-auth",
- "xai-grok-config",
- "xai-grok-config-types",
- "xai-grok-env",
- "xai-grok-extra-ca",
- "xai-grok-http",
- "xai-grok-memory",
- "xai-grok-sampler",
- "xai-grok-shell-base",
- "xai-grok-telemetry",
- "xai-grok-test-support",
- "xai-grok-tools",
- "xai-grok-version",
- "xai-system-power",
-]
-
-[[package]]
-name = "xai-grok-markdown"
-version = "0.1.0"
-dependencies = [
- "anstyle",
- "anstyle-lossy",
- "anstyle-syntect",
- "criterion",
- "crossterm",
- "html-escape",
- "linkify",
- "pretty_assertions",
- "pulldown-cmark",
- "ratatui",
- "supports-color",
- "syntect",
- "textwrap",
- "two-face",
- "unicode-segmentation",
- "unicode-width 0.2.0",
- "url",
- "xai-grok-markdown-core",
- "xai-ratatui-textarea",
-]
-
-[[package]]
-name = "xai-grok-markdown-core"
-version = "0.1.0"
-dependencies = [
- "pulldown-cmark",
- "strum 0.27.2",
-]
-
-[[package]]
-name = "xai-grok-mcp"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "async-trait",
- "axum",
- "futures",
- "http 1.4.0",
- "libc",
- "nix 0.30.1",
- "oauth2",
- "parking_lot",
- "reqwest 0.13.4",
- "rmcp",
- "serde",
- "serde_json",
- "serial_test",
- "sse-stream",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "tracing",
- "url",
- "webbrowser",
- "which",
- "xai-computer-hub-sdk",
- "xai-grok-config",
- "xai-grok-extra-ca",
- "xai-grok-sandbox",
- "xai-grok-session-events",
- "xai-grok-telemetry",
- "xai-grok-tools",
- "xai-grok-version",
- "xai-grok-workspace-types",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-grok-memory"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "arc-swap",
- "async-trait",
- "blake3",
- "chrono",
- "dunce",
- "filetime",
- "flate2",
- "git2",
- "libc",
- "nix 0.30.1",
- "notify",
- "parking_lot",
- "regex",
- "reqwest 0.12.24",
- "reqwest-middleware 0.4.2",
- "rusqlite",
- "serde",
- "serde_json",
- "sqlite-vec",
- "tar",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
- "windows 0.61.3",
- "xai-grok-auth",
- "xai-grok-config-types",
- "xai-grok-http",
- "xai-grok-tools",
- "xai-grok-version",
- "xai-sqlite-journal",
- "xai-token-estimation",
-]
-
-[[package]]
-name = "xai-grok-mermaid"
-version = "0.1.0"
-dependencies = [
- "fontdb",
- "image",
- "libc",
- "mermaid-to-svg",
- "resvg",
- "tempfile",
- "thiserror 2.0.18",
- "tiny-skia",
- "tracing",
- "wait-timeout",
- "which",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-models"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "xai-grok-otel"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "bytes",
- "http 1.4.0",
- "opentelemetry",
- "opentelemetry-http",
- "opentelemetry-otlp",
- "opentelemetry_sdk",
- "parking_lot",
- "rcgen",
- "reqwest 0.12.24",
- "rustls",
- "serde_json",
- "tempfile",
- "tokio",
- "tracing",
- "tracing-opentelemetry",
- "tracing-subscriber",
- "url",
- "xai-grok-auth",
- "xai-grok-env",
- "xai-grok-extra-ca",
- "xai-grok-secrets",
-]
-
-[[package]]
-name = "xai-grok-pager"
-version = "1.0.45"
-dependencies = [
- "agent-client-protocol",
- "ansi-to-tui",
- "anyhow",
- "backon",
- "base64 0.22.1",
- "blake3",
- "chrono",
- "clap",
- "clap_complete",
- "core-foundation",
- "criterion",
- "crossterm",
- "dunce",
- "flate2",
- "gethostname",
- "git2",
- "image",
- "indexmap",
- "insta",
- "libc",
- "nix 0.30.1",
- "nucleo",
- "obfstr",
- "parking_lot",
- "portable-pty",
- "pretty_assertions",
- "prost",
- "rand 0.9.5",
- "ratatui",
- "regex",
- "rstest",
- "serde",
- "serde_json",
- "serial_test",
- "shellexpand",
- "shlex",
- "signal-hook 0.3.18",
- "similar",
- "strip-ansi-escapes",
- "strum 0.27.2",
- "syntect",
- "tar",
- "tempfile",
- "textwrap",
- "thiserror 2.0.18",
- "tokio",
- "tokio-stream",
- "tokio-util",
- "toml",
- "toml_edit 0.22.27",
- "tracing",
- "tracing-subscriber",
- "unicode-segmentation",
- "unicode-width 0.2.0",
- "url",
- "urlencoding",
- "uuid",
- "walkdir",
- "windows-sys 0.59.0",
- "wiremock",
- "xai-acp-lib",
- "xai-chat-state",
- "xai-crash-handler",
- "xai-dirs",
- "xai-fast-worktree",
- "xai-file-utils",
- "xai-grok-active-sessions",
- "xai-grok-agent",
- "xai-grok-announcements",
- "xai-grok-cloud-config",
- "xai-grok-config",
- "xai-grok-dashboard-store",
- "xai-grok-external-agent-migration",
- "xai-grok-extra-ca",
- "xai-grok-feedback",
- "xai-grok-foreign-sessions",
- "xai-grok-gboom",
- "xai-grok-hooks",
- "xai-grok-login",
- "xai-grok-markdown",
- "xai-grok-mermaid",
- "xai-grok-otel",
- "xai-grok-pager-diff",
- "xai-grok-pager-render",
- "xai-grok-plugin-marketplace",
- "xai-grok-sampling-types",
- "xai-grok-sandbox",
- "xai-grok-shell",
- "xai-grok-status-line",
- "xai-grok-telemetry",
- "xai-grok-test-support",
- "xai-grok-tools",
- "xai-grok-update",
- "xai-grok-version",
- "xai-grok-voice",
- "xai-grok-workspace",
- "xai-hooks-plugins-types",
- "xai-interjection-core",
- "xai-prompt-queue",
- "xai-ratatui-inline",
- "xai-ratatui-textarea",
- "xai-token-estimation",
- "xai-tool-types",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-pager-bin"
-version = "1.0.45"
-dependencies = [
- "anyhow",
- "clap",
- "cryptify",
- "dunce",
- "libc",
- "obfstr",
- "semver",
- "serde",
- "serde_json",
- "serial_test",
- "sha2 0.10.9",
- "tar",
- "tempfile",
- "tikv-jemalloc-ctl",
- "tikv-jemalloc-sys",
- "tikv-jemallocator",
- "tokio",
- "tokio-util",
- "toml",
- "tracing",
- "tracing-subscriber",
- "xai-acp-lib",
- "xai-crash-handler",
- "xai-dirs",
- "xai-grok-cloud-config",
- "xai-grok-config",
- "xai-grok-extra-ca",
- "xai-grok-login",
- "xai-grok-pager",
- "xai-grok-pager-minimal",
- "xai-grok-sandbox",
- "xai-grok-shell",
- "xai-grok-telemetry",
- "xai-grok-update",
- "xai-grok-version",
- "xai-grok-workspace",
- "xai-tty-utils",
- "zstd",
-]
-
-[[package]]
-name = "xai-grok-pager-diff"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "serde_json",
- "similar",
- "tracing",
- "xai-grok-tools",
-]
-
-[[package]]
-name = "xai-grok-pager-minimal"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "crossterm",
- "ratatui",
- "serial_test",
- "similar",
- "tracing",
- "unicode-width 0.2.0",
- "uuid",
- "xai-grok-pager",
- "xai-grok-pager-diff",
- "xai-grok-shell",
- "xai-grok-version",
- "xai-ratatui-inline",
- "xai-token-estimation",
-]
-
-[[package]]
-name = "xai-grok-pager-pty-harness"
-version = "0.1.0"
-dependencies = [
- "alacritty_terminal",
- "anyhow",
- "base64 0.22.1",
- "clap",
- "dunce",
- "git2",
- "image",
- "libc",
- "portable-pty",
- "ptyctl",
- "reqwest 0.12.24",
- "serde",
- "serde_json",
- "serde_yaml",
- "serial_test",
- "strum 0.27.2",
- "tempfile",
- "tokio",
- "toml",
- "tracing",
- "tracing-subscriber",
- "unicode-width 0.2.0",
- "xai-grok-test-support",
- "xai-interjection-core",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-pager-render"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "anstyle",
- "anyhow",
- "base64 0.22.1",
- "blake3",
- "chrono",
- "crossterm",
- "dark-light",
- "documented",
- "dunce",
- "image",
- "libc",
- "linkify",
- "notify",
- "pretty_assertions",
- "ratatui",
- "ratatui-core",
- "regex",
- "serde",
- "serde_json",
- "serial_test",
- "shellexpand",
- "strum 0.27.2",
- "supports-color",
- "syntect",
- "tempfile",
- "textwrap",
- "tokio",
- "toml",
- "toml_edit 0.22.27",
- "tracing",
- "tui-scrollbar",
- "unicode-bidi",
- "unicode-bidi-mirroring",
- "unicode-segmentation",
- "unicode-width 0.2.0",
- "url",
- "uuid",
- "vte 0.15.0",
- "windows-sys 0.59.0",
- "xai-dirs",
- "xai-grok-config",
- "xai-grok-env",
- "xai-grok-gboom",
- "xai-grok-markdown",
- "xai-grok-paths",
- "xai-grok-shared",
- "xai-grok-telemetry",
- "xai-grok-tools",
- "xai-grok-workspace",
- "xai-ratatui-inline",
- "xai-ratatui-textarea",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-paths"
-version = "0.1.0"
-dependencies = [
- "camino",
- "serde",
- "serde_json",
- "thiserror 2.0.18",
-]
-
-[[package]]
-name = "xai-grok-permission-rules"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "dunce",
- "fs2",
- "git2",
- "glob",
- "rusqlite",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "toml",
- "tracing",
- "tracing-subscriber",
- "tree-sitter",
- "tree-sitter-bash",
- "url",
- "xai-dirs",
- "xai-grok-config",
- "xai-grok-paths",
- "xai-grok-version",
- "xai-sqlite-journal",
-]
-
-[[package]]
-name = "xai-grok-plugin-marketplace"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "dunce",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.18",
- "toml",
- "tracing",
- "xai-dirs",
- "xai-grok-agent",
- "xai-grok-config",
- "xai-hooks-plugins-types",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-sampler"
-version = "0.1.0"
-dependencies = [
- "async-openai",
- "async-stream",
- "axum",
- "axum-server",
- "base64 0.22.1",
- "blake3",
- "chrono",
- "eventsource-stream",
- "futures-util",
- "indexmap",
- "rcgen",
- "reqwest 0.12.24",
- "rustls",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "tokio",
- "tokio-util",
- "tracing",
- "tracing-subscriber",
- "uuid",
- "xai-grok-auth",
- "xai-grok-extra-ca",
- "xai-grok-sampling-types",
- "xai-grok-test-support",
- "xai-grok-version",
- "zstd",
-]
-
-[[package]]
-name = "xai-grok-sampling-types"
-version = "0.1.0"
-dependencies = [
- "assert_matches",
- "async-openai",
- "chrono",
- "indexmap",
- "reqwest 0.12.24",
- "schemars 1.0.4",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "thiserror 2.0.18",
- "tracing",
- "xai-circuit-breaker",
- "xai-grok-compaction",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-grok-sandbox"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "chrono",
- "dunce",
- "fs2",
- "globset",
- "ignore",
- "libc",
- "nono",
- "regex",
- "serde",
- "serde_json",
- "serial_test",
- "sha2 0.10.9",
- "strum 0.27.2",
- "thiserror 2.0.18",
- "tokio",
- "toml",
- "tracing",
- "unicode-normalization",
- "url",
- "xai-dirs",
- "xai-grok-config",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-secrets"
-version = "0.1.0"
-dependencies = [
- "regex",
- "serde_json",
- "url",
-]
-
-[[package]]
-name = "xai-grok-session-events"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "tempfile",
- "tracing",
-]
-
-[[package]]
-name = "xai-grok-session-search"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "blake3",
- "chrono",
- "fs2",
- "parking_lot",
- "rusqlite",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "tracing",
- "uuid",
- "xai-grok-config",
- "xai-grok-telemetry",
- "xai-sqlite-journal",
-]
-
-[[package]]
-name = "xai-grok-shared"
-version = "0.0.0"
-dependencies = [
- "agent-client-protocol",
- "anyhow",
- "arboard",
- "base64 0.22.1",
- "dunce",
- "image",
- "libc",
- "objc2 0.6.3",
- "parking_lot",
- "prod-mc-cli-chat-proxy-types",
- "regex",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.18",
- "tracing",
- "urlencoding",
- "uuid",
- "wl-clipboard-rs",
- "xai-dirs",
- "xai-grok-config",
- "xai-grok-image",
- "xai-grok-models",
- "xai-grok-status-line",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-shell"
-version = "1.0.45"
-dependencies = [
- "agent-client-protocol",
- "anyhow",
- "arc-swap",
- "async-openai",
- "async-trait",
- "axum",
- "backon",
- "base64 0.22.1",
- "blake3",
- "bm25",
- "bytes",
- "chrono",
- "clap",
- "criterion",
- "ctor",
- "dashmap",
- "dhat",
- "dunce",
- "filetime",
- "flate2",
- "fs2",
- "futures",
- "futures-util",
- "gcloud-storage",
- "gethostname",
- "git2",
- "glob",
- "ignore",
- "image",
- "indexmap",
- "infer 0.15.0",
- "jsonschema",
- "libc",
- "moka",
- "nix 0.30.1",
- "notify",
- "notify-debouncer-mini",
- "nucleo",
- "obfstr",
- "parking_lot",
- "pretty_assertions",
- "prod-mc-cli-chat-proxy-types",
- "regex",
- "reqwest 0.12.24",
- "reqwest-middleware 0.4.2",
- "rstest",
- "rustls",
- "semver",
- "serde",
- "serde_ignored",
- "serde_json",
- "serial_test",
- "sha2 0.10.9",
- "siphasher",
- "strum 0.27.2",
- "tar",
- "tdigests",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-retry",
- "tokio-rustls",
- "tokio-tungstenite",
- "tokio-util",
- "toml",
- "toml_edit 0.22.27",
- "tracing",
- "tracing-subscriber",
- "url",
- "urlencoding",
- "uuid",
- "walkdir",
- "webbrowser",
- "windows 0.61.3",
- "xai-acp-lib",
- "xai-agent-lifecycle",
- "xai-chat-state",
- "xai-codebase-graph",
- "xai-compaction-transcript",
- "xai-computer-hub-sdk",
- "xai-dirs",
- "xai-fast-worktree",
- "xai-file-utils",
- "xai-fsnotify",
- "xai-grok-agent",
- "xai-grok-announcements",
- "xai-grok-auth",
- "xai-grok-bundle",
- "xai-grok-cloud-config",
- "xai-grok-compaction",
- "xai-grok-config",
- "xai-grok-config-types",
- "xai-grok-env",
- "xai-grok-external-agent-migration",
- "xai-grok-extra-ca",
- "xai-grok-feedback",
- "xai-grok-file-lock",
- "xai-grok-foreign-sessions",
- "xai-grok-hooks",
- "xai-grok-http",
- "xai-grok-login",
- "xai-grok-mcp",
- "xai-grok-memory",
- "xai-grok-models",
- "xai-grok-otel",
- "xai-grok-paths",
- "xai-grok-plugin-marketplace",
- "xai-grok-sampler",
- "xai-grok-sampling-types",
- "xai-grok-sandbox",
- "xai-grok-session-events",
- "xai-grok-session-search",
- "xai-grok-shared",
- "xai-grok-shell-base",
- "xai-grok-shell-session-support",
- "xai-grok-shell-terminal",
- "xai-grok-status-line",
- "xai-grok-subagent-resolution",
- "xai-grok-telemetry",
- "xai-grok-test-support",
- "xai-grok-tools",
- "xai-grok-version",
- "xai-grok-workspace",
- "xai-hooks-plugins-types",
- "xai-hunk-tracker",
- "xai-interjection-core",
- "xai-message-delivery-core",
- "xai-prompt-queue",
- "xai-test-utils",
- "xai-token-estimation",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
- "xai-tracing-macros",
- "xai-tty-utils",
- "xai-workflow",
- "zstd",
-]
-
-[[package]]
-name = "xai-grok-shell-base"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "chrono",
- "libc",
- "nix 0.30.1",
- "pprof",
- "reqwest 0.12.24",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
- "url",
- "windows 0.61.3",
- "xai-dirs",
- "xai-grok-config",
- "xai-grok-env",
- "xai-grok-extra-ca",
- "xai-grok-shared",
- "xai-grok-version",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-shell-session-support"
-version = "0.1.0"
-dependencies = [
- "axum",
- "reqwest 0.12.24",
- "serde",
- "serde_json",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
- "xai-file-utils",
- "xai-grok-http",
- "xai-grok-version",
-]
-
-[[package]]
-name = "xai-grok-shell-terminal"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "async-trait",
- "base64 0.22.1",
- "chrono",
- "futures",
- "libc",
- "portable-pty",
- "process-wrap",
- "serde",
- "serde_json",
- "shlex",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
- "uuid",
- "windows 0.61.3",
- "xai-acp-lib",
- "xai-grok-config",
- "xai-grok-paths",
- "xai-grok-sandbox",
- "xai-grok-tools",
- "xai-grok-workspace",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-status-line"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "strum 0.27.2",
- "toml",
-]
-
-[[package]]
-name = "xai-grok-subagent-resolution"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "toml",
- "tracing",
- "xai-grok-agent",
- "xai-grok-sampling-types",
- "xai-grok-tools",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-grok-telemetry"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-trait",
- "axum",
- "axum-server",
- "base64 0.22.1",
- "chrono",
- "ctor",
- "filetime",
- "git2",
- "http 1.4.0",
- "mid",
- "obfstr",
- "opentelemetry",
- "opentelemetry-otlp",
- "opentelemetry-proto",
- "opentelemetry_sdk",
- "parking_lot",
- "prost",
- "rcgen",
- "reqwest 0.12.24",
- "rustls",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "tempfile",
- "tokio",
- "tokio-stream",
- "tonic",
- "tracing",
- "tracing-appender",
- "tracing-chrome",
- "tracing-subscriber",
- "uuid",
- "webpki-roots 0.26.11",
- "whoami",
- "xai-dirs",
- "xai-file-utils",
- "xai-grok-auth",
- "xai-grok-config",
- "xai-grok-env",
- "xai-grok-extra-ca",
- "xai-grok-otel",
- "xai-grok-sampler",
- "xai-grok-secrets",
- "xai-grok-session-events",
- "xai-grok-test-support",
- "xai-grok-version",
- "xai-token-estimation",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-test-support"
-version = "0.1.0"
-dependencies = [
- "agent-client-protocol",
- "anyhow",
- "async-trait",
- "axum",
- "axum-server",
- "base64 0.22.1",
- "clap",
- "futures-util",
- "libc",
- "opentelemetry-proto",
- "portable-pty",
- "pretty_assertions",
- "prost",
- "rcgen",
- "regex",
- "reqwest 0.12.24",
- "ring",
- "rustls",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-tungstenite",
- "tokio-util",
- "tracing",
- "tracing-subscriber",
- "url",
- "xai-acp-lib",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-tools"
-version = "0.1.220-alpha.4"
-dependencies = [
- "anyhow",
- "arc-swap",
- "async-lsp",
- "async-openai",
- "async-stream",
- "async-trait",
- "base64 0.22.1",
- "bstr",
- "chrono",
- "command-fds",
- "derive_more 2.1.1",
- "dhat",
- "dunce",
- "educe",
- "encoding_rs",
- "flate2",
- "fs2",
- "futures",
- "futures-util",
- "globset",
- "htmd",
- "ignore",
- "image",
- "indexmap",
- "infer 0.19.0",
- "kamadak-exif",
- "libc",
- "minijinja",
- "nix 0.30.1",
- "parking_lot",
- "pdf_oxide",
- "pretty_assertions",
- "pulldown-cmark",
- "quick-xml 0.41.0",
- "regex",
- "reqwest 0.12.24",
- "schemars 1.0.4",
- "scraper",
- "serde",
- "serde_json",
- "serde_path_to_error",
- "serde_yaml",
- "sha2 0.10.9",
- "shellexpand",
- "similar",
- "strip-ansi-escapes",
- "strum 0.26.3",
- "tar",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "tonic",
- "tracing",
- "tracing-subscriber",
- "unicode-normalization",
- "url",
- "uuid",
- "which",
- "wildmatch",
- "windows 0.61.3",
- "wiremock",
- "xai-computer-hub-core",
- "xai-computer-hub-sdk",
- "xai-dirs",
- "xai-file-utils",
- "xai-grok-auth",
- "xai-grok-config",
- "xai-grok-env",
- "xai-grok-extra-ca",
- "xai-grok-feedback",
- "xai-grok-image",
- "xai-grok-otel",
- "xai-grok-permission-rules",
- "xai-grok-sandbox",
- "xai-grok-test-support",
- "xai-grok-tools-api",
- "xai-grok-version",
- "xai-grok-workspace-types",
- "xai-interjection-core",
- "xai-message-delivery-core",
- "xai-test-utils",
- "xai-token-estimation",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
- "xai-tty-utils",
- "zip 3.0.0",
- "zstd",
-]
-
-[[package]]
-name = "xai-grok-tools-api"
-version = "0.1.220-alpha.4"
-dependencies = [
- "prost",
- "serde",
- "serde_json",
- "tonic",
- "tonic-prost",
- "xai-proto-build",
- "xai-tool-protocol",
-]
-
-[[package]]
-name = "xai-grok-update"
-version = "0.1.220-alpha.4"
-dependencies = [
- "anyhow",
- "dunce",
- "flate2",
- "futures",
- "indicatif",
- "libc",
- "reqwest 0.12.24",
- "semver",
- "serde",
- "serde_json",
- "serial_test",
- "sha2 0.10.9",
- "tempfile",
- "thiserror 2.0.18",
- "time",
- "tokio",
- "tracing",
- "url",
- "wiremock",
- "xai-dirs",
- "xai-grok-cloud-config",
- "xai-grok-extra-ca",
- "xai-grok-login",
- "xai-grok-shell",
- "xai-grok-telemetry",
- "xai-grok-tools",
- "xai-grok-version",
- "xai-tty-utils",
- "zip 3.0.0",
- "zstd",
-]
-
-[[package]]
-name = "xai-grok-version"
-version = "1.0.45"
-dependencies = [
- "semver",
-]
-
-[[package]]
-name = "xai-grok-voice"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "cpal",
- "futures-util",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "thiserror 2.0.18",
- "tokio",
- "tokio-tungstenite",
- "tokio-util",
- "toml",
- "tracing",
- "tracing-subscriber",
- "url",
- "xai-dirs",
- "xai-grok-extra-ca",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-workspace"
-version = "0.1.220-alpha.4"
-dependencies = [
- "agent-client-protocol",
- "anyhow",
- "arc-swap",
- "async-stream",
- "async-trait",
- "axum",
- "base64 0.22.1",
- "bstr",
- "chrono",
- "clap",
- "dashmap",
- "dunce",
- "fastrace",
- "flate2",
- "fs2",
- "futures",
- "git2",
- "hashbrown 0.16.1",
- "humantime-serde",
- "ignore",
- "indexmap",
- "infer 0.19.0",
- "libc",
- "nix 0.30.1",
- "nohash-hasher",
- "parking_lot",
- "prometheus",
- "rand 0.9.5",
- "regex",
- "reqwest 0.12.24",
- "rustc-hash 2.1.1",
- "serde",
- "serde_json",
- "sha1",
- "sha2 0.10.9",
- "smallvec",
- "strum 0.27.2",
- "tar",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-tungstenite",
- "tokio-util",
- "toml",
- "toml_edit 0.22.27",
- "tonic",
- "tracing",
- "tracing-subscriber",
- "tree-sitter",
- "url",
- "urlencoding",
- "uuid",
- "wait-timeout",
- "xai-acp-lib",
- "xai-codebase-graph",
- "xai-computer-hub-mcp-adapter",
- "xai-computer-hub-sdk",
- "xai-dirs",
- "xai-fast-worktree",
- "xai-file-utils",
- "xai-fsnotify",
- "xai-fuzzy-file-search",
- "xai-grok-agent",
- "xai-grok-auth",
- "xai-grok-config",
- "xai-grok-config-types",
- "xai-grok-diag-server",
- "xai-grok-egress-proxy",
- "xai-grok-env",
- "xai-grok-extra-ca",
- "xai-grok-hooks",
- "xai-grok-lifecycle",
- "xai-grok-mcp",
- "xai-grok-paths",
- "xai-grok-permission-rules",
- "xai-grok-sandbox",
- "xai-grok-session-events",
- "xai-grok-telemetry",
- "xai-grok-tools",
- "xai-grok-tools-api",
- "xai-grok-version",
- "xai-grok-workspace-client",
- "xai-grok-workspace-daemon",
- "xai-grok-workspace-types",
- "xai-hunk-tracker",
- "xai-test-utils",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
- "xai-tracing",
- "xai-tty-utils",
- "zip 3.0.0",
- "zstd",
-]
-
-[[package]]
-name = "xai-grok-workspace-client"
-version = "0.1.0"
-dependencies = [
- "schemars 1.0.4",
- "semver",
- "serde",
- "serde_json",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
- "xai-computer-hub-sdk",
- "xai-grok-workspace-types",
- "xai-tool-protocol",
- "xai-tool-runtime",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-grok-workspace-daemon"
-version = "0.1.0"
-dependencies = [
- "clap",
- "fs2",
- "libc",
- "prometheus",
- "reqwest 0.12.24",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "tempfile",
- "tokio",
- "tracing",
- "windows 0.61.3",
- "xai-computer-hub-sdk",
- "xai-tty-utils",
-]
-
-[[package]]
-name = "xai-grok-workspace-types"
-version = "0.1.0"
-dependencies = [
- "base64 0.22.1",
- "chrono",
- "serde",
- "serde_json",
- "strum 0.27.2",
- "thiserror 2.0.18",
-]
-
-[[package]]
-name = "xai-hooks-plugins-types"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "xai-hunk-tracker"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "dunce",
- "gix",
- "rustc-hash 2.1.1",
- "serde",
- "serde_json",
- "similar",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "tracing",
- "uuid",
- "xai-gix-status",
- "xai-test-utils",
-]
-
-[[package]]
-name = "xai-interjection-core"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "xai-message-delivery-core"
-version = "0.1.0"
-
-[[package]]
-name = "xai-mixpanel"
-version = "0.1.0"
-dependencies = [
- "base64 0.22.1",
- "reqwest 0.12.24",
- "serde_json",
- "thiserror 2.0.18",
- "tokio",
- "wiremock",
- "xai-grok-secrets",
-]
-
-[[package]]
-name = "xai-prompt-queue"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "xai-proto-build"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "pbjson-build",
- "prost-build",
- "prost-reflect",
- "tempfile",
- "tonic-prost-build",
-]
-
-[[package]]
-name = "xai-ratatui-inline"
-version = "0.1.0"
-dependencies = [
- "ansi-width",
- "anstyle-parse",
- "anyhow",
- "colored_json",
- "criterion",
- "crossterm",
- "lipsum",
- "ratatui",
- "serde_json",
- "termwiz",
- "unicode-width 0.2.0",
-]
-
-[[package]]
-name = "xai-ratatui-textarea"
-version = "0.1.0"
-dependencies = [
- "arboard",
- "crossterm",
- "fuzzy-matcher",
- "ignore",
- "itertools 0.14.0",
- "pretty_assertions",
- "rand 0.9.5",
- "ratatui",
- "ratatui-core",
- "textwrap",
- "tracing",
- "tui-scrollbar",
- "unicode-segmentation",
- "unicode-width 0.2.0",
-]
-
-[[package]]
-name = "xai-sqlite-journal"
-version = "0.1.0"
-dependencies = [
- "libc",
- "rusqlite",
- "strum 0.27.2",
- "tempfile",
- "tracing",
- "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "xai-system-power"
-version = "0.1.0"
-dependencies = [
- "windows-sys 0.59.0",
- "zbus",
-]
-
-[[package]]
-name = "xai-test-utils"
-version = "0.1.0"
-dependencies = [
- "runfiles",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "xai-token-estimation"
-version = "0.1.0"
-
-[[package]]
-name = "xai-tool-protocol"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "thiserror 2.0.18",
- "typeshare",
- "uuid",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-tool-runtime"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-trait",
- "futures",
- "schemars 1.0.4",
- "serde",
- "serde_json",
- "tokio",
- "tokio-util",
- "xai-grok-tools-api",
- "xai-tool-protocol",
- "xai-tool-types",
-]
-
-[[package]]
-name = "xai-tool-types"
-version = "0.1.0"
-dependencies = [
- "minijinja",
- "schemars 1.0.4",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "xai-tracing"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "bytes",
- "fastrace",
- "fastrace-opentelemetry",
- "fastrace-reqwest",
- "fastrace-tonic",
- "http 1.4.0",
- "http-body-util",
- "log",
- "opentelemetry",
- "opentelemetry-http",
- "opentelemetry-otlp",
- "opentelemetry_sdk",
- "reqwest 0.12.24",
- "reqwest-middleware 0.4.2",
- "tokio",
- "tonic",
- "tower",
- "tower-http",
- "tracing",
- "tracing-opentelemetry",
- "tracing-subscriber",
- "uuid",
- "wiremock",
-]
-
-[[package]]
-name = "xai-tracing-macros"
-version = "0.1.0"
-
-[[package]]
-name = "xai-tty-utils"
-version = "0.1.0"
-dependencies = [
- "libc",
- "nix 0.30.1",
- "tokio",
- "windows 0.61.3",
-]
-
-[[package]]
-name = "xai-workflow"
-version = "0.1.0"
-dependencies = [
- "libc",
- "rhai",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "tracing",
 ]
 
 [[package]]

@@ -6,108 +6,108 @@ async-openai = { git = "https://github.com/our-forks/async-openai.git", rev = "9
 [workspace]
 resolver = "2"
 members = [
-    "crates/build/xai-proto-build",
+    "crates/build/kite-proto-build",
     "crates/codegen/ptyctl",
     "crates/codegen/ptyctl-cli",
-    "crates/codegen/xai-acp-lib",
-    "crates/codegen/xai-agent-lifecycle",
-    "crates/codegen/xai-chat-state",
-    "crates/codegen/xai-codebase-graph",
-    "crates/codegen/xai-compaction-transcript",
-    "crates/codegen/xai-crash-handler",
-    "crates/codegen/xai-dirs",
-    "crates/codegen/xai-fast-worktree",
-    "crates/codegen/xai-file-utils",
-    "crates/codegen/xai-fsnotify",
-    "crates/codegen/xai-fuzzy-file-search",
-    "crates/codegen/xai-gix-status",
-    "crates/codegen/xai-grok-active-sessions",
-    "crates/codegen/xai-grok-agent",
-    "crates/codegen/xai-grok-announcements",
-    "crates/codegen/xai-grok-auth",
-    "crates/codegen/xai-grok-bundle",
-    "crates/codegen/xai-grok-cloud-config",
-    "crates/codegen/xai-grok-config",
-    "crates/codegen/xai-grok-config-types",
-    "crates/codegen/xai-grok-dashboard-store",
-    "crates/codegen/xai-grok-diag-server",
-    "crates/codegen/xai-grok-egress-proxy",
-    "crates/codegen/xai-grok-env",
-    "crates/codegen/xai-grok-external-agent-migration",
-    "crates/codegen/xai-grok-extra-ca",
-    "crates/codegen/xai-grok-feedback",
-    "crates/codegen/xai-grok-file-lock",
-    "crates/codegen/xai-grok-foreign-sessions",
-    "crates/codegen/xai-grok-gboom",
-    "crates/codegen/xai-grok-hooks",
-    "crates/codegen/xai-grok-http",
-    "crates/codegen/xai-grok-image",
-    "crates/codegen/xai-grok-lifecycle",
-    "crates/codegen/xai-grok-login",
-    "crates/codegen/xai-grok-markdown",
-    "crates/codegen/xai-grok-markdown-core",
-    "crates/codegen/xai-grok-mcp",
-    "crates/codegen/xai-grok-memory",
-    "crates/codegen/xai-grok-mermaid",
-    "crates/codegen/xai-grok-models",
-    "crates/codegen/xai-grok-otel",
-    "crates/codegen/xai-grok-pager",
-    "crates/codegen/xai-grok-pager-bin",
-    "crates/codegen/xai-grok-pager-diff",
-    "crates/codegen/xai-grok-pager-minimal",
-    "crates/codegen/xai-grok-pager-pty-harness",
-    "crates/codegen/xai-grok-pager-render",
-    "crates/codegen/xai-grok-paths",
-    "crates/codegen/xai-grok-permission-rules",
-    "crates/codegen/xai-grok-plugin-marketplace",
-    "crates/codegen/xai-grok-sampler",
-    "crates/codegen/xai-grok-sampling-types",
-    "crates/codegen/xai-grok-sandbox",
-    "crates/codegen/xai-grok-secrets",
-    "crates/codegen/xai-grok-session-events",
-    "crates/codegen/xai-grok-session-search",
-    "crates/codegen/xai-grok-shared",
-    "crates/codegen/xai-grok-shell",
-    "crates/codegen/xai-grok-shell-base",
-    "crates/codegen/xai-grok-shell-session-support",
-    "crates/codegen/xai-grok-shell-terminal",
-    "crates/codegen/xai-grok-status-line",
-    "crates/codegen/xai-grok-subagent-resolution",
-    "crates/codegen/xai-grok-telemetry",
-    "crates/codegen/xai-grok-test-support",
-    "crates/codegen/xai-grok-tools",
-    "crates/codegen/xai-grok-tools-api",
-    "crates/codegen/xai-grok-update",
-    "crates/codegen/xai-grok-version",
-    "crates/codegen/xai-grok-voice",
-    "crates/codegen/xai-grok-workspace",
-    "crates/codegen/xai-grok-workspace-client",
-    "crates/codegen/xai-grok-workspace-daemon",
-    "crates/codegen/xai-grok-workspace-types",
-    "crates/codegen/xai-hooks-plugins-types",
-    "crates/codegen/xai-hunk-tracker",
-    "crates/codegen/xai-mixpanel",
-    "crates/codegen/xai-prompt-queue",
-    "crates/codegen/xai-ratatui-inline",
-    "crates/codegen/xai-ratatui-textarea",
-    "crates/codegen/xai-sqlite-journal",
-    "crates/codegen/xai-system-power",
-    "crates/codegen/xai-token-estimation",
-    "crates/codegen/xai-tracing-macros",
-    "crates/codegen/xai-tty-utils",
-    "crates/codegen/xai-workflow",
-    "crates/common/xai-circuit-breaker",
-    "crates/common/xai-computer-hub-core",
-    "crates/common/xai-computer-hub-mcp-adapter",
-    "crates/common/xai-computer-hub-sdk",
-    "crates/common/xai-grok-compaction",
-    "crates/common/xai-interjection-core",
-    "crates/common/xai-message-delivery-core",
-    "crates/common/xai-test-utils",
-    "crates/common/xai-tool-protocol",
-    "crates/common/xai-tool-runtime",
-    "crates/common/xai-tool-types",
-    "crates/common/xai-tracing",
+    "crates/codegen/kite-acp-lib",
+    "crates/codegen/kite-agent-lifecycle",
+    "crates/codegen/kite-chat-state",
+    "crates/codegen/kite-codebase-graph",
+    "crates/codegen/kite-compaction-transcript",
+    "crates/codegen/kite-crash-handler",
+    "crates/codegen/kite-dirs",
+    "crates/codegen/kite-fast-worktree",
+    "crates/codegen/kite-file-utils",
+    "crates/codegen/kite-fsnotify",
+    "crates/codegen/kite-fuzzy-file-search",
+    "crates/codegen/kite-gix-status",
+    "crates/codegen/kite-active-sessions",
+    "crates/codegen/kite-agent",
+    "crates/codegen/kite-announcements",
+    "crates/codegen/kite-auth",
+    "crates/codegen/kite-bundle",
+    "crates/codegen/kite-cloud-config",
+    "crates/codegen/kite-config",
+    "crates/codegen/kite-config-types",
+    "crates/codegen/kite-dashboard-store",
+    "crates/codegen/kite-diag-server",
+    "crates/codegen/kite-egress-proxy",
+    "crates/codegen/kite-env",
+    "crates/codegen/kite-external-agent-migration",
+    "crates/codegen/kite-extra-ca",
+    "crates/codegen/kite-feedback",
+    "crates/codegen/kite-file-lock",
+    "crates/codegen/kite-foreign-sessions",
+    "crates/codegen/kite-gboom",
+    "crates/codegen/kite-hooks",
+    "crates/codegen/kite-http",
+    "crates/codegen/kite-image",
+    "crates/codegen/kite-lifecycle",
+    "crates/codegen/kite-login",
+    "crates/codegen/kite-markdown",
+    "crates/codegen/kite-markdown-core",
+    "crates/codegen/kite-mcp",
+    "crates/codegen/kite-memory",
+    "crates/codegen/kite-mermaid",
+    "crates/codegen/kite-models",
+    "crates/codegen/kite-otel",
+    "crates/codegen/kite-pager",
+    "crates/codegen/kite-pager-bin",
+    "crates/codegen/kite-pager-diff",
+    "crates/codegen/kite-pager-minimal",
+    "crates/codegen/kite-pager-pty-harness",
+    "crates/codegen/kite-pager-render",
+    "crates/codegen/kite-paths",
+    "crates/codegen/kite-permission-rules",
+    "crates/codegen/kite-plugin-marketplace",
+    "crates/codegen/kite-sampler",
+    "crates/codegen/kite-sampling-types",
+    "crates/codegen/kite-sandbox",
+    "crates/codegen/kite-secrets",
+    "crates/codegen/kite-session-events",
+    "crates/codegen/kite-session-search",
+    "crates/codegen/kite-shared",
+    "crates/codegen/kite-shell",
+    "crates/codegen/kite-shell-base",
+    "crates/codegen/kite-shell-session-support",
+    "crates/codegen/kite-shell-terminal",
+    "crates/codegen/kite-status-line",
+    "crates/codegen/kite-subagent-resolution",
+    "crates/codegen/kite-telemetry",
+    "crates/codegen/kite-test-support",
+    "crates/codegen/kite-tools",
+    "crates/codegen/kite-tools-api",
+    "crates/codegen/kite-update",
+    "crates/codegen/kite-version",
+    "crates/codegen/kite-voice",
+    "crates/codegen/kite-workspace",
+    "crates/codegen/kite-workspace-client",
+    "crates/codegen/kite-workspace-daemon",
+    "crates/codegen/kite-workspace-types",
+    "crates/codegen/kite-hooks-plugins-types",
+    "crates/codegen/kite-hunk-tracker",
+    "crates/codegen/kite-mixpanel",
+    "crates/codegen/kite-prompt-queue",
+    "crates/codegen/kite-ratatui-inline",
+    "crates/codegen/kite-ratatui-textarea",
+    "crates/codegen/kite-sqlite-journal",
+    "crates/codegen/kite-system-power",
+    "crates/codegen/kite-token-estimation",
+    "crates/codegen/kite-tracing-macros",
+    "crates/codegen/kite-tty-utils",
+    "crates/codegen/kite-workflow",
+    "crates/common/kite-circuit-breaker",
+    "crates/common/kite-computer-hub-core",
+    "crates/common/kite-computer-hub-mcp-adapter",
+    "crates/common/kite-computer-hub-sdk",
+    "crates/common/kite-compaction",
+    "crates/common/kite-interjection-core",
+    "crates/common/kite-message-delivery-core",
+    "crates/common/kite-test-utils",
+    "crates/common/kite-tool-protocol",
+    "crates/common/kite-tool-runtime",
+    "crates/common/kite-tool-types",
+    "crates/common/kite-tracing",
     "prod/mc/cli-chat-proxy-types",
     "third_party/dagre_rust",
     "third_party/graphlib_rust",
@@ -325,76 +325,76 @@ wildmatch = "2"
 windows = { version = "0.61", features = ["Win32_Security", "Win32_Security_Authorization", "Win32_Foundation", "Win32_System_Threading", "Win32_System_JobObjects", "Win32_System_Console", "Win32_System_Pipes"] }
 wiremock = "0.6"
 wl-clipboard-rs = "0.9"
-xai-acp-lib = { path = "crates/codegen/xai-acp-lib" }
-xai-agent-lifecycle = { path = "crates/codegen/xai-agent-lifecycle" }
-xai-circuit-breaker = { path = "crates/common/xai-circuit-breaker" }
-xai-compaction-transcript = { path = "crates/codegen/xai-compaction-transcript" }
-xai-computer-hub-core = { path = "crates/common/xai-computer-hub-core" }
-xai-computer-hub-sdk = { path = "crates/common/xai-computer-hub-sdk" }
-xai-dirs = { path = "crates/codegen/xai-dirs" }
-xai-fuzzy-file-search = { path = "crates/codegen/xai-fuzzy-file-search" }
-xai-gix-status = { path = "crates/codegen/xai-gix-status" }
-xai-grok-active-sessions = { path = "crates/codegen/xai-grok-active-sessions" }
-xai-grok-agent = { path = "crates/codegen/xai-grok-agent" }
-xai-grok-announcements = { path = "crates/codegen/xai-grok-announcements" }
-xai-grok-auth = { path = "crates/codegen/xai-grok-auth" }
-xai-grok-bundle = { path = "crates/codegen/xai-grok-bundle" }
-xai-grok-cloud-config = { path = "crates/codegen/xai-grok-cloud-config" }
-xai-grok-config = { path = "crates/codegen/xai-grok-config" }
-xai-grok-config-types = { path = "crates/codegen/xai-grok-config-types" }
-xai-grok-dashboard-store = { path = "crates/codegen/xai-grok-dashboard-store" }
-xai-grok-diag-server = { path = "crates/codegen/xai-grok-diag-server" }
-xai-grok-env = { path = "crates/codegen/xai-grok-env" }
-xai-grok-external-agent-migration = { path = "crates/codegen/xai-grok-external-agent-migration" }
-xai-grok-extra-ca = { path = "crates/codegen/xai-grok-extra-ca" }
-xai-grok-feedback = { path = "crates/codegen/xai-grok-feedback" }
-xai-grok-file-lock = { path = "crates/codegen/xai-grok-file-lock" }
-xai-grok-foreign-sessions = { path = "crates/codegen/xai-grok-foreign-sessions" }
-xai-grok-http = { path = "crates/codegen/xai-grok-http" }
-xai-grok-image = { path = "crates/codegen/xai-grok-image" }
-xai-grok-lifecycle = { path = "crates/codegen/xai-grok-lifecycle" }
-xai-grok-login = { path = "crates/codegen/xai-grok-login" }
-xai-grok-markdown = { path = "crates/codegen/xai-grok-markdown" }
-xai-grok-markdown-core = { path = "crates/codegen/xai-grok-markdown-core" }
-xai-grok-mcp = { path = "crates/codegen/xai-grok-mcp" }
-xai-grok-memory = { path = "crates/codegen/xai-grok-memory" }
-xai-grok-mermaid = { path = "crates/codegen/xai-grok-mermaid" }
-xai-grok-models = { path = "crates/codegen/xai-grok-models" }
-xai-grok-otel = { path = "crates/codegen/xai-grok-otel" }
-xai-grok-permission-rules = { path = "crates/codegen/xai-grok-permission-rules" }
-xai-grok-sampler = { path = "crates/codegen/xai-grok-sampler" }
-xai-grok-secrets = { path = "crates/codegen/xai-grok-secrets" }
-xai-grok-session-events = { path = "crates/codegen/xai-grok-session-events" }
-xai-grok-session-search = { path = "crates/codegen/xai-grok-session-search" }
-xai-grok-shared = { path = "crates/codegen/xai-grok-shared" }
-xai-grok-shell-base = { path = "crates/codegen/xai-grok-shell-base" }
-xai-grok-shell-session-support = { path = "crates/codegen/xai-grok-shell-session-support" }
-xai-grok-shell-terminal = { path = "crates/codegen/xai-grok-shell-terminal" }
-xai-grok-status-line = { path = "crates/codegen/xai-grok-status-line" }
-xai-grok-telemetry = { path = "crates/codegen/xai-grok-telemetry", default-features = false }
-xai-grok-test-support = { path = "crates/codegen/xai-grok-test-support" }
-xai-grok-tools = { path = "crates/codegen/xai-grok-tools" }
-xai-grok-tools-api = { path = "crates/codegen/xai-grok-tools-api" }
-xai-grok-version = { path = "crates/codegen/xai-grok-version" }
-xai-grok-workspace = { path = "crates/codegen/xai-grok-workspace", default-features = false }
-xai-grok-workspace-types = { path = "crates/codegen/xai-grok-workspace-types" }
-xai-hooks-plugins-types = { path = "crates/codegen/xai-hooks-plugins-types" }
-xai-interjection-core = { path = "crates/common/xai-interjection-core" }
-xai-message-delivery-core = { path = "crates/common/xai-message-delivery-core" }
-xai-mixpanel = { path = "crates/codegen/xai-mixpanel" }
-xai-prompt-queue = { path = "crates/codegen/xai-prompt-queue" }
-xai-proto-build = { path = "crates/build/xai-proto-build" }
-xai-ratatui-inline = { path = "crates/codegen/xai-ratatui-inline" }
-xai-ratatui-textarea = { path = "crates/codegen/xai-ratatui-textarea" }
-xai-sqlite-journal = { path = "crates/codegen/xai-sqlite-journal" }
-xai-system-power = { path = "crates/codegen/xai-system-power" }
-xai-test-utils = { path = "crates/common/xai-test-utils" }
-xai-token-estimation = { path = "crates/codegen/xai-token-estimation" }
-xai-tool-protocol = { path = "crates/common/xai-tool-protocol" }
-xai-tool-runtime = { path = "crates/common/xai-tool-runtime" }
-xai-tool-types = { path = "crates/common/xai-tool-types" }
-xai-tracing = { path = "crates/common/xai-tracing" }
-xai-tty-utils = { path = "crates/codegen/xai-tty-utils" }
+kite-acp-lib = { path = "crates/codegen/kite-acp-lib" }
+kite-agent-lifecycle = { path = "crates/codegen/kite-agent-lifecycle" }
+kite-circuit-breaker = { path = "crates/common/kite-circuit-breaker" }
+kite-compaction-transcript = { path = "crates/codegen/kite-compaction-transcript" }
+kite-computer-hub-core = { path = "crates/common/kite-computer-hub-core" }
+kite-computer-hub-sdk = { path = "crates/common/kite-computer-hub-sdk" }
+kite-dirs = { path = "crates/codegen/kite-dirs" }
+kite-fuzzy-file-search = { path = "crates/codegen/kite-fuzzy-file-search" }
+kite-gix-status = { path = "crates/codegen/kite-gix-status" }
+kite-active-sessions = { path = "crates/codegen/kite-active-sessions" }
+kite-agent = { path = "crates/codegen/kite-agent" }
+kite-announcements = { path = "crates/codegen/kite-announcements" }
+kite-auth = { path = "crates/codegen/kite-auth" }
+kite-bundle = { path = "crates/codegen/kite-bundle" }
+kite-cloud-config = { path = "crates/codegen/kite-cloud-config" }
+kite-config = { path = "crates/codegen/kite-config" }
+kite-config-types = { path = "crates/codegen/kite-config-types" }
+kite-dashboard-store = { path = "crates/codegen/kite-dashboard-store" }
+kite-diag-server = { path = "crates/codegen/kite-diag-server" }
+kite-env = { path = "crates/codegen/kite-env" }
+kite-external-agent-migration = { path = "crates/codegen/kite-external-agent-migration" }
+kite-extra-ca = { path = "crates/codegen/kite-extra-ca" }
+kite-feedback = { path = "crates/codegen/kite-feedback" }
+kite-file-lock = { path = "crates/codegen/kite-file-lock" }
+kite-foreign-sessions = { path = "crates/codegen/kite-foreign-sessions" }
+kite-http = { path = "crates/codegen/kite-http" }
+kite-image = { path = "crates/codegen/kite-image" }
+kite-lifecycle = { path = "crates/codegen/kite-lifecycle" }
+kite-login = { path = "crates/codegen/kite-login" }
+kite-markdown = { path = "crates/codegen/kite-markdown" }
+kite-markdown-core = { path = "crates/codegen/kite-markdown-core" }
+kite-mcp = { path = "crates/codegen/kite-mcp" }
+kite-memory = { path = "crates/codegen/kite-memory" }
+kite-mermaid = { path = "crates/codegen/kite-mermaid" }
+kite-models = { path = "crates/codegen/kite-models" }
+kite-otel = { path = "crates/codegen/kite-otel" }
+kite-permission-rules = { path = "crates/codegen/kite-permission-rules" }
+kite-sampler = { path = "crates/codegen/kite-sampler" }
+kite-secrets = { path = "crates/codegen/kite-secrets" }
+kite-session-events = { path = "crates/codegen/kite-session-events" }
+kite-session-search = { path = "crates/codegen/kite-session-search" }
+kite-shared = { path = "crates/codegen/kite-shared" }
+kite-shell-base = { path = "crates/codegen/kite-shell-base" }
+kite-shell-session-support = { path = "crates/codegen/kite-shell-session-support" }
+kite-shell-terminal = { path = "crates/codegen/kite-shell-terminal" }
+kite-status-line = { path = "crates/codegen/kite-status-line" }
+kite-telemetry = { path = "crates/codegen/kite-telemetry", default-features = false }
+kite-test-support = { path = "crates/codegen/kite-test-support" }
+kite-tools = { path = "crates/codegen/kite-tools" }
+kite-tools-api = { path = "crates/codegen/kite-tools-api" }
+kite-version = { path = "crates/codegen/kite-version" }
+kite-workspace = { path = "crates/codegen/kite-workspace", default-features = false }
+kite-workspace-types = { path = "crates/codegen/kite-workspace-types" }
+kite-hooks-plugins-types = { path = "crates/codegen/kite-hooks-plugins-types" }
+kite-interjection-core = { path = "crates/common/kite-interjection-core" }
+kite-message-delivery-core = { path = "crates/common/kite-message-delivery-core" }
+kite-mixpanel = { path = "crates/codegen/kite-mixpanel" }
+kite-prompt-queue = { path = "crates/codegen/kite-prompt-queue" }
+kite-proto-build = { path = "crates/build/kite-proto-build" }
+kite-ratatui-inline = { path = "crates/codegen/kite-ratatui-inline" }
+kite-ratatui-textarea = { path = "crates/codegen/kite-ratatui-textarea" }
+kite-sqlite-journal = { path = "crates/codegen/kite-sqlite-journal" }
+kite-system-power = { path = "crates/codegen/kite-system-power" }
+kite-test-utils = { path = "crates/common/kite-test-utils" }
+kite-token-estimation = { path = "crates/codegen/kite-token-estimation" }
+kite-tool-protocol = { path = "crates/common/kite-tool-protocol" }
+kite-tool-runtime = { path = "crates/common/kite-tool-runtime" }
+kite-tool-types = { path = "crates/common/kite-tool-types" }
+kite-tracing = { path = "crates/common/kite-tracing" }
+kite-tty-utils = { path = "crates/codegen/kite-tty-utils" }
 zbus = { version = "5" }
 zip = "3"
 zstd = "0.13"

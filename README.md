@@ -18,6 +18,10 @@ You can use it yourself too. Connecting it to a cloudflared tunnel (or any
 OpenAI-compatible server) is pretty straightforward; see
 [Usage and connecting](#usage-and-connecting) below.
 
+> ⚠️ **Friendly heads-up:** a lot of Kite was built with the help of AI, so bugs
+> are expected. Use it at your own risk, and feel free to open an issue if
+> something breaks!
+
 [What's different](#whats-different-from-grok-build) ·
 [Usage and connecting](#usage-and-connecting) ·
 [Building from source](#building-from-source) ·
@@ -94,22 +98,22 @@ Requirements:
 - macOS and Linux are supported build hosts; Windows builds are best-effort.
 
 ```sh
-cargo run -p xai-grok-pager-bin                         # build + launch the TUI
-cargo build -p xai-grok-pager-bin --release --bin kite  # release binary: target/release/kite
-cargo check -p xai-grok-pager-bin                       # fast validation
+cargo run -p kite-pager-bin                         # build + launch the TUI
+cargo build -p kite-pager-bin --release --bin kite  # release binary: target/release/kite
+cargo check -p kite-pager-bin                       # fast validation
 ```
 
 [KITE.md](KITE.md) also describes the remote Modal build used for Windows and
 Linux release binaries. After editing a system prompt template under
-`crates/codegen/xai-grok-agent/templates/`, run
-`python crates/codegen/xai-grok-agent/scripts/encrypt_templates.py` before a
+`crates/codegen/kite-agent/templates/`, run
+`python crates/codegen/kite-agent/scripts/encrypt_templates.py` before a
 local build.
 
 ## Documentation
 
 The user guide ships with the pager crate and is copied to
 `~/.kite/docs/user-guide/` at startup:
-[`crates/codegen/xai-grok-pager/docs/user-guide/`](crates/codegen/xai-grok-pager/docs/user-guide/)
+[`crates/codegen/kite-pager/docs/user-guide/`](crates/codegen/kite-pager/docs/user-guide/)
 — getting started, keyboard shortcuts, slash commands, configuration, theming,
 MCP servers, skills, plugins, hooks, headless mode, sandboxing, and more.
 
@@ -117,17 +121,18 @@ MCP servers, skills, plugins, hooks, headless mode, sandboxing, and more.
 
 | Path | Contents |
 |------|----------|
-| `crates/codegen/xai-grok-pager-bin` | Composition-root package; builds the `kite` binary |
-| `crates/codegen/xai-grok-pager` | The TUI: scrollback, prompt, modals, rendering |
-| `crates/codegen/xai-grok-shell` | Agent runtime + leader/stdio/headless entry points |
-| `crates/codegen/xai-grok-tools` | Tool implementations (terminal, file edit, search, ...) |
-| `crates/codegen/xai-grok-workspace` | Host filesystem, VCS, execution, checkpoints |
+| `crates/codegen/kite-pager-bin` | Composition-root package; builds the `kite` binary |
+| `crates/codegen/kite-pager` | The TUI: scrollback, prompt, modals, rendering |
+| `crates/codegen/kite-shell` | Agent runtime + leader/stdio/headless entry points |
+| `crates/codegen/kite-tools` | Tool implementations (terminal, file edit, search, ...) |
+| `crates/codegen/kite-workspace` | Host filesystem, VCS, execution, checkpoints |
 | `crates/codegen/...` | The rest of the CLI crate closure (config, MCP, markdown, sandbox, ...) |
 | `crates/common/`, `crates/build/`, `prod/mc/` | Small shared leaf crates pulled in by the closure |
 | `third_party/` | Vendored upstream source (Mermaid diagram stack) — see below |
 
-Crate, module, and environment-variable names still carry the inherited
-`xai-grok` / `GROK_` prefixes; renaming them is planned separately.
+Workspace crates and Rust modules use the `kite-*` / `kite_*` prefixes; see
+[the crate rename map](docs/crate-renames.md). User-facing `GROK_` environment
+variables and project `.grok/` directories retain their names for compatibility.
 
 > [!IMPORTANT]
 > The root `Cargo.toml` (workspace members, dependency versions, lints,
@@ -138,7 +143,7 @@ Crate, module, and environment-variable names still carry the inherited
 
 ```sh
 cargo check -p <crate>        # always target specific crates; full-workspace builds are slow
-cargo test -p xai-grok-config # per-crate tests
+cargo test -p kite-config # per-crate tests
 cargo clippy -p <crate>       # lint config: clippy.toml at the repo root
 cargo fmt --all               # rustfmt.toml at the repo root
 ```
@@ -161,7 +166,7 @@ Third-party and vendored code remains under its original licenses. See:
 - [`THIRD-PARTY-NOTICES`](THIRD-PARTY-NOTICES) — crates.io / git dependencies,
   bundled UI themes, and **in-tree source ports** (including openai/codex and
   sst/opencode tool implementations)
-- [`crates/codegen/xai-grok-tools/THIRD_PARTY_NOTICES.md`](crates/codegen/xai-grok-tools/THIRD_PARTY_NOTICES.md)
+- [`crates/codegen/kite-tools/THIRD_PARTY_NOTICES.md`](crates/codegen/kite-tools/THIRD_PARTY_NOTICES.md)
   — crate-local notice for the codex and opencode ports (license texts +
   Apache §4(b) change notice)
 - [`third_party/NOTICE`](third_party/NOTICE) — vendored Mermaid-stack index

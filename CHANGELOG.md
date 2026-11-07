@@ -4,6 +4,14 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 (upstream commit `2bdd1d6a`, see `SOURCE_REV`). Details and settings live in
 [KITE.md](KITE.md).
 
+## v0.1.1 — workspace crate rename
+
+- Rename all 100 `xai-*` workspace crates to `kite-*`, including Rust imports,
+  crate directories, snapshots, build scripts and documentation.
+- Preserve environment variables, project settings, protocol methods and HTTP
+  headers for compatibility. See [the crate rename map](docs/crate-renames.md).
+- Install ripgrep in the Modal test image so search tests can run.
+
 ## v0.1.0 — first release
 
 ### Local model connection
