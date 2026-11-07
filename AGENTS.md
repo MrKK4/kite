@@ -31,7 +31,16 @@ Use Rust unit tests and crate-local integration tests; asynchronous tests use `#
 
 ## Commit & Pull Request Guidelines
 
-Recent history uses `Synced from monorepo`; it establishes no feature-commit naming convention. Keep local change descriptions concise and explain intent and validation. Consult `CONTRIBUTING.md` for the contribution policy.
+Kite's history starts fresh (no upstream `Synced from monorepo` commits). Write short imperative subjects and explain intent and validation in the body. Consult `CONTRIBUTING.md` for the contribution policy.
+
+## Kite Rules
+
+- **Portable changes only:** behavior changes are compiled-in defaults plus documentation in `KITE.md`, never machine-local configuration. A fresh clone and build must behave the same on any machine.
+- **No xAI/grok.com services:** no feature may depend on xAI-hosted servers. Remove hosted clients rather than gating them; use local or open replacements (the `/login <url>` local endpoint, Exa/Parallel/`web_fetch` MCP, local session search, bundled skills).
+- **Local model first:** the target is a single-slot llama.cpp server. Avoid hidden side requests and anything that rewrites already-sent history, since both break prompt-cache reuse and cause long stalls.
+- **System prompt:** templates in `crates/codegen/xai-grok-agent/templates/` ship as an obfuscated copy; after editing one, run `python crates/codegen/xai-grok-agent/scripts/encrypt_templates.py` (templates must stay LF).
+- **Builds and tests:** see `KITE.md` (`scripts/modal_build.py`: `--mode test`, `--mode lock` after dependency edits, `--target windows|linux`).
+- **Clean up:** delete temporary scripts, probes and logs you create; leave nothing behind.
 
 ## Security Reports
 
