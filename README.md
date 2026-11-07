@@ -23,6 +23,7 @@ OpenAI-compatible server) is pretty straightforward; see
 > something breaks!
 
 [What's different](#whats-different-from-grok-build) ·
+[Install](#install-on-windows) ·
 [Usage and connecting](#usage-and-connecting) ·
 [Building from source](#building-from-source) ·
 [Documentation](#documentation) ·
@@ -53,10 +54,40 @@ The highlights (full list in [CHANGELOG.md](CHANGELOG.md)):
 - 🔒 **Nothing goes to xAI:** telemetry, feedback, account, billing, remote
   settings, updater, voice and media tools are removed.
 
+## Install on Windows
+
+PowerShell (no administrator access needed):
+
+```powershell
+irm https://raw.githubusercontent.com/MrKK4/kite/main/scripts/install.ps1 | iex
+kite --version
+```
+
+Or from **Git Bash on Windows**:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MrKK4/kite/main/scripts/install.sh | bash
+```
+
+The installer downloads the latest Windows x64 release, verifies its SHA-256
+against the release's `SHA256SUMS`, and installs `kite.exe` in `~/.kite/bin`.
+PowerShell can use `kite` immediately. For Git Bash, restart the terminal or run
+the `export PATH=...` command printed by the installer, then `kite --version`.
+Close running Kite processes before upgrading; rerun the same command to update.
+
+Set `KITE_VERSION` to a release tag (for example `v0.1.1`) to pin a version, or
+`KITE_INSTALL_DIR` to choose a different directory. `KITE_NO_MODIFY_PATH=1`
+skips the persistent user PATH update. No model settings or sessions are changed.
+
+Native macOS and Linux release binaries are not published yet; use
+[the source build instructions](#building-from-source) on those platforms.
+You can also [download the Windows executable directly](https://github.com/MrKK4/kite/releases/latest).
+
 ## Usage and connecting
 
-1. **Get Kite:** download `kite-windows-x64.exe` from
-   [Releases](https://github.com/MrKK4/kite/releases) (or build it, see below).
+1. **Get Kite:** use [the installer](#install-on-windows), download
+   `kite-windows-x64.exe` from [Releases](https://github.com/MrKK4/kite/releases),
+   or build it from source.
 2. **Install helpers:** [Node.js](https://nodejs.org) (memory and browser tools)
    and Google Chrome (browser tool).
 3. **Start a model server.** Anything OpenAI-compatible works: llama.cpp,

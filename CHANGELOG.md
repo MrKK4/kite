@@ -4,6 +4,12 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 (upstream commit `2bdd1d6a`, see `SOURCE_REV`). Details and settings live in
 [KITE.md](KITE.md).
 
+## Unreleased
+
+- Add Windows PowerShell and Git Bash one-line installers, with release SHA-256
+  verification, user PATH setup, version pinning and custom install directories.
+- Preserve the previous binary if a download fails checksum verification.
+
 ## v0.1.1 — workspace crate rename
 
 - Rename all 100 `xai-*` workspace crates to `kite-*`, including Rust imports,

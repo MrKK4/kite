@@ -181,7 +181,10 @@ retention, and training" setting and banner are removed.
 
 ## New machine checklist
 
-1. Build or copy `kite.exe` (see below).
+1. Install with `irm https://raw.githubusercontent.com/MrKK4/kite/main/scripts/install.ps1 | iex`
+   in Windows PowerShell (or use the Git Bash command in [README.md](README.md#install-on-windows)).
+   The installer verifies release checksums and adds `~/.kite/bin` to your user PATH.
+   Re-run it to update after closing Kite. Building or copying `kite.exe` also works.
 2. Install Node.js 24+ (for the `memory` and `playwright` servers).
 3. Windows: install Git for Windows so plugin hooks get Git Bash.
 4. Run `kite login <your model URL>`.
