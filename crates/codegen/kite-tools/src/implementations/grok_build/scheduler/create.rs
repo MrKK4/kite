@@ -230,7 +230,7 @@ impl kite_tool_runtime::Tool for SchedulerCreateTool {
         if !input.recurring {
             return Err(kite_tool_runtime::ToolError::invalid_arguments(
                 "one-shot tasks are not supported; run a background terminal command instead \
-                 (`sleep <secs> && <command>`, background: true) or do the work now",
+                 (`sleep <secs> && <command>` with block_until_ms: 0) or do the work now",
             ));
         }
 

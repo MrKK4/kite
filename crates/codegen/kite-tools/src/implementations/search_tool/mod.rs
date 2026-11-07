@@ -229,7 +229,8 @@ impl crate::types::tool_metadata::ToolMetadata for SearchTool {
          exa__web_fetch_exa).\n\
          - parallel: web search (parallel__web_search with {\"objective\": \"what to learn\", \
          \"search_queries\": [\"...\"]}, parallel__web_fetch).\n\
-         - playwright: a real browser (Chrome) for sites that need clicks, logins, or JavaScript \
+         - playwright: a real browser (Kite's own ungoogled-chromium with uBlock Origin Lite, driven by \
+         Patchright; installed Chrome when not on Windows) for sites that need clicks, logins, or JavaScript \
          (playwright__browser_navigate, playwright__browser_snapshot, playwright__browser_click, ...). \
          Browser pages cost far more context than search results, so to just read a page use \
          web_fetch or the exa/parallel tools first. \
@@ -240,7 +241,9 @@ impl crate::types::tool_metadata::ToolMetadata for SearchTool {
          from a snapshot or an image you actually received, never from assumption.\n\
          - camoufox (only if the user enabled it): the same browser tools (camoufox__browser_*) in a \
          fingerprint-resistant Firefox, for sites that block automation. Use it when the user asks \
-         or playwright is blocked by a bot check.\n\n\
+         or playwright is blocked by a bot check.\n\
+         Questions about either browser's setup, binaries, profile, patches or updating: read \
+         ~/.kite/docs/browsers.md first; it is not stock Playwright, so don't assume Playwright defaults.\n\n\
          If status is \"partial\", some servers may still be connecting."
     }
 }

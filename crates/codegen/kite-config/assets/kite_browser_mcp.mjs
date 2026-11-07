@@ -122,6 +122,9 @@ async function main() {
               "--disable-sync",
               "--no-default-browser-check",
               "--no-first-run",
+              // Hides the "unsupported command-line flag" bar Chromium shows for Patchright's
+              // --disable-blink-features=AutomationControlled.
+              "--test-type",
             ],
           },
         },

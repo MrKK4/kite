@@ -46,7 +46,7 @@ ${%- endif %}
 ${%- if kite_memory %}
 
 <long_term_memory>
-What you saved about the user and their work in earlier sessions, with the `memory` tools. It is already loaded: use it directly (for example, the user's name) without searching. To add or update a fact, use memory__add_observations on an existing entity or memory__create_entities; remove outdated facts with memory__delete_observations. Facts saved during this conversation are not listed here until the next session.
+What you saved about the user and their work in earlier sessions, with the `memory` tools. It is already loaded: use it directly (for example, the user's name) without searching. To add or update a fact, call memory__add_observations on an existing entity or memory__create_entities, and remove outdated facts with memory__delete_observations; these are MCP tools, so call them through `use_tool` (tool_name plus tool_input), never directly. Facts saved during this conversation are not listed here until the next session.
 ${{ kite_memory }}
 </long_term_memory>
 ${%- endif %}

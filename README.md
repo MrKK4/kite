@@ -46,7 +46,8 @@ The highlights (full list in [CHANGELOG.md](CHANGELOG.md)):
 - 🧠 **Memory:** a built-in knowledge-graph memory that loads into every
   session, plus search across past chats ("do you remember...").
 - 🌐 **Web and browser:** keyless Exa/Parallel search, `web_fetch`, a real
-  Chrome browser (Patchright), and opt-in Camoufox for bot-protected sites.
+  browser (Patchright on ungoogled-chromium with uBlock Origin Lite), and
+  opt-in Camoufox for bot-protected sites. See [docs/browsers.md](docs/browsers.md).
 - 🖥️ **UI fixes:** typing and flicker fixed on Windows, right-click paste,
   Esc cancels, clickable file paths, tighter layout.
 - 🧩 **Skills and plugins:** bundled skill-creator, Claude Code plugins, hooks

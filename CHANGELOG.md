@@ -5,6 +5,19 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 [KITE.md](KITE.md).
 
 
+
+## v0.1.6 — browser guide and tool-definition fixes
+
+- Browser: hide Chromium's "unsupported command-line flag" warning bar caused by
+  Patchright's stealth flag (`--test-type`).
+- Browser guide `docs/browsers.md` (usage, file locations, patches, updating),
+  installed to `~/.kite/docs/browsers.md`; the model is told to read it instead
+  of assuming stock Playwright defaults.
+- Tool-definition audit (`TOOL_AUDIT.md`) fixes: xAI-hosted web/X search is
+  never offered; the memory prompt says to call memory tools through
+  `use_tool`; accurate browser text in tool descriptions and the MCP docs;
+  corrected scheduler hint and skills path.
+
 ## v0.1.5 — isolated self-installing browsers
 
 - Browser: Kite's own isolated ungoogled-chromium + uBlock Origin Lite (full

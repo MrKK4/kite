@@ -66,7 +66,7 @@ description names these servers so the model knows to use them. `use_tool`'s
 argument schema is a flat object because llama.cpp's grammar conversion turns
 `oneOf`/`not` schemas into a grammar that only allows `{}`.
 
-Browser notes:
+Browser notes (full guide: [docs/browsers.md](docs/browsers.md), covering usage, file locations, patches and updating):
 - The `playwright` server runs Kite's own isolated browser (Windows x64):
   `~/.kite/kite-browser-mcp.mjs` downloads the latest
   [ungoogled-chromium](https://github.com/ungoogled-software/ungoogled-chromium-windows/releases)
@@ -191,7 +191,8 @@ Ordinary model requests and explicitly used network tools still use the network.
 Some of that is removed from the code outright rather than switched off: Mixpanel
 analytics, the remote product-event sink, and Sentry error reporting are gone;
 OTLP span and external telemetry exporters are never configured; the
-`/feedback` and `/privacy` commands, the `send_feedback` tool, the hosted
+`/feedback` and `/privacy` commands, the `send_feedback` tool (its code
+remains but it is never offered), the hosted
 feedback client, the feedback trace-upload offer, and the "Coding data,
 retention, and training" setting and banner are removed.
 

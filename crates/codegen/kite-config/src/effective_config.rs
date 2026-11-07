@@ -296,7 +296,8 @@ fn add_kite_default_mcp_servers(effective: &mut toml::Value) {
     };
     // Playwright MCP emulates a fixed 1280x720 viewport by default, so resizing the
     // headed window does nothing. `viewport: null` lets the page follow the real
-    // window; it opens maximized. Patchright drives the installed Google Chrome.
+    // window; it opens maximized. Used as-is only when Kite's own browser is unavailable
+    // (see kite_browser_mcp.mjs), so Chrome is the fallback channel.
     // Written once (an untouched older default is upgraded), then the user's edits are kept.
     const OLD_PLAYWRIGHT_CONFIG: &str =
         r#"{"browser":{"launchOptions":{"args":["--start-maximized"]},"contextOptions":{"viewport":null}}}"#;
@@ -317,6 +318,15 @@ fn add_kite_default_mcp_servers(effective: &mut toml::Value) {
     let browser_script = kite_dirs::grok_home().join("kite-browser-mcp.mjs");
     if std::fs::read_to_string(&browser_script).ok().as_deref() != Some(BROWSER_SCRIPT) {
         let _ = std::fs::write(&browser_script, BROWSER_SCRIPT);
+    }
+    // Browser guide the model reads for setup/update questions (see search_tool's description).
+    const BROWSER_GUIDE: &str = include_str!("../../../../docs/browsers.md");
+    let browser_guide = kite_dirs::grok_home().join("docs/browsers.md");
+    if std::fs::read_to_string(&browser_guide).ok().as_deref() != Some(BROWSER_GUIDE) {
+        if let Some(parent) = browser_guide.parent() {
+            let _ = std::fs::create_dir_all(parent);
+        }
+        let _ = std::fs::write(&browser_guide, BROWSER_GUIDE);
     }
     // Anthropic's skill-creator (Apache-2.0, anthropics/skills), installed as a bundled skill.
     macro_rules! skill_files {

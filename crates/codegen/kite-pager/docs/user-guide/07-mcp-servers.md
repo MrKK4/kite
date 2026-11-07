@@ -27,8 +27,8 @@ Kite ships with these MCP servers built in. Turn any of them off with `/mcp`, or
 | `memory` | Long-term memory (`@modelcontextprotocol/server-memory`), stored in `~/.kite/memory.json`. See [Memory](13-memory.md). | Node/npx |
 | `exa` | Keyless web search and page reading (`https://mcp.exa.ai/mcp`) | Network |
 | `parallel` | Keyless web search (`https://search.parallel.ai/mcp`) | Network |
-| `playwright` | Real browser (`patchright-mcp`, driving installed Google Chrome); settings in `~/.kite/playwright-mcp.json` | Node/npx, Google Chrome |
-| `camoufox` | **Off by default.** Fingerprint-resistant Firefox; enable with `[mcp_servers.camoufox] enabled = true` | Python + `camoufox`, Node/npx |
+| `playwright` | Real browser: `patchright-mcp` on Kite's own ungoogled-chromium + uBlock Origin Lite (downloaded on first use, Windows x64; installed Chrome elsewhere); settings in `~/.kite/playwright-mcp.json`; see `~/.kite/docs/browsers.md` | Node/npx |
+| `camoufox` | **Off by default.** Fingerprint-resistant Firefox, installs itself into `~/.kite/camoufox-venv` on first use; enable with `[mcp_servers.camoufox] enabled = true` | Python 3, Node/npx |
 
 To distribute MCP servers to a team, or to restrict which servers users may run (`allowedMcpServers` / `deniedMcpServers` in `requirements.toml` / `managed_config.toml`, with Claude `managed-settings.json` advisory for foreign-defined servers), see [Distribute across an organization](09-plugins.md#distribute-across-an-organization) in the Plugins guide.
 

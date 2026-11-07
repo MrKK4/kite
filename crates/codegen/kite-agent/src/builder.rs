@@ -942,7 +942,7 @@ impl AgentBuilder {
             .unwrap_or(false);
         tool_config.tools.retain(|tc| {
             let name = tc.id.rsplit(':').next().unwrap_or(&tc.id);
-            !matches!(name, "workflow" | "send_feedback")
+            !matches!(name, "workflow" | "send_feedback" | "web_search")
                 && (kite_scheduler || !name.starts_with("scheduler_"))
         });
         if !definition.disallowed_tools.is_empty() {
@@ -1290,7 +1290,9 @@ impl AgentBuilder {
             definition.description = rendered;
         }
         let mut hosted_tools = Vec::new();
-        if use_backend_search {
+        // Kite: xAI-hosted web/X search needs xAI servers, which Kite never uses.
+        const KITE_HOSTED_SEARCH: bool = false;
+        if KITE_HOSTED_SEARCH && use_backend_search {
             if web_search_enabled && definition.hosted_tool_allowed("web_search") {
                 hosted_tools.push(kite_sampling_types::HostedTool::WebSearch { options: None });
             }
