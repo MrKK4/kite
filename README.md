@@ -1,14 +1,24 @@
 # Kite
 
-**Kite** is a terminal coding agent for local and self-hosted models. It runs
-as a full-screen TUI that understands your codebase, edits files, executes
-shell commands, and manages long-running tasks — interactively, headlessly for
-scripting, or embedded in editors via the Agent Client Protocol (ACP).
+A fun project, by me, for me. 🪁
 
-Kite connects to an OpenAI-compatible model server you choose; no hosted
-account is needed. See [KITE.md](KITE.md) for connecting a model, default tools
-and MCP servers, memory, local-model performance settings, and building.
+I run a **Qwen 3.6 35B** model on a private Kaggle notebook (llama.cpp) and use
+it as my own "local" model. The notebook exposes the server through a
+**cloudflared tunnel**, and Kite is the harness I point at that tunnel. The two
+together work really well for me and handle all kinds of topics, from coding to
+research to browsing.
 
+Kite started as a fork of xAI's Grok Build. I've personalized it for my needs:
+little UI tweaks, different skills, a Chrome/Camoufox browser setup, memory, and
+I removed all of the Grok/xAI telemetry, feedback and hosted services, so it's
+now fully local (well, I think so 😄). The only network calls are the ones you
+make: your model server and the tools you use.
+
+You can use it yourself too. Connecting it to a cloudflared tunnel (or any
+OpenAI-compatible server) is pretty straightforward; see
+[Usage and connecting](#usage-and-connecting) below.
+
+[Usage and connecting](#usage-and-connecting) ·
 [Building from source](#building-from-source) ·
 [Documentation](#documentation) ·
 [Repository layout](#repository-layout) ·
@@ -18,16 +28,29 @@ and MCP servers, memory, local-model performance settings, and building.
 
 ---
 
-## Quick start
+## Usage and connecting
 
-```sh
-kite login http://localhost:8080/v1   # connect a model server, then open Kite
-kite                                  # interactive TUI
-kite -p "Explain this codebase"       # headless
-kite --version
-```
+1. **Get Kite:** download `kite-windows-x64.exe` from
+   [Releases](https://github.com/MrKK4/kite/releases) (or build it, see below).
+2. **Install helpers:** [Node.js](https://nodejs.org) (memory and browser tools)
+   and Google Chrome (browser tool).
+3. **Start a model server.** Anything OpenAI-compatible works: llama.cpp,
+   LM Studio, vLLM, Ollama's `/v1`... My setup is llama.cpp on a Kaggle notebook
+   with `cloudflared tunnel --url http://localhost:8080`, which prints a URL like
+   `https://something-random.trycloudflare.com`.
+4. **Connect and go:**
 
-Inside Kite, `/login <base-url>` connects or reconnects a model server.
+   ```sh
+   kite login https://something-random.trycloudflare.com/v1   # connect, then open Kite
+   kite                                                       # next time, just run it
+   kite -p "Explain this codebase"                            # headless, one-shot
+   ```
+
+   Inside Kite, `/login <url>` reconnects. Quick tunnels get a new URL every
+   restart, so just run `/login` again with the new one.
+
+Kite finds the model automatically from `<url>/models`. Defaults (context size,
+MCP servers, memory, browser, skills) are all explained in [KITE.md](KITE.md).
 
 ## Building from source
 
