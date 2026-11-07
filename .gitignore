@@ -1,0 +1,6 @@
+/target
+/dist
+/modal-*.log
+**/__pycache__/
+**/*.rs.bk
+.DS_Store
