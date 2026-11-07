@@ -4,6 +4,12 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 (upstream commit `2bdd1d6a`, see `SOURCE_REV`). Details and settings live in
 [KITE.md](KITE.md).
 
+## v0.1.4 — release source provenance
+
+- Build releases only from a clean Kite checkout, so the displayed commit
+  identifies Kite source instead of the upstream-history development checkout.
+- Reject wrong-origin and uncommitted release builds before compilation.
+
 ## v0.1.3 — resume fix
 
 - Fix: "Resume session" with no saved sessions opened and instantly closed the

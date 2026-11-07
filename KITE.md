@@ -194,7 +194,11 @@ copy `~/.kite/memory.json` to carry memories over.
 
 ## Build on Modal
 
-With an authenticated Modal CLI:
+With an authenticated Modal CLI, run release builds from a clean clone of
+`https://github.com/MrKK4/kite.git`. Commit release changes there before building;
+the release preflight rejects an upstream origin or uncommitted source.
+`--mode lock`, `--mode fmt` and `--mode test` can still run from the development
+checkout. Release artifacts must be built from the committed publishing clone:
 
 ```powershell
 modal run scripts/modal_build.py --mode test
@@ -221,7 +225,8 @@ refreshes Cargo.lock on Modal before the release build.
 
 Modal passes that package version and the source Git revision into the build,
 so `kite --version` reports the Kite release and a 12-character source commit
-(for example, `kite 0.1.2 (0123456789ab)`). Modified source gets a `-dirty` suffix.
-Official releases are built from a clean checkout of their published source.
+(for example, `kite 0.1.4 (0123456789ab)`). Official release builds reject dirty
+source and upstream-history checkouts.
+The displayed commit comes from the clean Kite publishing checkout.
 Local Cargo builds read the commit from Git; source archives without Git can
 supply it through the build-time `KITE_BUILD_COMMIT` environment variable.

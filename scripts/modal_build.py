@@ -14,6 +14,34 @@ import tomllib
 import modal
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def release_source_revision(root: Path) -> str:
+    """Release provenance must come from the clean Kite publishing checkout."""
+    try:
+        remote = subprocess.check_output(
+            ["git", "-C", str(root), "remote", "get-url", "origin"],
+            text=True, stderr=subprocess.PIPE,
+        ).strip().casefold().rstrip("/").removesuffix(".git")
+    except subprocess.CalledProcessError as error:
+        raise RuntimeError("Release builds require a clean clone of https://github.com/MrKK4/kite.git.") from error
+    if remote not in {
+        "https://github.com/mrkk4/kite", "git@github.com:mrkk4/kite",
+        "ssh://git@github.com/mrkk4/kite",
+    }:
+        raise RuntimeError(
+            "Release build refused: origin must be https://github.com/MrKK4/kite.git. "
+            "Clone that repository and build from its clean, committed source."
+        )
+    if subprocess.check_output(
+        ["git", "-C", str(root), "status", "--porcelain"], text=True,
+    ).strip():
+        raise RuntimeError("Release build refused: commit the changes in the Kite publishing checkout first.")
+    return subprocess.check_output(
+        ["git", "-C", str(root), "rev-parse", "HEAD"], text=True,
+    ).strip()
+
+
 app = modal.App("kite-build")
 cache = modal.Volume.from_name("kite-build-cache", create_if_missing=True)
 image = (
@@ -128,6 +156,7 @@ def build(target: str = "windows", mode: str = "build", source_commit: str = "")
         # template edit without regenerating silently builds the old prompt.
         run(["python3", "crates/codegen/kite-agent/scripts/encrypt_templates.py"])
         run(["python3", "scripts/test_version_stamping.py"])
+        run(["python3", "scripts/test_release_provenance.py"])
         run(["cargo", "test", "--locked", "-p", "kite-version"])
         formatted = format_source()
         if target == "windows":
@@ -148,17 +177,13 @@ def build(target: str = "windows", mode: str = "build", source_commit: str = "")
 
 @app.local_entrypoint()
 def main(target: str = "windows", mode: str = "build"):
-    # Resolve provenance before .git is excluded from the source upload. A build
-    # from modified source is labelled dirty rather than claiming a clean commit.
+    if mode not in {"build", "lock", "test", "fmt"}:
+        raise ValueError("mode must be build, lock, test or fmt")
+    # Never publish an upstream commit as Kite provenance. Resolve the revision
+    # from a clean Kite checkout before .git is excluded from the source upload.
     source_commit = ""
     if mode == "build":
-        source_commit = subprocess.check_output(
-            ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True,
-        ).strip()
-        if subprocess.check_output(
-            ["git", "-C", str(ROOT), "status", "--porcelain"], text=True,
-        ).strip():
-            source_commit += "-dirty"
+        source_commit = release_source_revision(ROOT)
         print(f"Building source revision {source_commit}")
     result = build.remote(target, mode, source_commit)
     print(result)
