@@ -4,6 +4,15 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 (upstream commit `2bdd1d6a`, see `SOURCE_REV`). Details and settings live in
 [KITE.md](KITE.md).
 
+
+## v0.1.5 — isolated self-installing browsers
+
+- Browser: Kite's own isolated ungoogled-chromium + uBlock Origin Lite (full
+  strength) via Patchright, downloaded automatically on first use (Windows x64);
+  separate profile under `~/.kite`.
+- Camoufox installs itself into `~/.kite/camoufox-venv` on first use, with one
+  automatic retry for the first launch.
+
 ## v0.1.4 — release source provenance
 
 - Build releases only from a clean Kite checkout, so the displayed commit

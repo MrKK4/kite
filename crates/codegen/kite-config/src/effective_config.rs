@@ -312,6 +312,12 @@ fn add_kite_default_mcp_servers(effective: &mut toml::Value) {
     if std::fs::read_to_string(&camoufox_script).ok().as_deref() != Some(CAMOUFOX_SCRIPT) {
         let _ = std::fs::write(&camoufox_script, CAMOUFOX_SCRIPT);
     }
+    // Browser launcher: isolated ungoogled-chromium + uBlock Origin Lite under ~/.kite.
+    const BROWSER_SCRIPT: &str = include_str!("../assets/kite_browser_mcp.mjs");
+    let browser_script = kite_dirs::grok_home().join("kite-browser-mcp.mjs");
+    if std::fs::read_to_string(&browser_script).ok().as_deref() != Some(BROWSER_SCRIPT) {
+        let _ = std::fs::write(&browser_script, BROWSER_SCRIPT);
+    }
     // Anthropic's skill-creator (Apache-2.0, anthropics/skills), installed as a bundled skill.
     macro_rules! skill_files {
         ($($path:literal),* $(,)?) => {
@@ -366,19 +372,15 @@ fn add_kite_default_mcp_servers(effective: &mut toml::Value) {
         (
             "playwright",
             vec![
-                ("command", "npx".into()),
+                // Runs patchright-mcp (Patchright's fork of Playwright MCP) on Kite's own
+                // browser; reads `playwright_config` for user overrides.
+                ("command", "node".into()),
                 (
                     "args",
-                    Value::Array(vec![
-                        "-y".into(),
-                        // Patchright's fork of Playwright MCP: same tools, patched driver.
-                        "patchright-mcp@0.0.68".into(),
-                        "--config".into(),
-                        playwright_config.to_string_lossy().into_owned().into(),
-                    ]),
+                    Value::Array(vec![browser_script.to_string_lossy().into_owned().into()]),
                 ),
-                // First run downloads the package and a browser.
-                ("startup_timeout_sec", Value::Integer(120)),
+                // First run downloads the MCP package, ungoogled-chromium and uBlock Origin Lite.
+                ("startup_timeout_sec", Value::Integer(900)),
             ],
         ),
         (
@@ -395,7 +397,8 @@ fn add_kite_default_mcp_servers(effective: &mut toml::Value) {
                     ]),
                 ),
                 ("enabled", Value::Boolean(false)),
-                ("startup_timeout_sec", Value::Integer(180)),
+                // First run creates ~/.kite/camoufox-venv and downloads Camoufox.
+                ("startup_timeout_sec", Value::Integer(900)),
             ],
         ),
     ];

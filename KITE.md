@@ -67,6 +67,22 @@ argument schema is a flat object because llama.cpp's grammar conversion turns
 `oneOf`/`not` schemas into a grammar that only allows `{}`.
 
 Browser notes:
+- The `playwright` server runs Kite's own isolated browser (Windows x64):
+  `~/.kite/kite-browser-mcp.mjs` downloads the latest
+  [ungoogled-chromium](https://github.com/ungoogled-software/ungoogled-chromium-windows/releases)
+  to `~/.kite/browser/` and
+  [uBlock Origin Lite](https://github.com/uBlockOrigin/uBOL-home/releases) to
+  `~/.kite/extensions/ublock-lite/` on first use, sets uBlock to full strength
+  ("complete"), and uses its own profile `~/.kite/browser-profile`. Nothing is
+  shared with global Playwright installs. `KITE_BROWSER_UPDATE=1` re-downloads
+  the latest. Setting `executablePath` in `~/.kite/playwright-mcp.json` uses
+  your own browser instead; on other platforms, or if setup fails, it uses
+  installed Google Chrome.
+- Camoufox installs itself: on first use `~/.kite/camoufox-mcp.py` creates
+  `~/.kite/camoufox-venv`, installs the latest Camoufox (Playwright pinned to
+  1.62 to match its MCP) and downloads the browser. `KITE_CAMOUFOX_UPDATE=1`
+  reinstalls.
+
 - No Chrome? Set `"channel": "chromium"` in `~/.kite/playwright-mcp.json` and run
   `npx patchright install chromium`.
 - Camoufox sessions are not persistent (Playwright cannot serve a persistent
