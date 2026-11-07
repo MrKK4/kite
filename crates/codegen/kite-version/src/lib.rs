@@ -1,4 +1,4 @@
-//! Installed grok CLI version, kept in sync with the shipping binaries.
+//! Installed Kite CLI version, kept in sync with the shipping binaries.
 
 #![deny(clippy::indexing_slicing)]
 

@@ -1,9 +1,9 @@
 [package]
 license = "Apache-2.0"
 name = "kite-version"
-version = "1.0.45"
+version = "0.1.2"
 edition.workspace = true
-description = "Lockstepped grok CLI version."
+description = "Lockstepped Kite CLI version."
 
 [dependencies]
 semver = { workspace = true }

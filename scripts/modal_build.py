@@ -9,6 +9,7 @@ import hashlib
 import os
 import subprocess
 import tempfile
+import tomllib
 
 import modal
 
@@ -40,7 +41,7 @@ image = (
 
 
 @app.function(image=image, cpu=16, memory=65536, timeout=14400, volumes={"/cache": cache})
-def build(target: str = "windows", mode: str = "build") -> dict:
+def build(target: str = "windows", mode: str = "build", source_commit: str = "") -> dict:
     import shutil
 
     shutil.copytree("/src", "/work/kite", dirs_exist_ok=True)
@@ -59,6 +60,11 @@ def build(target: str = "windows", mode: str = "build") -> dict:
         "PROTOC": "/usr/bin/protoc",
         "KITE_HOME": "/tmp/kite-build-home",
     })
+    # Keep the version crate and binary build script on the same release number.
+    version = tomllib.loads(Path("crates/codegen/kite-version/Cargo.toml").read_text())["package"]["version"]
+    os.environ["GROK_VERSION"] = version
+    if source_commit:
+        os.environ["KITE_BUILD_COMMIT"] = source_commit
     # Keep registry downloads reusable without sharing Cargo's SQLite database
     # or lock files between containers. Only one build uses this Volume at a time.
     cargo_home = Path("/work/cargo")
@@ -121,6 +127,8 @@ def build(target: str = "windows", mode: str = "build") -> dict:
         # The system prompt ships as an XOR-obfuscated copy of templates/*.md; a
         # template edit without regenerating silently builds the old prompt.
         run(["python3", "crates/codegen/kite-agent/scripts/encrypt_templates.py"])
+        run(["python3", "scripts/test_version_stamping.py"])
+        run(["cargo", "test", "--locked", "-p", "kite-version"])
         formatted = format_source()
         if target == "windows":
             run(["cargo", "xwin", "build", "--locked", "--release", "--target", "x86_64-pc-windows-msvc", "-p", "kite-pager-bin", "--bin", "kite"])
@@ -140,7 +148,19 @@ def build(target: str = "windows", mode: str = "build") -> dict:
 
 @app.local_entrypoint()
 def main(target: str = "windows", mode: str = "build"):
-    result = build.remote(target, mode)
+    # Resolve provenance before .git is excluded from the source upload. A build
+    # from modified source is labelled dirty rather than claiming a clean commit.
+    source_commit = ""
+    if mode == "build":
+        source_commit = subprocess.check_output(
+            ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True,
+        ).strip()
+        if subprocess.check_output(
+            ["git", "-C", str(ROOT), "status", "--porcelain"], text=True,
+        ).strip():
+            source_commit += "-dirty"
+        print(f"Building source revision {source_commit}")
+    result = build.remote(target, mode, source_commit)
     print(result)
     for name in (result.get("artifact"), result.get("formatted")):
         if not name:

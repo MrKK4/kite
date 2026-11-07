@@ -4,8 +4,10 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 (upstream commit `2bdd1d6a`, see `SOURCE_REV`). Details and settings live in
 [KITE.md](KITE.md).
 
-## Unreleased
+## v0.1.2 — installers and build version
 
+- Report the Kite release version and source commit in `kite --version`,
+  including Modal builds that upload source without Git metadata.
 - Add Windows PowerShell and Git Bash one-line installers, with release SHA-256
   verification, user PATH setup, version pinning and custom install directories.
 - Preserve the previous binary if a download fails checksum verification.

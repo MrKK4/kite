@@ -29,3 +29,4 @@ crates/codegen/kite-agent/src/prompt/skills.rs
 crates/codegen/kite-config/src/compat_tests.rs
 crates/codegen/kite-tools/src/implementations/skills/discovery.rs
 crates/codegen/kite-pager/src/app/agent_view/prompt.rs
+crates/codegen/kite-pager-bin/build.rs

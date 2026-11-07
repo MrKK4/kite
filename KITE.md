@@ -212,3 +212,16 @@ The system prompt is compiled from an obfuscated copy of
 `crates/codegen/kite-agent/templates/*.md`. The Modal build regenerates it;
 for a local build after editing a template, first run
 `python crates/codegen/kite-agent/scripts/encrypt_templates.py`.
+
+## Release versions
+
+The CLI version is kept in sync across the `kite-version`, `kite-pager-bin`,
+`kite-pager` and `kite-shell` manifests. A release bump updates all four and
+refreshes Cargo.lock on Modal before the release build.
+
+Modal passes that package version and the source Git revision into the build,
+so `kite --version` reports the Kite release and a 12-character source commit
+(for example, `kite 0.1.2 (0123456789ab)`). Modified source gets a `-dirty` suffix.
+Official releases are built from a clean checkout of their published source.
+Local Cargo builds read the commit from Git; source archives without Git can
+supply it through the build-time `KITE_BUILD_COMMIT` environment variable.
