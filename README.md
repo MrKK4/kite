@@ -18,6 +18,7 @@ You can use it yourself too. Connecting it to a cloudflared tunnel (or any
 OpenAI-compatible server) is pretty straightforward; see
 [Usage and connecting](#usage-and-connecting) below.
 
+[What's different](#whats-different-from-grok-build) ·
 [Usage and connecting](#usage-and-connecting) ·
 [Building from source](#building-from-source) ·
 [Documentation](#documentation) ·
@@ -27,6 +28,26 @@ OpenAI-compatible server) is pretty straightforward; see
 [License and provenance](#license-and-provenance)
 
 ---
+
+## What's different from Grok Build
+
+The highlights (full list in [CHANGELOG.md](CHANGELOG.md)):
+
+- 🔌 **Bring your own model:** `kite login <url>` for any OpenAI-compatible
+  server or cloudflared tunnel. No account needed.
+- ⚡ **Fast on a single local server:** no hidden side requests, and history is
+  never rewritten, so llama.cpp's prompt cache keeps replies quick even deep
+  into long chats. Starting context is cut roughly in half (~20k → ~11k tokens).
+- 🧠 **Memory:** a built-in knowledge-graph memory that loads into every
+  session, plus search across past chats ("do you remember...").
+- 🌐 **Web and browser:** keyless Exa/Parallel search, `web_fetch`, a real
+  Chrome browser (Patchright), and opt-in Camoufox for bot-protected sites.
+- 🖥️ **UI fixes:** typing and flicker fixed on Windows, right-click paste,
+  Esc cancels, clickable file paths, tighter layout.
+- 🧩 **Skills and plugins:** bundled skill-creator, Claude Code plugins, hooks
+  via Git Bash on Windows.
+- 🔒 **Nothing goes to xAI:** telemetry, feedback, account, billing, remote
+  settings, updater, voice and media tools are removed.
 
 ## Usage and connecting
 
