@@ -2197,14 +2197,20 @@ impl AppView {
             "non-paste events cannot carry paste provenance"
         );
         let mut normalized = self.keyboard_normalizer.rescue(ev);
-        // Kite: mouse capture hides right-click from the terminal's own paste,
-        // so treat it as Ctrl+V and reuse every view's existing paste path.
+        // Kite: mouse capture hides right-click from the terminal's own paste. Paste clipboard
+        // text as a bracketed paste (the terminal, not Kite, handles text on Ctrl+V); with no
+        // text, fall back to Ctrl+V so an image on the clipboard still attaches.
         if matches!(&*normalized, Event::Mouse(m) if m.kind == MouseEventKind::Down(MouseButton::Right))
         {
-            normalized = std::borrow::Cow::Owned(Event::Key(crossterm::event::KeyEvent::new(
-                KeyCode::Char('v'),
-                crossterm::event::KeyModifiers::CONTROL,
-            )));
+            normalized = std::borrow::Cow::Owned(
+                match crate::clipboard::system_clipboard_get().filter(|t| !t.is_empty()) {
+                    Some(text) => Event::Paste(text),
+                    None => Event::Key(crossterm::event::KeyEvent::new(
+                        KeyCode::Char('v'),
+                        crossterm::event::KeyModifiers::CONTROL,
+                    )),
+                },
+            );
         }
         let ev: &Event = &normalized;
         let key_event = match ev {
