@@ -28,7 +28,7 @@ Not `/config-agents` (alias `/agents`), which manages agent *definitions* and pe
 
 Compress conversation history to reclaim context-window space.
 
-Kite also auto-compacts once the context window hits 85% (tune it with `[session] auto_compact_threshold_percent`). Models discovered with `/login` instead compact at 220,000 tokens (`auto_compact_at_tokens` in the model's config entry).
+Kite also auto-compacts once the context window hits 85% (tune it with `[session] auto_compact_threshold_percent`). Models discovered with `/login` instead compact at 88% of the context size the server reports (`auto_compact_at_tokens` in the model's config entry).
 
 ### `/context`
 

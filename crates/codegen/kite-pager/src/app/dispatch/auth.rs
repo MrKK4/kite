@@ -359,7 +359,7 @@ pub(super) fn handle_auth_complete(
         {
             let model_id = state.current_model_id.clone();
             let connected_notice =
-                format!("Connected to {}. Auto-compact: 220,000 tokens.", model_id.0);
+                format!("Connected to {}. Auto-compact at 88% of the server's context window.", model_id.0);
             app.models = crate::acp::model_state::ModelState::from(Some(state));
             for agent in app.agents.values_mut() {
                 agent

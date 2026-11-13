@@ -10,7 +10,7 @@ Kite tracks token and context usage locally, per session. Nothing is sent anywhe
 - **`/session-info`** (aliases `/status`, `/info`) shows the model, turn count, and context usage for the current session.
 - **`/context-window <size>`** overrides the context window size for the current model (for example `/context-window 256000`). See [Slash Commands](04-slash-commands.md).
 
-Models discovered with `kite login` / `/login` default to a 262,144-token context window and compact at 220,000 tokens. To change that for a model, edit `context_window` and `auto_compact_at_tokens` in the model's entry in `~/.kite/config.toml`. See [Custom Models](11-custom-models.md) and [Session Management](17-sessions.md) for compaction.
+Models discovered with `kite login` / `/login` use the context size the server reports (llama.cpp `/props`, else `/models`; 262,144 if unknown) and compact at 88% of it. To change that for a model, edit `context_window` and `auto_compact_at_tokens` in the model's entry in `~/.kite/config.toml`. See [Custom Models](11-custom-models.md) and [Session Management](17-sessions.md) for compaction.
 
 ---
 

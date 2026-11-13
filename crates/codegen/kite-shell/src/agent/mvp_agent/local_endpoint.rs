@@ -5,8 +5,14 @@ use crate::agent::config::ConfigModelOverride;
 use std::num::NonZeroU64;
 use std::time::Duration;
 
+/// Fallback when the server does not report its context size.
 const LOCAL_CONTEXT_WINDOW: u64 = 262_144;
-const LOCAL_COMPACT_AT: u64 = 230_000;
+/// Compact at this share of the server's context window.
+const LOCAL_COMPACT_PERCENT: u64 = 88;
+
+fn compact_at(context_window: u64) -> u64 {
+    context_window * LOCAL_COMPACT_PERCENT / 100
+}
 
 /// Accept a base URL, never an inference path or URL carrying credentials.
 fn normalize_base_url(raw: &str) -> anyhow::Result<String> {
@@ -40,14 +46,33 @@ struct ModelsResponse {
 #[derive(serde::Deserialize)]
 struct DiscoveredModel {
     id: String,
+    /// vLLM reports the served context length here.
+    #[serde(default)]
+    max_model_len: Option<u64>,
+    /// llama.cpp reports the model's training context here.
+    #[serde(default)]
+    meta: Option<ModelMeta>,
+}
+
+#[derive(serde::Deserialize)]
+struct ModelMeta {
+    #[serde(default)]
+    n_ctx_train: Option<u64>,
 }
 
 fn local_models(
     base_url: &str,
     response: ModelsResponse,
+    server_context: Option<u64>,
 ) -> anyhow::Result<IndexMap<String, ConfigModelOverride>> {
     let mut models = IndexMap::new();
     for model in response.data {
+        // The server's configured context (llama.cpp /props) wins; then what /models reports.
+        let context_window = server_context
+            .or(model.max_model_len)
+            .or(model.meta.as_ref().and_then(|m| m.n_ctx_train))
+            .filter(|&n| n >= 4_096)
+            .unwrap_or(LOCAL_CONTEXT_WINDOW);
         let id = model.id.trim();
         if id.is_empty() {
             continue;
@@ -63,9 +88,9 @@ fn local_models(
                 // xAI session token or XAI_API_KEY on an unauthenticated server.
                 api_key: Some("none".into()),
                 api_backend: Some(crate::sampling::ApiBackend::ChatCompletions),
-                context_window: Some(LOCAL_CONTEXT_WINDOW),
-                auto_compact_at_tokens: NonZeroU64::new(LOCAL_COMPACT_AT),
-                auto_compact_threshold_percent: Some(88),
+                context_window: Some(context_window),
+                auto_compact_at_tokens: NonZeroU64::new(compact_at(context_window)),
+                auto_compact_threshold_percent: Some(LOCAL_COMPACT_PERCENT as u8),
                 max_completion_tokens: Some(32_768),
                 supports_reasoning_effort: Some(false),
                 supports_backend_search: Some(false),
@@ -90,7 +115,27 @@ async fn discover(base_url: &str) -> anyhow::Result<IndexMap<String, ConfigModel
         .error_for_status()?
         .json::<ModelsResponse>()
         .await?;
-    local_models(base_url, response)
+    local_models(base_url, response, server_context(base_url).await)
+}
+
+/// llama.cpp's configured context (`n_ctx` from `/props` at the server root). Best effort.
+async fn server_context(base_url: &str) -> Option<u64> {
+    let root = base_url.strip_suffix("/v1").unwrap_or(base_url);
+    let props: serde_json::Value = crate::http::shared_client()
+        .get(format!("{root}/props"))
+        .timeout(Duration::from_secs(10))
+        .send()
+        .await
+        .ok()?
+        .error_for_status()
+        .ok()?
+        .json()
+        .await
+        .ok()?;
+    props
+        .pointer("/default_generation_settings/n_ctx")
+        .or_else(|| props.get("n_ctx"))
+        .and_then(serde_json::Value::as_u64)
 }
 
 /// `kite login <url>`: discover and persist the endpoint before the TUI starts,
@@ -224,7 +269,7 @@ mod tests {
         let response = serde_json::from_value(serde_json::json!({
             "data": [{"id": "Qwen3", "object": "model"}, {"id": ""}, {"id": "Qwen3"}, {"id": "second"}]
         })).unwrap();
-        let models = local_models("http://localhost:8080/v1", response).unwrap();
+        let models = local_models("http://localhost:8080/v1", response, None).unwrap();
         assert_eq!(models.len(), 2);
         let (key, model) = models.first().unwrap();
         assert_eq!(key, "local:Qwen3");
@@ -232,9 +277,27 @@ mod tests {
         assert_eq!(model.context_window, Some(262_144));
         assert_eq!(
             model.auto_compact_at_tokens.map(NonZeroU64::get),
-            Some(230_000)
+            Some(230_686)
         );
         assert_eq!(model.supports_reasoning_effort, Some(false));
-        assert!(local_models("http://localhost/v1", ModelsResponse { data: vec![] }).is_err());
+        assert!(local_models("http://localhost/v1", ModelsResponse { data: vec![] }, None).is_err());
+    }
+
+    #[test]
+    fn compaction_follows_the_server_context_size() {
+        let response = || {
+            serde_json::from_value::<ModelsResponse>(serde_json::json!({
+                "data": [{"id": "q", "meta": {"n_ctx_train": 262144}, "max_model_len": 65536}]
+            }))
+            .unwrap()
+        };
+        // llama.cpp /props (configured n_ctx) wins over what /models reports.
+        let (_, m) = local_models("u", response(), Some(131_072)).unwrap().shift_remove_index(0).unwrap();
+        assert_eq!(m.context_window, Some(131_072));
+        assert_eq!(m.auto_compact_at_tokens.map(NonZeroU64::get), Some(115_343));
+        // Without /props, vLLM's max_model_len is used.
+        let (_, m) = local_models("u", response(), None).unwrap().shift_remove_index(0).unwrap();
+        assert_eq!(m.context_window, Some(65_536));
+        assert_eq!(m.auto_compact_at_tokens.map(NonZeroU64::get), Some(57_671));
     }
 }

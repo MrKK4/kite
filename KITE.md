@@ -44,8 +44,11 @@ template and thinking configuration; streamed `reasoning_content` is supported.
 The endpoint is expected to accept unauthenticated requests (the inference
 credential is the placeholder `none`, matching the supplied llama.cpp setup).
 
-Models discovered this way default to a 262,144-token context window and compact
-at **230,000 tokens**. Edit `context_window` and `auto_compact_at_tokens` in the
+Models discovered this way use the context size the server reports (llama.cpp
+`/props` `n_ctx`, else `max_model_len` or the model's training context from
+`/models`; 262,144 if unknown) and compact at **88%** of it, e.g. 230,686 tokens
+for 262,144 or 115,343 for 131,072. Log in again after changing the server's
+context size. Edit `context_window` and `auto_compact_at_tokens` in the
 model's config entry for a different model size.
 
 ## Tools and MCP servers
@@ -129,7 +132,7 @@ The server reuses its prompt cache only while the start of the prompt stays
 identical, so Kite keeps sent history stable:
 - Request-time trimming of old tool results is off (`[compaction.pruning]
   enabled`); it rewrote earlier messages and caused multi-minute re-reads.
-  Compaction at 230k tokens handles size instead.
+  Compaction at 88% of the context handles size instead.
 - Two-pass compaction (a speculative early summary call) is off
   (`[features] two_pass_compaction`).
 - Requests send `chat_template_kwargs: {"preserve_thinking": true}` so Qwen-style

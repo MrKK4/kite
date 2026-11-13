@@ -39,7 +39,7 @@ Each `local:*` entry is written with settings suited to a single local server:
 |---------|-------|
 | `api_backend` | `chat_completions` (OpenAI Chat Completions, `max_tokens`, system messages) |
 | `context_window` | 262,144 tokens |
-| `auto_compact_at_tokens` | 220,000 tokens (compaction starts here) |
+| `auto_compact_at_tokens` | 88% of the server-reported context (compaction starts here) |
 | `max_completion_tokens` | 32,768 |
 | `api_key` | `none` (placeholder; the server is expected to accept unauthenticated requests) |
 | Reasoning effort | not sent; the server owns its chat template and thinking configuration |

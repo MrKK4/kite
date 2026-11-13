@@ -37,7 +37,7 @@ The local profile uses OpenAI Chat Completions with `max_tokens` and system mess
 
 ### Context size
 
-Models discovered this way default to a 262,144-token context window and compact at 220,000 tokens. Edit `context_window` and `auto_compact_at_tokens` in the model's entry in `~/.kite/config.toml` for a different model size. See [Custom Models](11-custom-models.md).
+Models discovered this way use the context size the server reports (llama.cpp `/props`, else `/models`; 262,144 if unknown) and compact at 88% of it. Edit `context_window` and `auto_compact_at_tokens` in the model's entry in `~/.kite/config.toml` for a different model size. See [Custom Models](11-custom-models.md).
 
 ---
 

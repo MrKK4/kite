@@ -6,6 +6,16 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 
 
+
+## Unreleased
+
+- Docs: user guide now says local models compact at 230,000 tokens (the code
+  already did; four pages still said 220,000).
+- Local models now use the context size the server reports at `/login`
+  (llama.cpp `/props`, vLLM `max_model_len`, or the training context; 262,144 if
+  unknown) and compact at 88% of it, so a 131k server compacts at ~115k. The
+  login message no longer shows a hard-coded 220,000.
+
 ## v0.1.6 — browser guide and tool-definition fixes
 
 - Browser: hide Chromium's "unsupported command-line flag" warning bar caused by
