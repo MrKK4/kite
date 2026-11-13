@@ -9,6 +9,7 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 ## Unreleased
 
+- The terminal window/tab title said "grok"; it now says "kite".
 - Docs: user guide now says local models compact at 230,000 tokens (the code
   already did; four pages still said 220,000).
 - Local models now use the context size the server reports at `/login`
