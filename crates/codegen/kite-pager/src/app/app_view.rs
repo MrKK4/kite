@@ -2199,7 +2199,7 @@ impl AppView {
         let mut normalized = self.keyboard_normalizer.rescue(ev);
         // Kite: mouse capture hides right-click from the terminal's own paste. Paste clipboard
         // text as a bracketed paste (the terminal, not Kite, handles text on Ctrl+V); with no
-        // text, fall back to Ctrl+V so an image on the clipboard still attaches.
+        // text, send Alt+V (Kite's image paste; terminals intercept Ctrl+V) so an image attaches.
         if matches!(&*normalized, Event::Mouse(m) if m.kind == MouseEventKind::Down(MouseButton::Right))
         {
             normalized = std::borrow::Cow::Owned(
@@ -2207,7 +2207,7 @@ impl AppView {
                     Some(text) => Event::Paste(text),
                     None => Event::Key(crossterm::event::KeyEvent::new(
                         KeyCode::Char('v'),
-                        crossterm::event::KeyModifiers::CONTROL,
+                        crossterm::event::KeyModifiers::ALT,
                     )),
                 },
             );

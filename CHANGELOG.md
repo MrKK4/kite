@@ -9,8 +9,8 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 ## Unreleased
 
-- Right-click now pastes clipboard text (it only attached clipboard images before,
-  because Ctrl+V text paste is done by the terminal, not Kite).
+- Right-click now pastes clipboard text, or a clipboard image like Alt+V (before,
+  it pasted nothing: Ctrl+V text paste is done by the terminal, not Kite).
 - The terminal window/tab title said "grok"; it now says "kite".
 - Docs: user guide now says local models compact at 230,000 tokens (the code
   already did; four pages still said 220,000).
