@@ -138,6 +138,28 @@ identical, so Kite keeps sent history stable:
 - Requests send `chat_template_kwargs: {"preserve_thinking": true}` so Qwen-style
   templates keep earlier reasoning instead of re-rendering history.
 
+## Goals (`/goal`)
+
+`/goal <objective>` is a simple single-model loop: no planner, verifier,
+strategist or summarizer agents and no classifier or other side requests (the
+upstream harness waited on helpers that a single-slot server never ran, so it
+hung). The model gets the objective and these rules, and after each turn Kite
+reads its last reply:
+- `GOAL COMPLETE` (exact, case-sensitive, anywhere) ends the goal as complete.
+- `GOAL BLOCKED: <reason>` stops it as blocked; fix it, then `/goal resume`.
+- Otherwise a short continuation is appended (history is never rewritten), up
+  to 30 rounds. At the cap the goal pauses with a notice; `/goal resume` gives
+  another 30.
+- For multi-item work the model keeps `goal-progress.md` in the working
+  directory (`- [ ]` / `- [x]`). After a compaction it is told to read it and
+  continue from the first unchecked item.
+- Esc pauses the goal and queues nothing; `/goal pause` and `/goal clear` also
+  stop it. `--budget <tokens>` still applies.
+
+The switch is `KITE_SIMPLE_GOAL` in
+`crates/codegen/kite-shell/src/session/acp_session_impl/goal_support.rs`;
+`false` restores the upstream orchestrated harness.
+
 ## Screen layout
 
 Kite uses tighter spacing than upstream so answers get most of the screen: no

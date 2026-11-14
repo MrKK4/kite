@@ -9,6 +9,22 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 ## v0.1.7 — lean browsers, context-aware compaction, paste and title fixes
 
+- `/goal` no longer hangs on a local model: it is now a simple single-model
+  loop with no helper agents or side requests. The model replies
+  `GOAL COMPLETE` or `GOAL BLOCKED: <reason>`; otherwise Kite continues it for
+  up to 30 rounds. Long goals keep a `goal-progress.md` checklist that is
+  re-read after compaction; Esc stops the loop.
+- System prompt tightened: Kite is described as a general assistant (research,
+  browsing, files), not only for code; new tool-use rules for local models
+  (check instead of guessing, use only results actually received, change
+  approach after a failed call and stop after two tries, MCP via
+  search_tool/use_tool); memory saves immediately on "remember this"; the
+  communication rules are condensed from ~600 to ~170 words (fewer tokens on
+  every request); the user-guide note points at the browser guide.
+- Compaction prompt keeps more of what matters: a section for the user's
+  standing preferences and rules, decisions and rejected options, and key facts
+  (verified vs assumed); exact values (URLs, IDs, versions, numbers) are copied
+  verbatim; longer summaries allowed (about 2,000-6,000 words).
 - Browser lean mode (both servers): actions no longer return page snapshots;
   `browser_snapshot` saves to a file in `~/Downloads/Kite` that the model
   searches, and links are pulled with `browser_evaluate`. About 85% less

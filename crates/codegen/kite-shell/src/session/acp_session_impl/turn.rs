@@ -1940,6 +1940,13 @@ impl SessionActor {
             }
             return;
         }
+        if !turn_succeeded && goal_active_now && KITE_SIMPLE_GOAL {
+            // Simple goals continue only from a completed turn, so a cancelled / failed turn ends the loop.
+            // Pause so the goal does not stay Active with nothing driving it (e.g. an Esc whose cancel did not settle).
+            self.auto_pause_goal_if_active(crate::session::goal_tracker::GoalPauseReason::User)
+                .await;
+            return;
+        }
         if !turn_succeeded && goal_active_now {
             let current_tokens = self.chat_state_handle.get_total_tokens().await as i64;
             if self.enforce_goal_token_budget(current_tokens).await {

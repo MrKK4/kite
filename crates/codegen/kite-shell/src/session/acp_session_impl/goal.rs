@@ -820,6 +820,14 @@ impl SessionActor {
             );
         }
 
+        if KITE_SIMPLE_GOAL {
+            // Simple loop: no planner subagent; the first directive carries the objective and loop contract.
+            let body = render_simple_goal_rules(objective);
+            return GoalSetupOutcome::Inference {
+                reminder: format!("<system-reminder>\n{body}\nStart now.\n</system-reminder>\n\n"),
+            };
+        }
+
         self.maybe_run_goal_planner(objective).await;
         if let Some(msg) = self.planner_pause_short_circuit_message("Goal paused.") {
             return GoalSetupOutcome::Message(msg);
@@ -941,7 +949,7 @@ impl SessionActor {
             .store(0, std::sync::atomic::Ordering::Relaxed);
 
         let mut planner_published = false;
-        if was_resumed {
+        if was_resumed && !KITE_SIMPLE_GOAL {
             let needs_retry = {
                 let tracker = self.goal_tracker.lock();
                 tracker
@@ -1026,7 +1034,13 @@ impl SessionActor {
                 let scratch_dir =
                     crate::session::goal_tracker::implementer_scratch_dir(&o.verifier_id);
                 let scratch = scratch_dir.to_string_lossy();
-                let body = if self.goal_runs_on_workflow_engine() {
+                let body = if KITE_SIMPLE_GOAL {
+                    format!(
+                        "{block_recap}{goal_state}{rules}\n{resume}",
+                        rules = render_simple_goal_rules(&o.objective),
+                        resume = simple_goal_resume_step(),
+                    )
+                } else if self.goal_runs_on_workflow_engine() {
                     render_goal_rules(
                         &o.objective,
                         &names,
@@ -1095,7 +1109,10 @@ impl SessionActor {
         let mut ctx = format!(
             "Objective: {objective}\nDo not restart this goal or revive a prior unrelated task. Continue from the current next step."
         );
-        if let Some(step) = resolve_goal_next_step(plan_path.as_deref()) {
+        if KITE_SIMPLE_GOAL {
+            ctx.push_str("\nNext step: ");
+            ctx.push_str(&simple_goal_resume_step());
+        } else if let Some(step) = resolve_goal_next_step(plan_path.as_deref()) {
             ctx.push_str("\nNext step: ");
             ctx.push_str(&step);
         }
@@ -1135,8 +1152,12 @@ impl SessionActor {
                 goal_reminder_plan_path(planner_enabled, o).map(std::path::Path::to_path_buf);
             (o.objective.clone(), status, elapsed, plan_path, is_active)
         };
-        let next_step = resolve_goal_next_step(plan_path.as_deref())
-            .unwrap_or_else(|| format!("Check your `{}` list for next steps.", names.todo));
+        let next_step = if KITE_SIMPLE_GOAL {
+            simple_goal_resume_step()
+        } else {
+            resolve_goal_next_step(plan_path.as_deref())
+                .unwrap_or_else(|| format!("Check your `{}` list for next steps.", names.todo))
+        };
         let body = if is_active {
             format!(
                 "Objective: {objective}\nStatus: {status}\nTokens: {tokens_used} | Elapsed: {elapsed}\n\n{GOAL_CONTINUATION_SENTINEL}\n{next_step}\n\nDo not restart this goal or revive a prior unrelated task."
@@ -1151,6 +1172,22 @@ impl SessionActor {
 
     /// Inject GoalSummary so the next sample sees next-step, not create-style rules.
     pub(crate) async fn reseed_active_goal_after_compaction(&self) {
+        if KITE_SIMPLE_GOAL {
+            // Re-seed only a live goal; the directive points the model back at the progress checklist.
+            let objective = if laziness_injection_active(
+                self.goal_harness_enabled(),
+                self.goal_tracker.lock().status(),
+            ) {
+                self.goal_objective_for_compaction()
+            } else {
+                None
+            };
+            if let Some(objective) = objective {
+                self.inject_goal_continuation_message(render_simple_goal_reseed(&objective))
+                    .await;
+            }
+            return;
+        }
         let current_tokens = self.chat_state_handle.get_total_tokens().await as i64;
         let Some(plan) = self
             .prepare_goal_continuation(current_tokens, GoalContinuationPurpose::Compaction)
@@ -1397,8 +1434,114 @@ impl SessionActor {
         }
     }
 
+    /// Kite simple-goal round end (see [`KITE_SIMPLE_GOAL`]): decides from the current turn's last assistant message and the
+    /// continuation-round count only, with no helper subagents and no model requests.
+    /// Returns the next continuation directive when the loop should keep going.
+    /// `None` means the goal was not active, or it was just ended here (completed, blocked, round cap, or token budget).
+    async fn simple_goal_round_end(&self) -> Option<String> {
+        use crate::session::goal_tracker::{GoalPauseReason, GoalStatus};
+        if !laziness_injection_active(
+            self.goal_harness_enabled(),
+            self.goal_tracker.lock().status(),
+        ) {
+            return None;
+        }
+        // Bounded to the current prompt turn so a marker from an earlier goal's reply can never match.
+        let last_text = self
+            .chat_state_handle
+            .get_last_assistant_text_in_turn()
+            .await;
+        let rounds_run = self
+            .goal_tracker
+            .lock()
+            .snapshot()
+            .map_or(0, |o| o.rounds_since_verify);
+        let current_tokens = self.chat_state_handle.get_total_tokens().await as i64;
+        match decide_simple_goal_round(last_text.as_deref(), rounds_run) {
+            SimpleGoalDecision::Complete => {
+                let (tokens_used, finished_marginal) = self.goal_tokens(current_tokens);
+                let notify = self.goal_notify_sender();
+                let completed = {
+                    let mut tracker = self.goal_tracker.lock();
+                    let completed = tracker.complete();
+                    if completed {
+                        notify.emit_goal_updated(&mut tracker, tokens_used, finished_marginal);
+                    }
+                    completed
+                };
+                if completed {
+                    self.send_slash_command_output(&format!(
+                        "Goal complete: the model reported {SIMPLE_GOAL_COMPLETE_MARKER}."
+                    ))
+                    .await;
+                }
+                None
+            }
+            SimpleGoalDecision::Blocked(reason) => {
+                let reason = if reason.is_empty() {
+                    "no reason given".to_owned()
+                } else {
+                    reason
+                };
+                if self
+                    .auto_pause_goal_if_active_with_message(
+                        GoalPauseReason::Verification,
+                        format!("Model reported {SIMPLE_GOAL_BLOCKED_MARKER}: {reason}"),
+                    )
+                    .await
+                {
+                    self.send_slash_command_output(&format!(
+                        "Goal blocked: {reason}\nUse /goal resume after addressing it, or /goal clear."
+                    ))
+                    .await;
+                }
+                None
+            }
+            SimpleGoalDecision::RoundCap => {
+                let msg = format!(
+                    "Goal stopped: reached the {SIMPLE_GOAL_MAX_ROUNDS}-round cap without \
+                     {SIMPLE_GOAL_COMPLETE_MARKER}. Use /goal resume for another \
+                     {SIMPLE_GOAL_MAX_ROUNDS} rounds, or /goal clear."
+                );
+                if self
+                    .auto_pause_goal_if_active_with_message(GoalPauseReason::BackOff, msg.clone())
+                    .await
+                {
+                    self.send_slash_command_output(&msg).await;
+                }
+                None
+            }
+            SimpleGoalDecision::Continue => {
+                if self.enforce_goal_token_budget(current_tokens).await {
+                    return None;
+                }
+                let (tokens_used, finished_marginal) = self.goal_tokens(current_tokens);
+                let notify = self.goal_notify_sender();
+                let round = {
+                    let mut tracker = self.goal_tracker.lock();
+                    // Re-check: Esc / `/goal pause` / `/goal clear` may have landed while this round ended.
+                    if tracker.status() != Some(GoalStatus::Active) {
+                        return None;
+                    }
+                    let o = tracker.snapshot_mut()?;
+                    o.rounds_since_verify = o.rounds_since_verify.saturating_add(1);
+                    let round = o.rounds_since_verify;
+                    notify.emit_goal_updated(&mut tracker, tokens_used, finished_marginal);
+                    round
+                };
+                Some(render_simple_goal_continuation(round))
+            }
+        }
+    }
+
     pub(super) async fn run_goal_round_end(&self) -> GoalRoundDecision {
         use crate::session::goal_evaluator::GoalEvaluatorDecision;
+        if KITE_SIMPLE_GOAL {
+            return match self.simple_goal_round_end().await {
+                Some(directive) => GoalRoundDecision::Continue(directive),
+                None => GoalRoundDecision::EndTurn,
+            };
+        }
         if !laziness_injection_active(
             self.goal_harness_enabled(),
             self.goal_tracker.lock().status(),
@@ -1496,18 +1639,37 @@ impl SessionActor {
     }
 
     pub(super) async fn inject_goal_continuation_message(&self, directive: String) {
-        self.prune_prior_goal_continuation_directives().await;
+        // Simple goals append only: pruning old directives rewrites already-sent history and breaks prompt-cache reuse.
+        if !KITE_SIMPLE_GOAL {
+            self.prune_prior_goal_continuation_directives().await;
+        }
         self.chat_state_handle
             .push_user_message(ConversationItem::goal_summary(directive));
     }
 
     pub(super) async fn maybe_queue_goal_continuation(&self) {
-        let current_tokens = self.chat_state_handle.get_total_tokens().await as i64;
-        let Some(plan) = self
-            .prepare_goal_continuation(current_tokens, GoalContinuationPurpose::TurnEnd)
-            .await
-        else {
-            return;
+        let plan = if KITE_SIMPLE_GOAL {
+            // Checked before deciding so an already-queued continuation never counts a second round.
+            if self.has_pending_goal_continuation().await {
+                return;
+            }
+            let Some(directive) = self.simple_goal_round_end().await else {
+                return;
+            };
+            GoalContinuationPlan {
+                directive,
+                stop_pattern: None,
+                strategy_rec: None,
+            }
+        } else {
+            let current_tokens = self.chat_state_handle.get_total_tokens().await as i64;
+            let Some(plan) = self
+                .prepare_goal_continuation(current_tokens, GoalContinuationPurpose::TurnEnd)
+                .await
+            else {
+                return;
+            };
+            plan
         };
         {
             let state = self.state.lock().await;
@@ -1521,7 +1683,9 @@ impl SessionActor {
                 return;
             }
         }
-        self.prune_prior_goal_continuation_directives().await;
+        if !KITE_SIMPLE_GOAL {
+            self.prune_prior_goal_continuation_directives().await;
+        }
 
         let prompt_id = format!("goal-summary-{}", uuid::Uuid::now_v7());
         let (respond_to, _) = tokio::sync::oneshot::channel();
@@ -1679,12 +1843,22 @@ impl SessionActor {
         use kite_tools::implementations::grok_build::update_goal::{
             RejectReason, UpdateGoalAck,
         };
-        if !self.goal_harness_enabled() {
+        // Simple goals never drain into the classifier / verifier; completion is the in-text marker.
+        if KITE_SIMPLE_GOAL || !self.goal_harness_enabled() {
+            let detail = if KITE_SIMPLE_GOAL {
+                format!(
+                    "update_goal is not used in this session. Reply with `{SIMPLE_GOAL_COMPLETE_MARKER}` \
+                     plus a short summary when the goal is done and verified, or \
+                     `{SIMPLE_GOAL_BLOCKED_MARKER}: <reason>` if truly stuck."
+                )
+            } else {
+                "Goal mode is not active for this session (no /goal run in \
+                 progress); update_goal has no effect."
+                    .to_string()
+            };
             let reject = || UpdateGoalAck::Rejected {
                 reason: RejectReason::HarnessDisabled,
-                detail: "Goal mode is not active for this session (no /goal run in \
-                         progress); update_goal has no effect."
-                    .to_string(),
+                detail: detail.clone(),
             };
             for (_input, ack_tx) in extra {
                 send_ack(ack_tx, reject());
@@ -2079,6 +2253,10 @@ impl SessionActor {
     /// Decides whether to continue the loop in-turn (with the continuation directive) or end the turn.
     /// The premature-stop signal, if any, is emitted here, once per continued round.
     pub(super) async fn run_goal_round_end_legacy(&self) -> GoalRoundDecision {
+        if KITE_SIMPLE_GOAL {
+            // Same simple loop on both engines; skips the TurnEnd drain (classifier) entirely.
+            return self.run_goal_round_end().await;
+        }
         let current_tokens = self.chat_state_handle.get_total_tokens().await as i64;
         let Some(plan) = self
             .prepare_goal_continuation(current_tokens, GoalContinuationPurpose::TurnEnd)

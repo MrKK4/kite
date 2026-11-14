@@ -264,17 +264,22 @@ fn detailed_compaction_prompt(user_context: Option<&str>) -> String {
     };
 
     format!(
-        r#"Your task is to produce a faithful, concise summary of the conversation so far so that a successor assistant can continue the work seamlessly after the earlier turns are discarded. The successor will see the user's original query plus this summary. Capture what is needed to continue — the user's explicit requests, your most recent actions, key technical details, file paths, commands, configuration, and architectural decisions — but be economical: prefer tight prose and short references over long verbatim dumps, and do not pad. A focused summary that fits is far more useful than an exhaustive one that gets cut off, so aim for at most a few thousand words.
+        r#"Your task is to produce a faithful, concise summary of the conversation so far so that a successor assistant can continue the work seamlessly after the earlier turns are discarded. The successor will see the user's original query plus this summary. Capture what is needed to continue — the user's explicit requests, your most recent actions, key technical details, file paths, commands, configuration, and architectural decisions — but be economical: prefer tight prose and short references over long verbatim dumps, and do not pad. Losing a fact is worse than a longer summary: keep every detail the work still depends on, and cut only repetition and dead ends. Aim for roughly 2,000-6,000 words depending on how much happened.
+
+Copy exact values verbatim, never paraphrased or rounded: URLs, file paths, commands, IDs, hashes, version numbers, ports, model names, error messages, and numbers the user gave or that were measured. Never include secrets (passwords, tokens, API keys); say that one exists and where it is configured instead.
 {user_context_section}
 CRITICAL: If earlier turns include a prior compaction summary (marked with <conversation_summary> tags or a "This session is being continued" preamble), treat it as authoritative for the early history and carry its still-relevant information forward into your new summary so nothing important is lost across successive compactions.
 
 Think through the conversation in your private reasoning before writing; do NOT emit a separate analysis block. Output the final summary inside a single <summary>...</summary> block, organized into the following numbered sections. Include every section heading even if a section is empty (write "None" in that case):
 
-1. Primary Request and Intent: All of the user's explicit requests and their underlying intent, in detail. Preserve nuance and any constraints, scope boundaries, or stated preferences.
+1. Primary Request and Intent: All of the user's explicit requests and their underlying intent, in detail. Preserve nuance and any constraints and scope boundaries.
+1b. User Preferences and Standing Instructions: Every rule or preference the user stated that should keep applying (reply length or style, tools or accounts to use or avoid, things to always or never do, how they want work verified or reported), quoted or near-verbatim. These must survive every compaction.
 2. Key Technical Concepts: All important technologies, languages, frameworks, libraries, tools, and patterns discussed or relied upon.
 3. Files and Code Sections: Every file examined, created, or modified. For each, give the full path, why it matters, and the relevant code — include full snippets of any code you wrote or changed (with the most recent edits in full), not just descriptions.
 4. Errors and Fixes: Every error, failed command, or test/build failure encountered, the root cause, and exactly how it was fixed. Note any fix that came from user feedback verbatim.
 5. Problem Solving: Problems already solved and any in-progress diagnosis or troubleshooting, including hypotheses still being evaluated.
+5b. Decisions and Rejected Options: Decisions made (by the user or agreed), and options that were considered and rejected or that the user declined, each with the reason, so they are not proposed again.
+5c. Key Facts and Environment: Exact facts the work relies on: servers, endpoints, accounts and repositories (by name, not credentials), directories, versions, measured results, and what was verified by actually running or checking it versus only assumed.
 6. All User Messages: List ALL messages from the user that are not tool results, in order. These are critical for understanding intent and how it evolved. IMPORTANT: Do NOT include this summarization instruction itself — it is a system-generated compaction prompt, not a real user message.
 7. Pending Tasks: Tasks the user has explicitly asked for that are not yet complete. Do not invent tasks the user never requested.
 8. Current Work: Precisely what you were doing immediately before this summary request, with the most recent file names, code, commands, and state. Be specific enough that work can resume mid-stream.

@@ -348,7 +348,7 @@ To pin the model a subagent uses, set its entry under `[subagents.models]`.
 
 ### Goal mode and background workflows
 
-`/goal` has two drivers, chosen by the background-workflows setting. With workflows enabled, the host-owned workflow engine evaluates rounds and drives completion verification; with them disabled, `/goal` falls back to the legacy model-facing `update_goal` tool. Whether `/goal` is available at all is a separate switch (the goal feature setting).
+`/goal` runs as a simple single-model loop (completion markers, a 30-round cap, and a `goal-progress.md` checklist; see [Slash Commands](04-slash-commands.md#goal)) whatever the background-workflows setting, and never starts planner or verifier agents. Whether `/goal` is available at all is a separate switch (the goal feature setting).
 
 Background workflows — named `.grok/workflows/*.rhai` scripts, `/deep-research`, and `/workflow` launches — are controlled by `[workflows] enabled`. Kite does not offer the model-facing `workflow` tool.
 
@@ -690,7 +690,7 @@ The key ones. See the README for the complete list.
 |----------|-------------|
 | `GROK_MEMORY` | Enable (`1`) or disable (`0`) cross-session memory |
 | `GROK_SUBAGENTS` | Enable (`1`) or disable (`0`) subagents |
-| `GROK_WORKFLOWS` | Enable (`1`) or disable (`0`) background workflows and select the `/goal` driver (default on: host-owned workflow driver; off: legacy `update_goal`) |
+| `GROK_WORKFLOWS` | Enable (`1`) or disable (`0`) background workflows (`/goal` uses the simple single-model loop either way) |
 | `GROK_WEB_FETCH` | Enable (`1`) or disable (`0`) the web_fetch tool |
 | `GROK_WEB_FETCH_ALLOW_LOCAL` | Allow `web_fetch` to explicit loopback hosts only (`localhost` / `127.0.0.0/8` / `::1`). Same as `[toolset.web_fetch] allow_local`. Default off; private/metadata stay blocked. |
 | `GROK_AGENT` | Custom agent definition path or name |

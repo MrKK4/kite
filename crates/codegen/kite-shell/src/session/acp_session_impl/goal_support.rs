@@ -229,6 +229,113 @@ pub(super) const GOAL_CONTINUATION_SENTINEL: &str =
 pub(super) const GOAL_CONTINUATION_BAIL_PREFACE: &str = "You appear to be stopping or handing off, but the goal is NOT complete \
      and todos remain. Do not end the turn here — keep working.\n\n";
 
+/// Kite: run `/goal` as a simple single-model loop.
+/// No planner / verifier / strategist / summarizer subagents and no classifier or other side model requests: the main model works,
+/// and after each completed turn the harness reads the last assistant message for [`SIMPLE_GOAL_COMPLETE_MARKER`] /
+/// [`SIMPLE_GOAL_BLOCKED_MARKER`] (see [`decide_simple_goal_round`]), else queues a short continuation, up to [`SIMPLE_GOAL_MAX_ROUNDS`].
+/// A single-slot local server cannot run helper agents alongside the main turn, so the old orchestrated path hung waiting on them.
+/// Set to `false` to restore the upstream orchestrated goal harness (code kept intact).
+pub(crate) const KITE_SIMPLE_GOAL: bool = true;
+
+/// Continuation rounds a simple goal may run before it stops (paused) and tells the user it hit the cap.
+pub(crate) const SIMPLE_GOAL_MAX_ROUNDS: u32 = 30;
+
+/// Exact, case-sensitive marker the model replies with once everything is done and verified.
+pub(crate) const SIMPLE_GOAL_COMPLETE_MARKER: &str = "GOAL COMPLETE";
+
+/// Exact, case-sensitive marker the model replies with (`GOAL BLOCKED: <reason>`) when truly stuck.
+pub(crate) const SIMPLE_GOAL_BLOCKED_MARKER: &str = "GOAL BLOCKED";
+
+/// Progress checklist the model keeps in the working directory so long goals survive compaction and restarts.
+pub(crate) const SIMPLE_GOAL_PROGRESS_FILE: &str = "goal-progress.md";
+
+/// Outcome of one simple-goal round.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) enum SimpleGoalDecision {
+    /// Last assistant message contains [`SIMPLE_GOAL_COMPLETE_MARKER`].
+    Complete,
+    /// Last assistant message contains [`SIMPLE_GOAL_BLOCKED_MARKER`]; carries the reason (may be empty).
+    Blocked(String),
+    /// Neither marker and fewer than [`SIMPLE_GOAL_MAX_ROUNDS`] continuation rounds have run.
+    Continue,
+    /// Neither marker and [`SIMPLE_GOAL_MAX_ROUNDS`] continuation rounds have already run.
+    RoundCap,
+}
+
+/// Pure round-end decision for the simple goal loop: markers first (complete wins over blocked), then the round cap.
+pub(crate) fn decide_simple_goal_round(
+    last_assistant_text: Option<&str>,
+    rounds_run: u32,
+) -> SimpleGoalDecision {
+    let text = last_assistant_text.unwrap_or_default();
+    if text.contains(SIMPLE_GOAL_COMPLETE_MARKER) {
+        return SimpleGoalDecision::Complete;
+    }
+    if let Some(idx) = text.find(SIMPLE_GOAL_BLOCKED_MARKER) {
+        let rest = &text[idx + SIMPLE_GOAL_BLOCKED_MARKER.len()..];
+        let reason = rest
+            .lines()
+            .next()
+            .unwrap_or_default()
+            .trim_start_matches(|c: char| c == ':' || c.is_whitespace())
+            .trim();
+        return SimpleGoalDecision::Blocked(reason.to_owned());
+    }
+    if rounds_run >= SIMPLE_GOAL_MAX_ROUNDS {
+        SimpleGoalDecision::RoundCap
+    } else {
+        SimpleGoalDecision::Continue
+    }
+}
+
+/// Simple-goal rules body (objective plus the loop contract); shared by `/goal <objective>`, `/goal resume` and the compaction re-seed.
+pub(crate) fn render_simple_goal_rules(objective: &str) -> String {
+    format!(
+        "Goal: {objective}\n\n\
+         Work toward this goal until it is fully done.\n\
+         - For multi-item work, keep a progress checklist in `{SIMPLE_GOAL_PROGRESS_FILE}` in the current working directory listing every item as `- [ ]` / `- [x]`; update it after each item.\n\
+         - After a compaction or restart, read `{SIMPLE_GOAL_PROGRESS_FILE}` first and continue from the first unchecked item.\n\
+         - Verify results with tools before declaring done.\n\
+         - When everything is done and verified, reply with `{SIMPLE_GOAL_COMPLETE_MARKER}` plus a short summary.\n\
+         - If truly stuck after two different attempts on the same step, reply `{SIMPLE_GOAL_BLOCKED_MARKER}: <reason>`.\n\
+         - Do not ask the user questions unless blocked."
+    )
+}
+
+/// Short per-round continuation directive (round `round` of [`SIMPLE_GOAL_MAX_ROUNDS`]).
+/// Carries [`GOAL_CONTINUATION_SENTINEL`] so it reads as a continuation, not create-style rules.
+pub(crate) fn render_simple_goal_continuation(round: u32) -> String {
+    format!(
+        "<system-reminder>\n\
+         {GOAL_CONTINUATION_SENTINEL}\n\
+         Continue from the first unfinished item (round {round}/{SIMPLE_GOAL_MAX_ROUNDS}); keep `{SIMPLE_GOAL_PROGRESS_FILE}` updated if you use it. \
+         Verify with tools. When everything is done and verified, reply `{SIMPLE_GOAL_COMPLETE_MARKER}` with a short summary; \
+         if stuck after two different attempts, reply `{SIMPLE_GOAL_BLOCKED_MARKER}: <reason>`.\n\
+         </system-reminder>"
+    )
+}
+
+/// Next-step line used after a compaction so the model resumes from the progress file instead of restarting.
+pub(crate) fn simple_goal_resume_step() -> String {
+    format!(
+        "If `{SIMPLE_GOAL_PROGRESS_FILE}` exists in the current working directory, read it first and continue from the first unchecked item."
+    )
+}
+
+/// Post-compaction re-seed directive: objective, resume-from-progress-file step and the loop contract.
+pub(crate) fn render_simple_goal_reseed(objective: &str) -> String {
+    format!(
+        "<system-reminder>\n\
+         {GOAL_CONTINUATION_SENTINEL}\n\
+         {resume}\n\
+         Do not restart this goal or revive a prior unrelated task.\n\n\
+         {rules}\n\
+         </system-reminder>",
+        resume = simple_goal_resume_step(),
+        rules = render_simple_goal_rules(objective),
+    )
+}
+
 /// Render the shared goal-rules template with tool names and site-specific blocks substituted in.
 /// The template is the slim current form: verification is owned by the harness (the adversarial skeptic panel in `goal_classifier.rs`),.
 /// so this body only carries TRACKING / WORKING / VERIFY / TEST.
@@ -1120,7 +1227,8 @@ impl SessionActor {
         {
             return;
         }
-        if !self.goal_planner_enabled || !self.goal_harness_enabled() {
+        // Simple goals never write a plan file, so a missing plan is expected.
+        if KITE_SIMPLE_GOAL || !self.goal_planner_enabled || !self.goal_harness_enabled() {
             return;
         }
         let needs_pause = {
@@ -1836,5 +1944,83 @@ mod compaction_goal_section_tests {
         let goal = out.find("A goal has been set: ship it").unwrap();
         assert!(bg < task && task < goal, "{out}");
         assert!(out.contains("</system-reminder>"));
+    }
+}
+
+#[cfg(test)]
+mod simple_goal_tests {
+    use super::{
+        SIMPLE_GOAL_MAX_ROUNDS, SIMPLE_GOAL_PROGRESS_FILE, SimpleGoalDecision,
+        decide_simple_goal_round, render_simple_goal_continuation, render_simple_goal_reseed,
+        render_simple_goal_rules,
+    };
+
+    #[test]
+    fn complete_marker_anywhere_completes() {
+        let text = "All items checked.\n\nGOAL COMPLETE: added the endpoint and tests pass.";
+        assert_eq!(decide_simple_goal_round(Some(text), 3), SimpleGoalDecision::Complete);
+    }
+
+    #[test]
+    fn complete_wins_over_blocked_and_cap() {
+        let text = "GOAL BLOCKED: earlier\nGOAL COMPLETE";
+        assert_eq!(
+            decide_simple_goal_round(Some(text), SIMPLE_GOAL_MAX_ROUNDS),
+            SimpleGoalDecision::Complete
+        );
+    }
+
+    #[test]
+    fn markers_are_case_sensitive() {
+        assert_eq!(
+            decide_simple_goal_round(Some("goal complete"), 0),
+            SimpleGoalDecision::Continue
+        );
+        assert_eq!(
+            decide_simple_goal_round(Some("Goal Blocked: nope"), 0),
+            SimpleGoalDecision::Continue
+        );
+    }
+
+    #[test]
+    fn blocked_marker_carries_reason() {
+        let text = "Tried twice.\nGOAL BLOCKED: missing API key for the staging server\nmore text";
+        assert_eq!(
+            decide_simple_goal_round(Some(text), 1),
+            SimpleGoalDecision::Blocked("missing API key for the staging server".to_owned())
+        );
+        assert_eq!(
+            decide_simple_goal_round(Some("GOAL BLOCKED"), 1),
+            SimpleGoalDecision::Blocked(String::new())
+        );
+    }
+
+    #[test]
+    fn continues_below_cap_and_stops_at_cap() {
+        assert_eq!(decide_simple_goal_round(None, 0), SimpleGoalDecision::Continue);
+        assert_eq!(
+            decide_simple_goal_round(Some("working on item 2"), SIMPLE_GOAL_MAX_ROUNDS - 1),
+            SimpleGoalDecision::Continue
+        );
+        assert_eq!(
+            decide_simple_goal_round(Some("working on item 3"), SIMPLE_GOAL_MAX_ROUNDS),
+            SimpleGoalDecision::RoundCap
+        );
+    }
+
+    #[test]
+    fn directives_carry_contract_and_progress_file() {
+        let rules = render_simple_goal_rules("ship it");
+        assert!(rules.contains("ship it"));
+        assert!(rules.contains(SIMPLE_GOAL_PROGRESS_FILE));
+        assert!(rules.contains("GOAL COMPLETE"));
+        assert!(rules.contains("GOAL BLOCKED: <reason>"));
+        let cont = render_simple_goal_continuation(4);
+        assert!(cont.contains(&format!("round 4/{SIMPLE_GOAL_MAX_ROUNDS}")));
+        assert!(cont.contains(super::GOAL_CONTINUATION_SENTINEL));
+        let reseed = render_simple_goal_reseed("ship it");
+        assert!(reseed.contains("ship it"));
+        assert!(reseed.contains("first unchecked item"));
+        assert!(reseed.contains(super::GOAL_CONTINUATION_SENTINEL));
     }
 }

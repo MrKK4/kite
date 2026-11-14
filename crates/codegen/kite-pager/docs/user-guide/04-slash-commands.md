@@ -266,7 +266,7 @@ In Kite the scheduler tools that `/loop` uses are off by default; enable them wi
 
 ### `/goal`
 
-Set, manage, or check an autonomous goal. Kite works across rounds and only marks the goal complete after an independent evidence review confirms the claim; if that review can't reproduce the result or has no usable evidence, the goal stays active or pauses with concrete gaps.
+Set, manage, or check an autonomous goal. Kite runs `/goal` as a simple single-model loop: no planner, verifier, or other helper agents and no side model requests, so it works on one single-slot local server. The model is told the objective and keeps working round after round until it replies with a marker.
 
 ```
 /goal Migrate the auth module to the new API
@@ -276,7 +276,15 @@ Set, manage, or check an autonomous goal. Kite works across rounds and only mark
 /goal clear
 ```
 
-Arguments are `<objective> [--budget <tokens>]`, or one of `status`, `pause`, `resume`, `clear`. The `--budget` here is a **token** budget for the goal run, separate from the agent-count budgets that workflows use. `/goal` appears when goal mode is enabled for the session. Which driver runs it depends on background workflows: with them on, the host evaluates each model round and runs adversarial verification on completion candidates; with them off, the legacy model-facing `update_goal` path reports progress and triggers verification.
+Arguments are `<objective> [--budget <tokens>]`, or one of `status`, `pause`, `resume`, `clear`. The `--budget` here is a **token** budget for the goal run, separate from the agent-count budgets that workflows use. `/goal` appears when goal mode is enabled for the session.
+
+How the loop works:
+
+- **Done:** when the model's reply contains `GOAL COMPLETE` (exact, case-sensitive), the goal ends as complete.
+- **Blocked:** when it replies `GOAL BLOCKED: <reason>` (after two different failed attempts on the same step), the goal stops as blocked and shows the reason. Fix the problem, then `/goal resume`.
+- **Otherwise:** Kite sends a short continuation and the model keeps going, for up to **30** continuation rounds. At the cap the goal stops and Kite tells you; `/goal resume` grants another 30 rounds.
+- **Progress file:** for multi-item work the model keeps a checklist in `goal-progress.md` in the working directory (`- [ ]` / `- [x]`), updates it after each item, and after a compaction or restart reads it first and continues from the first unchecked item.
+- **Stopping:** Esc (cancelling the turn) pauses the goal and no continuation is queued; `/goal pause` and `/goal clear` stop it too.
 
 ### `/deep-research <query>`
 
