@@ -234,8 +234,13 @@ impl crate::types::tool_metadata::ToolMetadata for SearchTool {
          (playwright__browser_navigate, playwright__browser_snapshot, playwright__browser_click, ...). \
          Browser pages cost far more context than search results, so to just read a page use \
          web_fetch or the exa/parallel tools first. \
-         After navigating, call browser_snapshot (no arguments) to read the page and get element refs \
-         for click/type; dismiss cookie or consent dialogs before continuing. To SEE the page, call \
+         Actions return no page content (to save context). browser_snapshot (no arguments) saves the \
+         page to a file and returns its path: search that file (grep/read_file) for the element refs \
+         you need for click/type instead of reading it whole. To extract links or text, prefer \
+         browser_evaluate with a small function, e.g. \
+         () => [...document.querySelectorAll('a')].map(a => a.href). Downloads are saved to \
+         ~/Downloads/Kite and their path is reported. Dismiss cookie or consent dialogs before \
+         continuing. To SEE the page, call \
          browser_take_screenshot WITHOUT a filename: only then is the image returned to you. A \
          filename just saves a file for the user and you receive no image. Describe a page only \
          from a snapshot or an image you actually received, never from assumption.\n\

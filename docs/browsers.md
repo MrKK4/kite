@@ -30,6 +30,19 @@ The model finds the tools through `search_tool` (`playwright__browser_*`,
   Chromium download is Windows x64; elsewhere `playwright` uses your installed
   Google Chrome.
 
+## Lean mode (saves context)
+
+Browser pages are big, so both servers run in lean mode by default: navigating,
+clicking and typing return no page content, and `browser_snapshot` saves the page
+to a file in `~/Downloads/Kite` and returns its path. The model searches that
+file for the elements it needs, and uses `browser_evaluate` to pull out links or
+text. On a search-then-download task this cut the browser output by about 85%
+(65k to 9k characters). Downloads also land in `~/Downloads/Kite`.
+
+- `KITE_BROWSER_LEAN=0`: return full page snapshots again.
+- `KITE_BROWSER_OUTPUT=<folder>`: put snapshots and downloads somewhere else.
+- Snapshot files pile up there; delete them whenever you like.
+
 ## Where everything lives
 
 | Path | What |
@@ -38,6 +51,7 @@ The model finds the tools through `search_tool` (`playwright__browser_*`,
 | `~/.kite/browser/mcp-config.json` | Generated launch config (rewritten every start) |
 | `~/.kite/extensions/ublock-lite/` | uBlock Origin Lite (unpacked) |
 | `~/.kite/browser-profile/` | Chromium profile: cookies, logins, uBlock settings |
+| `~/Downloads/Kite/` | Page snapshots and downloads (lean mode) |
 | `~/.kite/playwright-mcp.json` | **Your** settings for the `playwright` server (safe to edit) |
 | `~/.kite/kite-browser-mcp.mjs` | Chromium launcher (written by Kite on start; don't edit) |
 | `~/.kite/camoufox-venv/` | Camoufox's Python environment (Camoufox package, Playwright 1.62) |

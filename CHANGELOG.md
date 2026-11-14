@@ -9,6 +9,10 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 ## Unreleased
 
+- Browser lean mode (both servers): actions no longer return page snapshots;
+  `browser_snapshot` saves to a file in `~/Downloads/Kite` that the model
+  searches, and links are pulled with `browser_evaluate`. About 85% less
+  context on a search-then-download task. `KITE_BROWSER_LEAN=0` turns it off.
 - Right-click now pastes clipboard text, or a clipboard image like Alt+V (before,
   it pasted nothing: Ctrl+V text paste is done by the terminal, not Kite).
 - The terminal window/tab title said "grok"; it now says "kite".

@@ -115,7 +115,14 @@ def main():
             json.dump(config, f)
             config_path = f.name
         try:
-            sys.exit(subprocess.call([npx, "-y", MCP_PACKAGE, "--config", config_path]))
+            args = [npx, "-y", MCP_PACKAGE, "--config", config_path]
+            # Lean mode like Kite's Chromium server: no snapshot after actions; browser_snapshot
+            # saves to a file. KITE_BROWSER_LEAN=0 restores inline snapshots.
+            if os.environ.get("KITE_BROWSER_LEAN") != "0":
+                out = os.environ.get("KITE_BROWSER_OUTPUT") or str(Path.home() / "Downloads" / "Kite")
+                os.makedirs(out, exist_ok=True)
+                args += ["--snapshot-mode", "none", "--output-mode", "file", "--output-dir", out]
+            sys.exit(subprocess.call(args))
         finally:
             os.unlink(config_path)
     finally:

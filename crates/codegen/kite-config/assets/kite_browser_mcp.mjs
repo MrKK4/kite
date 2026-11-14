@@ -16,6 +16,8 @@ const extDir = path.join(home, "extensions", "ublock-lite");
 const profileDir = path.join(home, "browser-profile");
 const userConfigPath = path.join(home, "playwright-mcp.json");
 const generatedConfigPath = path.join(browserDir, "mcp-config.json");
+// Snapshots and downloads land here (lean mode); paths are reported to the model.
+const outputDir = process.env.KITE_BROWSER_OUTPUT || path.join(os.homedir(), "Downloads", "Kite");
 const chromeExe = path.join(browserDir, "chrome.exe");
 const log = (msg) => process.stderr.write(`kite-browser: ${msg}\n`);
 
@@ -139,6 +141,13 @@ async function main() {
   // With a shell (needed for npx.cmd), quote the path so spaces survive.
   const shell = process.platform === "win32";
   const args = ["-y", MCP_PACKAGE];
+  // Lean mode (~85% fewer tokens): actions return no page snapshot, and browser_snapshot
+  // saves to a file the model searches. KITE_BROWSER_LEAN=0 restores inline snapshots.
+  if (process.env.KITE_BROWSER_LEAN !== "0") {
+    fs.mkdirSync(outputDir, { recursive: true });
+    args.push("--snapshot-mode", "none", "--output-mode", "file",
+      "--output-dir", shell ? `"${outputDir}"` : outputDir);
+  }
   if (fs.existsSync(configPath)) args.push("--config", shell ? `"${configPath}"` : configPath);
   const child = spawn(npx, args, {
     stdio: "inherit",
