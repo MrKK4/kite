@@ -7,7 +7,7 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 
 
-## Unreleased
+## v0.1.7 — lean browsers, context-aware compaction, paste and title fixes
 
 - Browser lean mode (both servers): actions no longer return page snapshots;
   `browser_snapshot` saves to a file in `~/Downloads/Kite` that the model
