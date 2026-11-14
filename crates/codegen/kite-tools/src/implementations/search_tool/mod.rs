@@ -238,8 +238,12 @@ impl crate::types::tool_metadata::ToolMetadata for SearchTool {
          page to a file and returns its path: search that file (grep/read_file) for the element refs \
          you need for click/type instead of reading it whole. To extract links or text, prefer \
          browser_evaluate with a small function, e.g. \
-         () => [...document.querySelectorAll('a')].map(a => a.href). Downloads are saved to \
-         ~/Downloads/Kite and their path is reported. Dismiss cookie or consent dialogs before \
+         () => [...document.querySelectorAll('a')].map(a => a.href); its result may also come back \
+         as a small file path to read. Pages render after navigation returns, so use \
+         browser_wait_for (text) before reading results. To download a file whose URL you have, \
+         use the terminal (curl -L -o <path> <url>) rather than the browser; click download \
+         buttons only when the file needs the browser's login (saved to ~/Downloads/Kite). \
+         Dismiss cookie or consent dialogs before \
          continuing. To SEE the page, call \
          browser_take_screenshot WITHOUT a filename: only then is the image returned to you. A \
          filename just saves a file for the user and you receive no image. Describe a page only \

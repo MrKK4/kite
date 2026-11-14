@@ -36,8 +36,15 @@ Browser pages are big, so both servers run in lean mode by default: navigating,
 clicking and typing return no page content, and `browser_snapshot` saves the page
 to a file in `~/Downloads/Kite` and returns its path. The model searches that
 file for the elements it needs, and uses `browser_evaluate` to pull out links or
-text. On a search-then-download task this cut the browser output by about 85%
-(65k to 9k characters). Downloads also land in `~/Downloads/Kite`.
+text. On a PyPI search task this cut the browser output by about 85% (65k to 9k
+characters). Downloads also land in `~/Downloads/Kite`.
+
+Measured on GitHub (search "cloudflared" → result links → releases page):
+about 41,000 characters by default vs about 4,000 in lean mode. In lean mode
+`browser_evaluate` results may also come back as a small file to read, and pages
+keep rendering after navigation returns, so the model waits for text first.
+For downloads with a known URL, the model uses the terminal (`curl -L -o`):
+navigating the browser straight to a file is unreliable in Playwright MCP.
 
 - `KITE_BROWSER_LEAN=0`: return full page snapshots again.
 - `KITE_BROWSER_OUTPUT=<folder>`: put snapshots and downloads somewhere else.
