@@ -9,6 +9,8 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 ## v0.1.8 — tighter layout, tok/s, smarter file links
 
+- The model's temporary files go to a dedicated `%TEMP%\kite\` folder
+  (`/tmp/kite/` on Linux) instead of the bare system temp folder.
 - Bare file names in replies now link too: if the name is not in the working
   folder, Kite finds it in a subfolder (only when exactly one file has that
   name). The prompt also asks for folder paths when listing file names.

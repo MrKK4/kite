@@ -189,17 +189,10 @@ fn format_kite_memory(raw: &str, max_chars: usize) -> String {
 }
 
 fn scratch_dir() -> String {
-    if cfg!(windows) {
-        let dir = std::env::temp_dir();
-        let text = dir.display().to_string();
-        if text.ends_with(std::path::MAIN_SEPARATOR) {
-            text
-        } else {
-            format!("{text}{}", std::path::MAIN_SEPARATOR)
-        }
-    } else {
-        "/tmp/".to_string()
-    }
+    // Kite: a dedicated folder so the model's temp files never mix with other programs'.
+    let dir = std::env::temp_dir().join("kite");
+    let _ = std::fs::create_dir_all(&dir);
+    format!("{}{}", dir.display(), std::path::MAIN_SEPARATOR)
 }
 impl PromptContext {
     /// For `Subagent` audience, applies the same suppression as the render path: persona summaries are cleared.
