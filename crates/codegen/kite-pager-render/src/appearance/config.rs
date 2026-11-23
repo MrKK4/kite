@@ -57,7 +57,8 @@ pub struct TurnStatusConfig {
 
 impl Default for TurnStatusConfig {
     fn default() -> Self {
-        Self { gap: true }
+        // Kite: the turn status line sits directly on the prompt (no blank row between them).
+        Self { gap: false }
     }
 }
 
@@ -804,11 +805,13 @@ pub struct RawLayoutConfig {
 impl Default for RawLayoutConfig {
     fn default() -> Self {
         Self {
-            outer_vpad: 1,
-            outer_hpad_left: 2,
-            outer_hpad_right: 2,
-            block_pad_left: 2,
-            block_pad_right: 2,
+            // Kite: tighter defaults (mirrors `LayoutConfig::default`); this is what `pager.toml` and
+            // `AppearanceConfig::default()` actually resolve through.
+            outer_vpad: 0,
+            outer_hpad_left: 1,
+            outer_hpad_right: 1,
+            block_pad_left: 1,
+            block_pad_right: 1,
         }
     }
 }
@@ -1030,7 +1033,7 @@ pub struct RawPromptConfig {
 impl Default for RawPromptConfig {
     fn default() -> Self {
         Self {
-            vpad: true,
+            vpad: false, // Kite: no blank rows inside the (pinned) prompt box
             bg: RawBlockBackground::Light,
             accent_bg: false,
             min_lines: 2,

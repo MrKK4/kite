@@ -999,7 +999,7 @@ mod tests {
         let renderer = EntryRenderer::new(&entry, &theme);
 
         // Area: 20 chars wide, 3 rows
-        // Layout: accent(1) + left_pad(2) + content(16) + right_pad(1) = 20
+        // Layout: accent(1) + left_pad(1) + content(17) + right_pad(1) = 20 (Kite block_pad defaults)
         let area = Rect::new(0, 0, 20, 3);
         let mut buf = Buffer::empty(area);
         renderer.render(area, &mut buf);
@@ -1009,16 +1009,15 @@ mod tests {
         assert_eq!(buf.cell((0, 1)).unwrap().symbol(), "┃");
         assert_eq!(buf.cell((0, 2)).unwrap().symbol(), "┃");
 
-        // Left padding at columns 1-2 (empty space)
+        // Left padding at column 1 (empty space)
         assert_eq!(buf.cell((1, 1)).unwrap().symbol(), " ");
-        assert_eq!(buf.cell((2, 1)).unwrap().symbol(), " ");
 
-        // Content starts at column 3
+        // Content starts at column 2
         // Row 0 = vpad (empty), row 1 = content "Test", row 2 = vpad
-        assert_eq!(buf.cell((3, 1)).unwrap().symbol(), "T");
-        assert_eq!(buf.cell((4, 1)).unwrap().symbol(), "e");
-        assert_eq!(buf.cell((5, 1)).unwrap().symbol(), "s");
-        assert_eq!(buf.cell((6, 1)).unwrap().symbol(), "t");
+        assert_eq!(buf.cell((2, 1)).unwrap().symbol(), "T");
+        assert_eq!(buf.cell((3, 1)).unwrap().symbol(), "e");
+        assert_eq!(buf.cell((4, 1)).unwrap().symbol(), "s");
+        assert_eq!(buf.cell((5, 1)).unwrap().symbol(), "t");
     }
 
     #[test]
@@ -1040,9 +1039,9 @@ mod tests {
             let mut buf = Buffer::empty(area);
             let renderer = EntryRenderer::new(&entry, &theme).with_tick(tick);
             renderer.render(area, &mut buf);
-            // Default layout: accent(1) + left_pad(2), so content starts at 3
+            // Kite default layout: accent(1) + left_pad(1), so content starts at 2
             // Tool call header has no vpad, so bullet sits on row 0.
-            let cell = buf.cell((3, 0)).unwrap();
+            let cell = buf.cell((2, 0)).unwrap();
             assert_eq!(
                 cell.symbol(),
                 "◆",
@@ -1113,11 +1112,11 @@ mod tests {
         let mut buf = Buffer::empty(area);
         renderer.render(area, &mut buf);
 
-        // UserPrompt has vpad=true, first content row is y=1.
+        // Kite: UserPrompt has no vpad by default, so the first content row is y=0.
         let expected = entry.created_at.unwrap().format("%-I:%M %p").to_string();
         let ts_width = expected.len() as u16;
         let ts_x = width - 2 - ts_width;
-        let content_row = 1u16;
+        let content_row = 0u16;
 
         let rendered = collect_row_symbols(&buf, content_row, ts_x, ts_x + ts_width);
         assert_eq!(
@@ -1419,9 +1418,9 @@ mod tests {
         let mut buf = Buffer::empty(area);
         renderer.render(area, &mut buf);
 
-        // The band bg as this render actually painted it: a content cell on the text row (row 1: UserPrompt has vpad), left of the rightmost timestamp gutter
+        // The band bg as this render actually painted it: a content cell on the text row (row 0: Kite's UserPrompt has no vpad), left of the rightmost timestamp gutter
         let band = gutter_band(&renderer, width);
-        let content_cell = buf.cell((band.start.saturating_sub(8), 1)).unwrap();
+        let content_cell = buf.cell((band.start.saturating_sub(8), 0)).unwrap();
         assert_ne!(
             content_cell.bg,
             Color::Reset,
@@ -1429,7 +1428,7 @@ mod tests {
         );
 
         // Gutter cell carries the same block background, proving the block fill (not the bg_base clear) owns it
-        let gutter_cell = buf.cell((band.start + 2, 1)).unwrap();
+        let gutter_cell = buf.cell((band.start + 2, 0)).unwrap();
         assert_eq!(
             gutter_cell.bg, content_cell.bg,
             "background block gutter must use the block bg fill"

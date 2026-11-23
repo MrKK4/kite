@@ -995,6 +995,7 @@ impl SessionActor {
     pub(super) fn response_completed_update(
         &self,
         response: &kite_sampling_types::ConversationResponse,
+        tokens_per_sec: Option<f64>,
     ) -> XaiSessionUpdate {
         let usage = response
             .usage
@@ -1010,6 +1011,7 @@ impl SessionActor {
             usage,
             signature,
             stop_sequence: response.stop_sequence.clone(),
+            tokens_per_sec,
         }
     }
     /// [`Self::send_xai_notification`] with caller-supplied `_meta` keys merged into the standard eventId/timestamp meta.

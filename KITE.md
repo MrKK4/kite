@@ -138,6 +138,25 @@ identical, so Kite keeps sent history stable:
 - Requests send `chat_template_kwargs: {"preserve_thinking": true}` so Qwen-style
   templates keep earlier reasoning instead of re-rendering history.
 
+Compaction time limit: each compaction attempt is cut off after
+a wall-clock budget (built-in default **300 s**,
+`DEFAULT_COMPACTION_WALL_CLOCK_BUDGET_SECS` in
+`crates/codegen/kite-shell/src/util/config/resolve/compaction.rs`) and retried. A compaction
+re-reads the whole history, because Kite rewrites it (reasoning stripped, images
+and tool results pruned) and so it no longer matches the server's prompt cache.
+On slow local servers a single read takes longer than 300 s, so every attempt is
+cut off and the history is read again. Measured on Kaggle 2x T4 with llama.cpp
+v1.0.0: the dense Qwen3.8-27B reads prompts at ~440 tok/s, so a ~115K-token
+compaction needs ~5-7 minutes in one pass, but took 22 minutes with the 300 s
+limit. The 35B-A3B MoE reads at ~1,200-1,500 tok/s and stays under the limit.
+- Override without rebuilding: `GROK_COMPACTION_WALL_CLOCK_SECS=1800` (0
+  disables the limit). Currently set as a Windows user environment variable on
+  the development machine.
+- To make it the built-in default, set `DEFAULT_COMPACTION_WALL_CLOCK_BUDGET_SECS`
+  to `1800` in that file (the session reads this constant; the 300 in
+  `CompactionPolicy::default()` in `kite-agent/src/compaction.rs` is only a
+  fallback, so change both to keep them consistent). TODO for the next build.
+
 ## Goals (`/goal`)
 
 `/goal <objective>` is a simple single-model loop: no planner, verifier,
@@ -163,11 +182,25 @@ The switch is `KITE_SIMPLE_GOAL` in
 ## Screen layout
 
 Kite uses tighter spacing than upstream so answers get most of the screen: no
-blank rows at the top and bottom or around the header and footer, 1-column side
-margins and block padding, and no padding rows inside the pinned prompt box.
-Restore any of it in your appearance config under `scrollback.layout`
-(`outer_vpad`, `outer_hpad_left/right`, `block_pad_left/right`) and
-`scrollback.blocks.prompt.vpad`.
+blank rows at the top and bottom or around the header and footer, none above
+the turn status line (`Thinking… 3m35s`), between it and the input box, or
+between the input box and the footer hints; 1-column side margins and block
+padding; and no padding rows inside the user prompt box (including the pinned
+copy at the top, which keeps only its one separator row). These are the
+built-in defaults in `crates/codegen/kite-pager-render/src/appearance/config.rs`
+(`RawLayoutConfig`, `RawPromptConfig`, `TurnStatusConfig`). Restore the upstream
+spacing in `pager.toml` under `scrollback.layout` (`outer_vpad = 1` also brings
+back the rows above the turn status and footer, `outer_hpad_left/right`,
+`block_pad_left/right`) and `scrollback.blocks.prompt.vpad`.
+
+The prompt box's bottom border shows the generation speed of the last completed
+model response after the model name, e.g. `qwen3.6-35b-a3b · 45 tok/s ·
+always-approve`. It is the response's output (completion) tokens divided by its
+streaming time (the model call's duration minus time to first token, so prompt
+processing is excluded), rounded to a whole number. The shell computes it from
+the usage and timing it already has and sends it on the per-response
+`ResponseCompleted` update; no extra requests are made. It is hidden until a
+response has completed (or when the server reports no usage).
 
 ## Skills and tools (context size)
 

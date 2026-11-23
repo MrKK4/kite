@@ -1745,9 +1745,13 @@ impl AgentView {
                 }
             }
             if appearance.scrollback.scroll.follow_indicator != FollowIndicator::None {
+                // Kite: with no spacer above the turn status line, the row below the scrollback is that line; skip the ▼ rather than hide it under the status text.
+                let gap_row_is_turn_status =
+                    layout.turn_status.height > 0 && layout.turn_status.y == gap_y;
                 if !self.scrollback.is_follow_mode()
                     && self.scrollback.has_content_below()
                     && content_line_y.is_none()
+                    && !gap_row_is_turn_status
                 {
                     follow_indicator_y = Some(gap_y);
                 }
@@ -2298,8 +2302,24 @@ impl AgentView {
         } else {
             self.published_mode_label()
         };
-        let flags: Vec<PromptFlag> =
+        // Kite: generation speed of the last completed response, right after the model name.
+        let speed_label: Option<String> = self
+            .session
+            .models
+            .last_tokens_per_sec()
+            .map(|tps| format!("{tps} tok/s"));
+        let mut flags: Vec<PromptFlag> =
             mode_flags(mode_label, self.session.permission_label(), &theme);
+        if let Some(text) = speed_label.as_deref() {
+            flags.insert(
+                0,
+                PromptFlag {
+                    text,
+                    color: None,
+                    bold: false,
+                },
+            );
+        }
         let multiline = self.multiline_mode;
         let warning = self.credit_balance.as_ref().and_then(|bal| {
             crate::views::credit_bar::usage_warning_for_session(

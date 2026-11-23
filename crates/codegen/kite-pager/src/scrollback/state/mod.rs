@@ -2768,7 +2768,7 @@ mod tests {
         state.prepare_layout(80, 20);
 
         // The cached height is 1 (content only, no vpad)
-        // With vpad=true (default), it would be 3 (1 content row plus 2 vpad rows)
+        // With vpad=true, it would be 3 (1 content row plus 2 vpad rows)
         let cached_height = state.get_cached_entry_height(0).unwrap();
         assert_eq!(
             cached_height, 1,
@@ -2778,8 +2778,8 @@ mod tests {
     }
 
     #[test]
-    fn test_cached_height_with_default_appearance_has_vpad() {
-        // Default appearance has vpad=true for prompt blocks
+    fn test_cached_height_with_default_appearance_has_no_vpad() {
+        // Kite: default appearance has vpad=false for prompt blocks
         let mut state = ScrollbackState::new();
 
         // Push a user prompt (1 line of content)
@@ -2788,11 +2788,11 @@ mod tests {
         // Prepare layout to populate the cache
         state.prepare_layout(80, 20);
 
-        // The cached height is 3 (1 content row plus 2 vpad rows)
+        // The cached height is 1 (content only, no vpad rows)
         let cached_height = state.get_cached_entry_height(0).unwrap();
         assert_eq!(
-            cached_height, 3,
-            "Cached height should be 3 (with vpad) but got {}",
+            cached_height, 1,
+            "Cached height should be 1 (no vpad) but got {}",
             cached_height
         );
     }

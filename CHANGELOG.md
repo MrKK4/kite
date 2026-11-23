@@ -7,6 +7,20 @@ What Kite changes compared to the upstream Grok Build source it was forked from
 
 
 
+## v0.1.8 — tighter layout, tok/s, smarter file links
+
+- Bare file names in replies now link too: if the name is not in the working
+  folder, Kite finds it in a subfolder (only when exactly one file has that
+  name). The prompt also asks for folder paths when listing file names.
+- Agent screen spacing: the tighter layout defaults now actually apply (they
+  were set on a type the config loader bypasses), and the blank rows above the
+  turn status line, between it and the input box, and between the input box
+  and the footer hints are gone. The user prompt box (and its pinned copy)
+  has no blank padding rows.
+- The prompt box border shows the last response's generation speed next to
+  the model name (`model · 45 tok/s · always-approve`): output tokens over
+  streaming time, hidden until a response completes.
+
 ## v0.1.7 — lean browsers, context-aware compaction, paste and title fixes
 
 - `/goal` no longer hangs on a local model: it is now a simple single-model

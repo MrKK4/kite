@@ -1184,6 +1184,11 @@ pub enum SessionUpdate {
         /// Headless `streaming-messages-json` stamps it onto the assistant frame.
         #[serde(default, skip_serializing_if = "Option::is_none")]
         stop_sequence: Option<String>,
+        /// Kite: generation speed of this response, output tokens per second of streaming
+        /// (completion tokens / (model call time - time to first token)). The TUI shows it next to the model name.
+        /// `None` when the backend reported no usage or the duration was zero.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        tokens_per_sec: Option<f64>,
     },
     /// Token counts for a whole turn, summed across every model call.
     /// The streaming-json `usage` line prints them. They are not one response, so the Messages reducer must not copy them onto an assistant message.

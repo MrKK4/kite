@@ -246,7 +246,10 @@ impl AgentViewLayout {
             constraints.push(Constraint::Length(queue_height));
         }
         if turn_status_height > 0 {
-            constraints.push(Constraint::Length(1));
+            // Kite: no blank row above the turn status line unless outer padding is configured.
+            // The spacer stays in the vector (zero rows) so chunk indices are unchanged.
+            let turn_status_gap = if top_vpad == 0 { 0u16 } else { 1 };
+            constraints.push(Constraint::Length(turn_status_gap));
             constraints.push(Constraint::Length(turn_status_height));
         }
         if banner_height > 0 {
@@ -1998,9 +2001,14 @@ mod tests {
         prompt_height: u16,
         status_line_height: u16,
     ) -> AgentViewLayout {
+        // These budgets were measured with upstream's 1-row outer padding; pin it so they stay meaningful.
         AgentViewLayout::compute(AgentViewLayoutParams {
             prompt_height,
             status_line_height,
+            layout_cfg: LayoutConfig {
+                outer_vpad: 1,
+                ..LayoutConfig::default()
+            },
             ..base_params(area)
         })
     }
@@ -2077,9 +2085,10 @@ mod tests {
     fn prompt_budget_counts_the_rows_above_the_prompt() {
         let area = Rect::new(0, 0, 80, 25);
         let plain = base_params(area);
+        // Kite defaults (outer_vpad 0): status bar 1 + scrollback minimum 5 + shortcuts 1, no padding or gap rows.
         assert_eq!(
             AgentViewLayout::rows_available_for_prompt(plain),
-            25 - 11,
+            25 - 7,
             "a frame with no optional row gives everything else to the prompt"
         );
         let with_rows = AgentViewLayoutParams {
@@ -2089,8 +2098,8 @@ mod tests {
         };
         assert_eq!(
             AgentViewLayout::rows_available_for_prompt(with_rows),
-            25 - 11 - 4,
-            "each row above the prompt takes its own height plus the gap above it"
+            25 - 7 - 3,
+            "the banner takes its row plus a gap; the turn status line has no gap without outer padding"
         );
     }
     #[test]

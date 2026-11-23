@@ -180,16 +180,71 @@ fn file_path_link(text: &str, start: usize, end: usize) -> Option<(Range<usize>,
         return None;
     }
     let path = std::path::Path::new(path);
-    let abs = if path.is_absolute() {
+    let mut abs = if path.is_absolute() {
         path.to_path_buf()
     } else {
         std::env::current_dir().ok()?.join(path)
     };
     if !abs.is_file() {
-        return None;
+        // A bare name for a file in a subfolder: link it when exactly one file has that name.
+        if has_dir || path.is_absolute() {
+            return None;
+        }
+        abs = find_unique_in_workspace(path.to_str()?)?;
     }
     let url = url::Url::from_file_path(&abs).ok()?.to_string();
     Some((start..start + token.len(), url))
+}
+
+/// File names under the working directory, refreshed at most every 5 seconds.
+// ponytail: one bounded walk (50k entries, 8 levels) shared by every render; a
+// filesystem watcher is the upgrade if big workspaces make this slow.
+fn find_unique_in_workspace(name: &str) -> Option<std::path::PathBuf> {
+    use std::collections::HashMap;
+    use std::path::PathBuf;
+    use std::sync::Mutex;
+    use std::time::{Duration, Instant};
+    type Index = (Instant, PathBuf, HashMap<String, Option<PathBuf>>);
+    static INDEX: Mutex<Option<Index>> = Mutex::new(None);
+
+    let cwd = std::env::current_dir().ok()?;
+    let mut guard = INDEX.lock().ok()?;
+    let stale = guard.as_ref().is_none_or(|(at, dir, _)| {
+        *dir != cwd || at.elapsed() > Duration::from_secs(5)
+    });
+    if stale {
+        let mut files: HashMap<String, Option<PathBuf>> = HashMap::new();
+        let mut stack = vec![(cwd.clone(), 0usize)];
+        let mut seen = 0usize;
+        while let Some((dir, depth)) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+            for entry in entries.flatten() {
+                seen += 1;
+                if seen > 50_000 {
+                    break;
+                }
+                let path = entry.path();
+                let file_name = entry.file_name().to_string_lossy().into_owned();
+                let Ok(kind) = entry.file_type() else { continue };
+                if kind.is_dir() {
+                    if depth < 8
+                        && !file_name.starts_with('.')
+                        && !matches!(file_name.as_str(), "node_modules" | "target" | "__pycache__")
+                    {
+                        stack.push((path, depth + 1));
+                    }
+                } else if kind.is_file() {
+                    // A second file with the same name makes it ambiguous: never link a guess.
+                    files
+                        .entry(file_name)
+                        .and_modify(|slot| *slot = None)
+                        .or_insert(Some(path));
+                }
+            }
+        }
+        *guard = Some((Instant::now(), cwd, files));
+    }
+    guard.as_ref()?.2.get(name)?.clone()
 }
 
 fn for_each_plain_url(text: &str, mut f: impl FnMut(Range<usize>, String)) {
@@ -266,6 +321,15 @@ mod tests {
         assert_eq!(hits.len(), 1, "{hits:?}");
         assert_eq!(hits[0].0, shown);
         assert!(hits[0].1.starts_with("file://"));
+    }
+
+    #[test]
+    fn bare_file_name_in_a_subfolder_links_when_unique() {
+        // Unit tests run in the crate dir; url_scan.rs exists only under src/.
+        let mut hits = Vec::new();
+        for_each_plain_link("see url_scan.rs for details", |range, url| hits.push((range, url)));
+        assert_eq!(hits.len(), 1, "{hits:?}");
+        assert!(hits[0].1.ends_with("src/url_scan.rs"), "{hits:?}");
     }
 
     #[test]

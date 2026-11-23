@@ -1342,6 +1342,13 @@ pub(super) fn handle_session_notification_with_origin(
                 true
             }
         }
+        XaiSessionUpdate::ResponseCompleted {
+            tokens_per_sec: Some(tokens_per_sec),
+            ..
+        } => {
+            // Kite: generation speed of the last completed response, shown after the model name in the prompt box.
+            agent.session.models.set_last_tokens_per_sec(tokens_per_sec)
+        }
         XaiSessionUpdate::SessionStatus(status) => {
             agent.status_context = Some(*status);
             status_snapshot_applied = true;

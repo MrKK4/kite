@@ -66,6 +66,9 @@ pub struct ModelState {
     /// The model the backend routed the current turn to, when it named one other than `current`.
     /// Footer only; `current` stays the user's selection.
     served_model_name: Option<String>,
+    /// Kite: generation speed of the last completed model response (output tokens per second of streaming),
+    /// shown after the model name in the prompt box. `None` until a response has completed.
+    last_tokens_per_sec: Option<u32>,
 }
 
 impl ModelState {
@@ -101,6 +104,23 @@ impl ModelState {
 
     pub fn set_served_model_name(&mut self, display_name: Option<String>) {
         self.served_model_name = display_name;
+    }
+
+    /// Kite: record the last completed response's generation speed. Non-finite or non-positive rates are ignored.
+    /// Returns whether the displayed value changed.
+    pub fn set_last_tokens_per_sec(&mut self, tokens_per_sec: f64) -> bool {
+        if !tokens_per_sec.is_finite() || tokens_per_sec <= 0.0 {
+            return false;
+        }
+        let rounded = Some(tokens_per_sec.round().min(f64::from(u32::MAX)) as u32);
+        let changed = self.last_tokens_per_sec != rounded;
+        self.last_tokens_per_sec = rounded;
+        changed
+    }
+
+    /// Kite: the last completed response's generation speed, rounded to whole tokens per second.
+    pub fn last_tokens_per_sec(&self) -> Option<u32> {
+        self.last_tokens_per_sec
     }
 
     /// Machine-readable model ID string for the current model (e.g. "grok-4.5").
@@ -397,6 +417,7 @@ impl From<Option<acp::SessionModelState>> for ModelState {
                     context_window_selection,
                     model_changed_during_switch: false,
                     served_model_name: None,
+                    last_tokens_per_sec: None,
                 }
             })
             .unwrap_or_default()
